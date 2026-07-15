@@ -109,7 +109,11 @@ function build(lang) {
 
   // --- Conclusion ---
   children.push(heading1(L.conclusion));
-  children.push(bodyPar(content.conclusion));
+  const C = content.conclusion;
+  children.push(bodyPar(C.summary));
+  children.push(bodyPar(C.planIntro));
+  C.steps.forEach((s) => { children.push(heading2(s.h)); children.push(bodyPar(s.p)); });
+  children.push(bodyPar(C.closing));
 
   // --- References ---
   children.push(heading1(L.references));

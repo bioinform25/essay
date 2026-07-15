@@ -32,14 +32,15 @@ module.exports = {
     "fragments unsuitable for structure-based docking, so we redirected structure-based screening to " +
     "ANGPTL4's C-terminal fibrinogen-like domain (PDB 6EUB) - a genuinely undrugged target (zero DGIdb " +
     "drug interactions) independently validated by a 2024 single-cell study showing cardiac-fibroblast-" +
-    "specific ANGPTL4 secretion in HFpEF. AutoDock Vina screening of 21 compounds (cardiometabolic drugs, " +
-    "endogenous fatty acids, and unrelated controls) ranked Resmetirom (the first FDA-approved MASH drug) " +
-    "and Ezetimibe as the top two hits (-9.07 and -8.88 kcal/mol). An orthogonal, box-free DiffDock cross-" +
-    "check showed Ezetimibe's top pose converging within 3.5 A of the Vina-defined pocket, while " +
-    "Resmetirom's top pose landed 23.5 A away at a distinct site - reframing Ezetimibe, not the top Vina " +
-    "scorer, as the more cross-validated candidate. This work illustrates how a rigorously reanalyzed, " +
-    "genuinely null result can redirect a network pharmacology pipeline toward a clinically relevant, " +
-    "testable hypothesis.",
+    "specific ANGPTL4 secretion in HFpEF. AutoDock Vina screening of 21 compounds ranked Resmetirom (the " +
+    "first FDA-approved MASH drug), Ezetimibe, and Pioglitazone as the top three hits (-9.07, -8.88, and " +
+    "-8.28 kcal/mol). Cross-checking these three with box-free DiffDock showed Pioglitazone (confidence " +
+    "-1.06, best of the three) and Ezetimibe (-1.32) both converging within 4 A of the Vina-defined " +
+    "pocket, while Resmetirom's pose landed 23.5 A away at a distinct site - reframing Pioglitazone and " +
+    "Ezetimibe, not the top Vina scorer, as the structurally cross-validated candidates, with Pioglitazone " +
+    "further backed by an independent STITCH-annotated ANGPTL4 association. This work illustrates how a " +
+    "rigorously reanalyzed, genuinely null result can redirect a network pharmacology pipeline toward a " +
+    "clinically relevant, testable hypothesis.",
 
   keywords: "Keywords: HFpEF, MASLD, cardio-hepatic axis, ANGPTL4, network pharmacology, molecular docking",
 
@@ -153,7 +154,9 @@ module.exports = {
       "Because this machine has no CUDA-capable GPU, a from-scratch local DiffDock (Corso et al., 2023) " +
       "installation was judged impractical for CPU-only inference. Instead, a publicly hosted Gradio " +
       "Space running the original inference code (gcorso/DiffDock; mirrored at swcanner/DiffDock-Web) was " +
-      "used to cross-validate the top two Vina hits (Resmetirom, Ezetimibe) only. Unlike Vina, DiffDock " +
+      "used to cross-validate the top Vina hits (Resmetirom, Ezetimibe, and Pioglitazone - the last added " +
+      "because it was independently flagged by STITCH as a genuine ANGPTL4 chemical partner) only. " +
+      "Unlike Vina, DiffDock " +
       "performs blind docking without a predefined binding site, so agreement between the two methods on " +
       "the pose location constitutes an independent structural check rather than a simple re-ranking " +
       "(10 samples per complex, seed unfixed)."
@@ -235,7 +238,14 @@ module.exports = {
       "consistent with their ranking as the top network hubs. SDC3 localized to MP (macrophage/Kupffer-" +
       "lineage) cells, and CDH5 localized to endothelia, exactly as expected for this canonical " +
       "endothelial marker - serving as a built-in positive control for the localization approach " +
-      "(Supplemental Figure S3 shows the same analysis split by disease condition)." },
+      "(Supplemental Figure S3 shows the same analysis split by disease condition). Because this " +
+      "reference is human, we additionally queried an independent mouse liver atlas (Tabula Muris, " +
+      "FACS/Smart-seq2, n=714 cells) to confirm the localization directly in the same species as our " +
+      "bulk cohort. This mouse-native check reproduced the human pattern almost exactly: Sdc4 was " +
+      "detected in 91.8% of hepatocytes, Sdc1 in 68.3%, Sdc3 in 80.3% of Kupffer cells, and Cdh5 in " +
+      "98.4% of hepatic sinusoidal endothelial cells (Supplemental Figure S4). The convergence of " +
+      "network centrality, human scRNA-seq, and an independent mouse scRNA-seq atlas on the same " +
+      "cell-type assignments substantially strengthens confidence in this localization." },
     { type: "figure", file: "figures/Angptl4axis_liver_localization_dotplot.png",
       caption: "Figure 5. Liver cell-type localization of Angptl4-axis genes, using an independent " +
                "cross-species reference (project4, human GSE136103). SDC1/SDC4 localize to hepatocytes, " +
@@ -285,22 +295,33 @@ module.exports = {
 
     { type: "heading", text: "3.9 DiffDock cross-validation reframes the leading candidate" },
     { type: "p", text:
-      "Applying blind docking (no predefined binding site) to the top two Vina hits produced a striking " +
-      "divergence. Ezetimibe's top-ranked pose (confidence -1.32) fell within 3.5 A of the Vina-defined " +
-      "pocket centroid, i.e., two independent methods converged on essentially the same site (Figure 7A). " +
-      "Resmetirom's top-ranked pose (confidence -2.06), in contrast, localized 23.5 A away, at an " +
-      "entirely different surface region (Figure 7B; Supplemental Text S2 gives full contact-residue " +
-      "detail). Both DiffDock confidence values fall within that method's low-to-moderate range and " +
-      "should not be over-interpreted as confirmed binding; nonetheless, on a strictly comparative basis, " +
-      "Ezetimibe - not the top Vina scorer - emerges as the more structurally consistent candidate across " +
-      "two independent docking algorithms." },
+      "Applying blind docking (no predefined binding site) to the top three Vina hits - Resmetirom, " +
+      "Ezetimibe, and Pioglitazone (the last included because it was independently flagged by STITCH as " +
+      "a genuine ANGPTL4 chemical partner; Section 3.6) - produced an informative split. Pioglitazone's " +
+      "top-ranked pose (confidence -1.06, the best of the three) fell 3.9 A from the Vina-defined pocket " +
+      "centroid, and Ezetimibe's top-ranked pose (confidence -1.32) fell within 3.5 A of the same " +
+      "centroid (Figure 7A, 7B) - two chemically unrelated compounds, docked independently with a " +
+      "method that searches the entire protein surface, both converged on essentially the same site, " +
+      "with substantially overlapping contact residues (Leu304, Leu312, Gly313, Ala314, Leu322, Val324, " +
+      "Gly352, Thr353, His356 are shared between the two poses). Resmetirom's top-ranked pose (confidence " +
+      "-2.06), by contrast, localized 23.5 A away at an entirely different surface region (Figure 7C; " +
+      "Supplemental Text S2 gives full contact-residue detail for all three). All three DiffDock " +
+      "confidence values fall within that method's low-to-moderate range and should not be over-" +
+      "interpreted as confirmed binding; nonetheless, on a strictly comparative basis, Pioglitazone and " +
+      "Ezetimibe - not the top Vina scorer - emerge as the structurally consistent candidates across two " +
+      "independent docking algorithms, and Pioglitazone in particular is now supported by three " +
+      "independent lines of evidence (a real STITCH-annotated chemical association, a top-5 Vina score, " +
+      "and a DiffDock pose that converges on the same site as Vina)." },
     { type: "figure", file: "figures/composite/Figure7_pose_combined.png",
-      caption: "Figure 7. Structure-based docking poses of the top two AutoDock Vina hits, cross-" +
-               "validated by DiffDock. (A) Ezetimibe (DiffDock confidence -1.32), converging within 3.5 A " +
-               "of the Vina-defined pocket; contact residues Leu304, Leu312, Gly313, Ala314, Leu322, " +
-               "Ser323, Val324, Trp349, Trp350, Gly352, Thr353, His356. (B) Resmetirom (DiffDock " +
-               "confidence -2.06), 23.5 A from the Vina-defined pocket at a distinct site; contact " +
-               "residues Trp280, Asp281, Ile367, Leu374, Tyr387, Tyr388, Pro389." },
+      caption: "Figure 7. Structure-based docking poses of the top three AutoDock Vina hits, cross-" +
+               "validated by DiffDock. (A) Pioglitazone (DiffDock confidence -1.06, the best of the " +
+               "three), converging within 3.9 A of the Vina-defined pocket; contact residues Leu304, " +
+               "Ala309, Leu312, Gly313, Ala314, Val317, Leu322, Val324, Gly352, Thr353, His356, Lys381. " +
+               "(B) Ezetimibe (DiffDock confidence -1.32), converging within 3.5 A of the same pocket; " +
+               "contact residues Leu304, Leu312, Gly313, Ala314, Leu322, Ser323, Val324, Trp349, Trp350, " +
+               "Gly352, Thr353, His356. (C) Resmetirom (DiffDock confidence -2.06), 23.5 A from the Vina-" +
+               "defined pocket at a distinct site; contact residues Trp280, Asp281, Ile367, Leu374, " +
+               "Tyr387, Tyr388, Pro389." },
   ],
 
   discussion: [
@@ -335,30 +356,97 @@ module.exports = {
     "single docking algorithm, and supports Ezetimibe as the more defensible hypothesis-generating lead " +
     "from this screen.",
 
+    "Ezetimibe's established mechanism of action - inhibition of the intestinal cholesterol transporter " +
+    "NPC1L1 at the brush-border membrane, unrelated to any known action on ANGPTL4 - is worth revisiting " +
+    "in light of this result. If the predicted ANGPTL4-binding pose is confirmed biochemically, Ezetimibe " +
+    "would represent a genuine dual-action, multi-target drug-repurposing candidate: its canonical " +
+    "NPC1L1-mediated effect on intestinal cholesterol absorption would be complemented by a second, " +
+    "previously unrecognized action of directly intercepting a heart-derived signal (Angptl4) at the " +
+    "liver, potentially blocking the cardiohepatic axis at its source rather than only its downstream " +
+    "metabolic consequences. The same dual-action logic extends, arguably even more strongly, to " +
+    "Pioglitazone: it is already a PPAR-gamma agonist prescribed for insulin resistance, and its " +
+    "independent STITCH-annotated association with Angptl4 (Section 3.6) together with its DiffDock " +
+    "convergence on the same pocket as Ezetimibe (Section 3.9) raise the possibility that part of its " +
+    "known metabolic benefit could involve direct engagement of this heart-derived signal, in addition " +
+    "to its canonical nuclear-receptor-mediated action. We raise both as hypotheses generated by the " +
+    "docking data, not as established pharmacological mechanisms - exactly the kind of possibility that " +
+    "the wet-lab validation plan proposed in Section 5 is designed to test.",
+
     "Several limitations should be noted. First, this analysis rests on a single mouse model with a " +
     "small sample size (n=5/group), and independent replication is warranted. Second, the cardiac source " +
     "of Angptl4 was confirmed only through an independent literature report rather than through single-" +
-    "cell data generated in this study, and the hepatic localization of the syndecans relies on a human, " +
-    "cross-species reference rather than mouse single-cell validation. Third, DiffDock was run through a " +
-    "public web interface for only the top two compounds because of the absence of a local GPU, rather " +
-    "than across the full 21-compound library. Fourth, all binding affinities reported here are in " +
-    "silico predictions; biochemical confirmation (e.g., Western blot, SPR, or ITC) will be required " +
-    "before any therapeutic claim can be made.",
+    "cell data generated in this study. Third, DiffDock was run through a public web interface for only " +
+    "the top Vina hits (Resmetirom, Ezetimibe, and Pioglitazone - the latter included because it was " +
+    "independently flagged by STITCH as a genuine ANGPTL4 chemical partner) because of the absence of a " +
+    "local GPU, rather than across the full 21-compound library. Fourth, all binding affinities reported " +
+    "here are in silico predictions; biochemical confirmation (e.g., Western blot, SPR, or ITC) will be " +
+    "required before any therapeutic claim can be made.",
   ],
 
-  conclusion:
-    "By reanalyzing a publicly available paired liver-heart mouse transcriptome dataset under stricter " +
-    "statistical criteria and carrying the analysis through ligand-receptor interactome matching, PPI " +
-    "network construction, network pharmacology, druggability assessment, and structure-based virtual " +
-    "screening, we identified a heart-to-liver Angptl4-Sdc/Cdh5 axis in place of our originally " +
-    "hypothesized liver-to-heart direction - a reversal that in fact corresponds to the clinically " +
-    "established cardiohepatic syndrome. Recognizing that the network hubs Sdc1/Sdc4 are not currently " +
-    "structurally actionable, we redirected structure-based screening to Angptl4 itself, and identified " +
-    "Ezetimibe as the candidate most consistently cross-validated by two independent docking algorithms. " +
-    "Future work should pursue (1) direct cell-type localization using single-cell data collected from " +
-    "both liver and heart of the same animals, (2) full-library DiffDock re-screening on a GPU-equipped " +
-    "system, (3) biochemical confirmation of Ezetimibe-ANGPTL4 binding by SPR or ITC, and (4) in vivo " +
-    "assessment of hepatic phenotype following Ezetimibe administration in the HFpEF mouse model.",
+  conclusion: {
+    summary:
+      "By reanalyzing a publicly available paired liver-heart mouse transcriptome dataset under stricter " +
+      "statistical criteria and carrying the analysis through ligand-receptor interactome matching, PPI " +
+      "network construction, network pharmacology, druggability assessment, and structure-based virtual " +
+      "screening, we identified a heart-to-liver Angptl4-Sdc/Cdh5 axis in place of our originally " +
+      "hypothesized liver-to-heart direction - a reversal that in fact corresponds to the clinically " +
+      "established cardiohepatic syndrome. This localization was independently reproduced in both a " +
+      "human liver scRNA-seq atlas and a mouse-native atlas (Tabula Muris), and, recognizing that the " +
+      "network hubs Sdc1/Sdc4 are not currently structurally actionable, we redirected structure-based " +
+      "screening to Angptl4 itself, identifying Pioglitazone and Ezetimibe as the candidates most " +
+      "consistently cross-validated across independent docking algorithms - Pioglitazone in particular " +
+      "supported by three convergent lines of in silico evidence (STITCH annotation, Vina rank, and " +
+      "DiffDock pocket convergence). Because these results remain in silico predictions, we outline " +
+      "below a concrete wet-lab validation pipeline rather than only a generic list of future " +
+      "directions.",
+    planIntro:
+      "The proposed validation pipeline follows a conditioned-media paradigm - stressed/secreting donor " +
+      "cells transferring a secreted factor to a recipient cell type, with pharmacological blockade " +
+      "tested on the recipient side - the same general design used in prior work from the host " +
+      "laboratory modeling hepatocyte and macrophage responses to secreted lipotoxic/apoptotic signals " +
+      "(e.g., conditioned media from apoptotic adipocytes applied to macrophages and AML12 hepatocytes). " +
+      "Adapting that paradigm to the heart-to-liver axis identified here gives the following concrete steps:",
+    steps: [
+      { h: "(1) Cell models", p:
+        "Primary murine cardiac fibroblasts (or an immortalized cardiac fibroblast line) as the Angptl4-" +
+        "secreting donor cell, paired with AML12 mouse hepatocytes and primary murine hepatic stellate " +
+        "cells as the two recipient cell types - chosen to match the cell types to which Sdc1/Sdc4 " +
+        "(hepatocyte) and downstream fibrogenic signaling (hepatic stellate cell) were localized in " +
+        "Sections 3.4-3.5." },
+      { h: "(2) Conditioned-media transfer with pharmacological blockade", p:
+        "Collect conditioned media from cardiac fibroblasts under HFpEF-mimicking stress (e.g., mechanical " +
+        "stretch or metabolic/hypertensive stress analogous to the in vivo 2-hit regimen), confirm elevated " +
+        "secreted Angptl4 by ELISA, then apply the conditioned media to hepatocytes/hepatic stellate cells " +
+        "with or without pre-treatment by each of the two structurally cross-validated candidates " +
+        "(Ezetimibe and Pioglitazone; Section 3.9) across a dose range bracketing their predicted binding " +
+        "affinities. A recombinant ANGPTL4 protein arm should be run in parallel as a simplified positive " +
+        "control before committing to the full conditioned-media design." },
+      { h: "(3) Readout", p:
+        "Harvest whole-cell lysate (not media supernatant) for Western blot, since the mechanistic question " +
+        "concerns intracellular signaling in the recipient cell, not the secreted ligand itself. Probe both " +
+        "total and phosphorylated forms of the relevant downstream pathway (e.g., SMAD2/3 phosphorylation " +
+        "for a TGF-beta-linked fibrogenic readout, or NF-kB/p65 phosphorylation for an inflammatory " +
+        "readout), alongside fibrotic markers (fibronectin, collagen I) as functional endpoints." },
+      { h: "(4) Sample-scale and blotting practicalities", p:
+        "A design of this kind (donor stress condition x recipient cell type x Ezetimibe dose, each with " +
+        "replicates) realistically runs to on the order of 17 samples processed and blotted together. At " +
+        "that scale, uniform secondary-antibody blocking becomes a real practical constraint: using a " +
+        "generous, freshly prepared blocking solution (e.g., on the order of 180 mL of 3% BSA in PBST) " +
+        "for the secondary antibody incubation step helps ensure even blocking and antibody binding across " +
+        "the full membrane, which matters for resolving the small signal changes expected between " +
+        "treatment arms rather than losing them to lane-to-lane or membrane-edge background variation." },
+      { h: "(5) In vivo follow-up", p:
+        "If the in vitro data support direct ANGPTL4-Ezetimibe engagement and downstream signal blockade, " +
+        "the natural next step is to administer Ezetimibe in the same 2-hit HFpEF mouse model used in this " +
+        "study and assess whether hepatic fibrotic/inflammatory markers are attenuated independently of " +
+        "Ezetimibe's canonical cholesterol-lowering effect (e.g., by including a diet/genetic control that " +
+        "isolates the cholesterol-absorption pathway)." },
+    ],
+    closing:
+      "Beyond this specific pipeline, biochemical confirmation of ANGPTL4-Ezetimibe binding by SPR or ITC, " +
+      "and full-library DiffDock re-screening on a GPU-equipped system, remain worthwhile complementary " +
+      "directions.",
+  },
 
   tables: [
     {
@@ -439,7 +527,9 @@ module.exports = {
       { file: "13_vina_results_plot.R", desc: "Render the ranked Vina results as a categorized bar chart." },
       { file: "14_visualize_poses.py / 15_static_pose_figure.py", desc: "Early-stage pose visualization attempts (py3Dmol web-rendering, then a matplotlib-based static fallback) before the PyMOL pipeline below was added." },
       { file: "16_pymol_pose_render.py", desc: "Headless PyMOL (installed via a dedicated Miniconda environment) rendering of the final publication-quality binding-pose figures, run via `pymol -cq`." },
-      { file: "17_stitch_panels.py", desc: "Combine paired single-panel figures (volcano, heatmap, GSEA, docking pose, GO) into single composite Figure images with panel letters (A)/(B), matching standard journal figure layout." },
+      { file: "17_stitch_panels.py", desc: "Combine paired single-panel figures (volcano, heatmap, GSEA, docking pose, GO) into single composite Figure images with panel letters (A)/(B)/(C), matching standard journal figure layout." },
+      { file: "18_fix_liver_heatmap.R", desc: "Regenerate the Liver heatmap alone (reusing the cached DESeq2 object) with a smaller row font and taller canvas so 86 gene labels no longer overlap." },
+      { file: "19_tabula_muris_check.R", desc: "Cross-check Sdc1/Sdc4/Sdc3/Cdh5 hepatocyte/Kupffer/endothelial localization directly in mouse tissue using the public Tabula Muris FACS liver atlas, closing the human-only cross-species gap." },
     ],
     reproNote:
       "Software versions: R 4.5.2 (DESeq2, apeglm, clusterProfiler, fgsea, msigdbr, CellChat, igraph, " +
@@ -447,8 +537,9 @@ module.exports = {
       "py3Dmol); AutoDock Vina 1.2.7; PyMOL (open-source build, installed via a dedicated Miniconda " +
       "environment); Cytoscape 3.10.4 (installed, available for manual use). DiffDock was not installed " +
       "locally (no CUDA-capable GPU on this machine) and was instead run through a publicly hosted " +
-      "Gradio Space mirroring the original gcorso/DiffDock inference code, for the top two Vina " +
-      "candidates only. The full commit history of the repository constitutes a complete, chronological " +
+      "Gradio Space mirroring the original gcorso/DiffDock inference code, for the top Vina candidates " +
+      "only (Resmetirom, Ezetimibe, Pioglitazone). The full commit history of the repository constitutes " +
+      "a complete, chronological " +
       "log of the analysis as it was actually performed, including the initial (liver-to-heart) " +
       "hypothesis, the point at which it was found unsupported, and the subsequent re-direction of the " +
       "target and screening strategy.",
@@ -467,6 +558,8 @@ module.exports = {
         caption: "Figure S2. Liver KEGG pathway enrichment (9 significant pathways, padj<0.05). No KEGG pathway reached significance in LV under the same threshold, which is reported here rather than omitted." },
       { file: "figures/Angptl4axis_liver_localization_by_condition.png",
         caption: "Figure S3. Liver cell-type localization of Angptl4-axis genes, split by disease condition (healthy vs. cirrhotic; project4 GSE136103 cross-species reference). Provided in addition to Figure 5 to show whether localization itself, rather than only expression level, shifts with disease state." },
+      { file: "figures/TabulaMuris_liver_dotplot.png",
+        caption: "Figure S4. Independent mouse-native cross-check of Angptl4-axis gene localization (Tabula Muris, FACS/Smart-seq2 liver atlas, n=714 cells, 5 annotated cell types). Sdc4 (91.8%) and Sdc1 (68.3%) were detected predominantly in hepatocytes, Sdc3 in Kupffer cells (80.3%), and Cdh5 in hepatic sinusoidal endothelial cells (98.4%) - reproducing the human-atlas pattern shown in Figure 5 directly in the same species as the bulk cohort." },
     ],
     tableIntros: {
       S1: "Complete Liver DEG table underlying Figure 1A and the 86-gene count reported in Section 3.1 (all columns from the DESeq2/apeglm output: baseMean, log2FoldChange, lfcSE, pvalue, padj, gene_name).",
@@ -527,29 +620,38 @@ module.exports = {
       "available.",
     ],
     textS2: [
-      "Ezetimibe emerged as the more cross-validated candidate: an orthogonal, box-free method " +
-      "(DiffDock) independently converged on essentially the same surface pocket that Vina was " +
-      "constrained to search, and did so with a better confidence score than Resmetirom. The contact " +
-      "residues at this site (Leu304, Leu312, Gly313, Ala314, Leu322, Ser323, Val324, Trp349, Trp350, " +
-      "Gly352, Thr353, His356) form a real hydrophobic groove consistent with a genuine small-molecule " +
-      "pocket rather than a surface artifact.",
+      "Three Vina hits were cross-checked with DiffDock: Resmetirom and Ezetimibe (the top two by Vina " +
+      "score), plus Pioglitazone, added because it was independently flagged by STITCH as a genuine " +
+      "ANGPTL4 chemical partner (Section 3.6) rather than purely on its Vina rank.",
+      "Pioglitazone and Ezetimibe emerged as the cross-validated candidates: an orthogonal, box-free " +
+      "method (DiffDock) independently converged on essentially the same surface pocket that Vina was " +
+      "constrained to search for both compounds, with Pioglitazone's top pose 3.9 A from the Vina pocket " +
+      "centroid (confidence -1.06, the best of the three) and Ezetimibe's 3.5 A away (confidence -1.32). " +
+      "The two poses share the majority of their contact residues (Leu304, Leu312, Gly313, Ala314, " +
+      "Leu322, Val324, Gly352, Thr353, His356 in common), and Pioglitazone additionally contacts Ala309, " +
+      "Val317, and Lys381. This overlap, from two chemically unrelated scaffolds docked independently, " +
+      "is itself evidence that the site is a real, druggable pocket rather than a coincidental surface " +
+      "depression.",
       "Resmetirom scored best on Vina, which only searched the predefined pocket, but DiffDock's " +
       "unconstrained search preferred a completely different surface region (contact residues Trp280, " +
       "Asp281, Ile367, Leu374, Tyr387, Tyr388, Pro389). We report this as a genuine discrepancy rather " +
       "than smoothing it over: Resmetirom's top Vina score should be read as \"the best-fitting pose " +
       "within the pocket we searched,\" not as strong independent evidence that this is its preferred " +
       "binding site on ANGPTL4.",
-      "Both DiffDock confidence scores (-2.06 for Resmetirom, -1.32 for Ezetimibe) fall within that " +
-      "method's own low-to-moderate confidence range (published benchmarks treat a confidence score " +
-      "above 0 as high-confidence), so neither result should be oversold as a confirmed binder - both " +
-      "remain hypothesis-generating leads from this screen, not validated hits.",
+      "All three DiffDock confidence scores (-2.06 for Resmetirom, -1.32 for Ezetimibe, -1.06 for " +
+      "Pioglitazone) fall within that method's own low-to-moderate confidence range (published " +
+      "benchmarks treat a confidence score above 0 as high-confidence), so none of the three results " +
+      "should be oversold as a confirmed binder - all remain hypothesis-generating leads from this " +
+      "screen, not validated hits. Pioglitazone is nonetheless the most consistently supported of the " +
+      "three across independent lines of in silico evidence (STITCH annotation, Vina rank, and DiffDock " +
+      "pocket convergence).",
       "DiffDock was not run locally: this machine has no CUDA-capable GPU, and a local from-scratch " +
       "install (PyTorch, PyTorch Geometric, e3nn, and the ESM protein language model) would have made " +
       "CPU-only inference impractically slow for even a single complex. Instead, a publicly running " +
       "DiffDock Gradio Space (swcanner/DiffDock-Web, mirroring the original gcorso/DiffDock inference " +
-      "code) was used via its web interface for the two approved top-hit compounds only, consistent with " +
-      "the earlier CPU-budget decision to restrict DiffDock to the final 1-2 candidates rather than the " +
-      "full 21-compound library.",
+      "code) was used via its web interface for the approved top-hit compounds only (Resmetirom, " +
+      "Ezetimibe, Pioglitazone), consistent with the earlier CPU-budget decision to restrict DiffDock to " +
+      "a handful of final candidates rather than the full 21-compound library.",
     ],
   },
 

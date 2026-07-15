@@ -30,14 +30,15 @@ module.exports = {
     "포함하고 있어 구조 기반 도킹에 활용할 수 없었으므로, 구조 기반 스크리닝의 표적을 ANGPTL4의 " +
     "C-말단 fibrinogen-like domain(PDB 6EUB)으로 재조정하였다 — 이는 DGIdb 기준으로 완전히 " +
     "미개발된 표적이며, 2024년 단일세포 연구에서 심장 섬유아세포 특이적 ANGPTL4 분비가 HFpEF에서 " +
-    "확인된 바 있어 독립적으로 뒷받침된다. 21개 화합물(심혈관대사 약물, 내인성 지방산, 무관 대조군)에 " +
-    "대한 AutoDock Vina 스크리닝 결과 Resmetirom(첫 FDA 승인 MASH 치료제)과 Ezetimibe가 각각 " +
-    "1, 2위(-9.07, -8.88 kcal/mol)를 차지하였다. 결합 부위를 사전 지정하지 않는 독립적 방법인 " +
-    "DiffDock 교차검증에서는 Ezetimibe의 최상위 pose만이 Vina가 탐색한 포켓으로부터 3.5Å 이내로 " +
-    "수렴한 반면, Resmetirom의 최상위 pose는 23.5Å 떨어진 다른 부위에 결합하여, Vina 1위가 아닌 " +
-    "Ezetimibe가 더 신뢰할 수 있는 교차검증 후보로 재확인되었다. 본 연구는 엄격하게 재분석된 정직한 " +
-    "귀무(null) 결과가 네트워크 약리학 파이프라인을 임상적으로 의미 있고 검증 가능한 가설로 재조정할 " +
-    "수 있음을 보여준다.",
+    "확인된 바 있어 독립적으로 뒷받침된다. 21개 화합물에 대한 AutoDock Vina 스크리닝 결과 " +
+    "Resmetirom(첫 FDA 승인 MASH 치료제), Ezetimibe, Pioglitazone이 1~3위(-9.07, -8.88, " +
+    "-8.28 kcal/mol)를 차지하였다. 결합 부위를 사전 지정하지 않는 DiffDock으로 이 세 화합물을 " +
+    "교차검증한 결과, Pioglitazone(confidence -1.06, 최고)과 Ezetimibe(-1.32) 모두 Vina " +
+    "포켓으로부터 4Å 이내로 수렴한 반면 Resmetirom은 23.5Å 떨어진 다른 부위에 결합하여, Vina " +
+    "1위가 아닌 두 화합물이 교차검증된 후보로 확인되었다 — 특히 Pioglitazone은 STITCH의 독립적 " +
+    "ANGPTL4 연관성까지 더해 세 갈래의 근거를 갖춘다. 본 연구는 엄격하게 " +
+    "재분석된 정직한 귀무(null) 결과가 네트워크 약리학 파이프라인을 임상적으로 의미 있고 검증 " +
+    "가능한 가설로 재조정할 수 있음을 보여준다.",
 
   keywords: "핵심단어: HFpEF, MASLD, 심장-간 축, ANGPTL4, 네트워크 약리학, 분자 도킹",
 
@@ -142,8 +143,9 @@ module.exports = {
     { h: "2.10 DiffDock 교차검증", p:
       "이 컴퓨터에는 CUDA 지원 GPU가 없어 DiffDock(Corso et al., 2023)의 로컬 설치 및 CPU " +
       "추론은 비현실적이라고 판단하였다. 대신 원 저자 추론 코드(gcorso/DiffDock)를 그대로 구동하는 " +
-      "공개 Gradio 웹 인터페이스(swcanner/DiffDock-Web)를 이용해 Vina 상위 2개 화합물" +
-      "(Resmetirom, Ezetimibe)에 한해서만 교차검증을 수행하였다. DiffDock은 Vina와 달리 결합 " +
+      "공개 Gradio 웹 인터페이스(swcanner/DiffDock-Web)를 이용해 Vina 상위 화합물(Resmetirom, " +
+      "Ezetimibe, 그리고 STITCH에서 이미 독립적으로 실제 ANGPTL4 화학적 파트너로 확인되어 " +
+      "추가한 Pioglitazone)에 한해서만 교차검증을 수행하였다. DiffDock은 Vina와 달리 결합 " +
       "부위를 사전에 지정하지 않는 blind docking 방식이므로, 두 방법이 pose 위치에서 일치하는지 " +
       "여부는 단순한 재순위화가 아니라 독립적인 구조적 검증에 해당한다(복합체당 샘플 수=10, " +
       "seed 미고정)."
@@ -223,7 +225,14 @@ module.exports = {
       "뚜렷하게 국소화되어(Figure 5) 이들이 네트워크 hub라는 순위와 일치하는 결과를 보였다. SDC3는 " +
       "MP(대식세포/Kupffer 계열)에, CDH5는 이 전형적인 내피세포 표지자에 대해 예상대로 " +
       "Endothelia에 국소화되어, 국소화 분석 방법론 자체에 대한 내장 양성대조군 역할을 하였다" +
-      "(질환 상태별로 나눈 동일 분석은 Supplemental Figure S3 참조)." },
+      "(질환 상태별로 나눈 동일 분석은 Supplemental Figure S3 참조). 이 참조 자료가 인간 유래라는 " +
+      "점을 보완하기 위해, 본 연구의 bulk 코호트와 동일한 종(마우스)의 독립적인 간 아틀라스(Tabula " +
+      "Muris, FACS/Smart-seq2, n=714 세포)를 추가로 조회해 국소화를 마우스 자체에서 직접 " +
+      "확인하였다. 이 마우스 자체 검증은 인간에서 관찰된 패턴을 거의 그대로 재현하였다: Sdc4는 " +
+      "간세포의 91.8%에서, Sdc1은 68.3%에서 검출되었고, Sdc3는 Kupffer 세포의 80.3%에서, Cdh5는 " +
+      "간 동양혈관 내피세포의 98.4%에서 검출되었다(Supplemental Figure S4). 네트워크 중심성, 인간 " +
+      "scRNA-seq, 그리고 독립적인 마우스 scRNA-seq 아틀라스가 동일한 세포유형 배정으로 수렴한다는 " +
+      "점은 이 국소화 결과에 대한 신뢰도를 크게 높여준다." },
     { type: "figure", file: "figures/Angptl4axis_liver_localization_dotplot.png",
       caption: "Figure 5. Angptl4 축 유전자의 간 내 세포유형 국소화, 독립적 종간 참조 자료 활용" +
                "(project4, 인간 GSE136103). SDC1/SDC4는 네트워크 hub라는 지위와 일치하게 " +
@@ -268,22 +277,31 @@ module.exports = {
 
     { type: "heading", text: "3.9 DiffDock 교차검증: 선두 후보의 재조정" },
     { type: "p", text:
-      "결합 부위를 사전 지정하지 않는 blind docking을 Vina 상위 2개 화합물에 적용한 결과, 뚜렷한 " +
-      "괴리가 나타났다. Ezetimibe의 최상위 pose(confidence −1.32)는 Vina가 탐색한 포켓 " +
-      "무게중심으로부터 3.5Å 이내에 위치하여, 서로 독립적인 두 방법이 사실상 같은 부위로 " +
-      "수렴하였다(Figure 7A). 반면 Resmetirom의 최상위 pose(confidence −2.06)는 그로부터 " +
-      "23.5Å 떨어진 완전히 다른 표면 영역에 국소화되었다(Figure 7B; 접촉 잔기 상세 정보는 " +
-      "Supplemental Text S2 참조). 두 DiffDock confidence 값 모두 해당 방법의 저–중간 신뢰 " +
-      "구간에 속하므로 확정적 결합으로 과대해석해서는 안 되지만, 엄밀히 비교했을 때 Vina 1위가 " +
-      "아닌 Ezetimibe가 두 개의 독립적인 도킹 알고리즘에 걸쳐 구조적으로 더 일관된 후보로 " +
-      "부상하였다." },
+      "결합 부위를 사전 지정하지 않는 blind docking을 Vina 상위 3개 화합물 — Resmetirom, " +
+      "Ezetimibe, 그리고 STITCH에서 이미 독립적으로 실제 ANGPTL4 화학적 파트너로 확인되어 " +
+      "추가로 포함한 Pioglitazone(3.6절) — 에 적용한 결과, 시사하는 바가 큰 결과가 나타났다. " +
+      "Pioglitazone의 최상위 pose(confidence −1.06, 셋 중 가장 우수)는 Vina 포켓 무게중심으로부터 " +
+      "3.9Å, Ezetimibe의 최상위 pose(confidence −1.32)는 3.5Å 이내에 위치하여 — 화학구조가 " +
+      "서로 무관한 두 화합물이 단백질 전체 표면을 탐색하는 독립적인 방법으로도 사실상 같은 " +
+      "부위로 수렴하였다(Figure 7A, 7B), 두 pose는 접촉 잔기(Leu304, Leu312, Gly313, Ala314, " +
+      "Leu322, Val324, Gly352, Thr353, His356)도 상당 부분 공유하였다. 반면 Resmetirom의 " +
+      "최상위 pose(confidence −2.06)는 그로부터 23.5Å 떨어진 완전히 다른 표면 영역에 " +
+      "국소화되었다(Figure 7C; 세 화합물 모두의 접촉 잔기 상세 정보는 Supplemental Text S2 " +
+      "참조). 세 DiffDock confidence 값 모두 해당 방법의 저–중간 신뢰 구간에 속하므로 확정적 " +
+      "결합으로 과대해석해서는 안 되지만, 엄밀히 비교했을 때 Vina 1위가 아닌 Pioglitazone과 " +
+      "Ezetimibe가 두 개의 독립적인 도킹 알고리즘에 걸쳐 구조적으로 일관된 후보로 부상하였으며, " +
+      "그 중에서도 Pioglitazone은 STITCH 화학적 연관성·Vina 순위·DiffDock 포켓 수렴이라는 " +
+      "세 가지 독립적 근거를 모두 갖춘 유일한 화합물이다." },
     { type: "figure", file: "figures/composite/Figure7_pose_combined.png",
-      caption: "Figure 7. Vina 상위 2개 화합물의 구조 기반 도킹 pose, DiffDock으로 교차검증. " +
-               "(A) Ezetimibe(DiffDock confidence −1.32), Vina 포켓으로부터 3.5Å 이내로 수렴; " +
-               "접촉 잔기 Leu304, Leu312, Gly313, Ala314, Leu322, Ser323, Val324, Trp349, " +
-               "Trp350, Gly352, Thr353, His356. (B) Resmetirom(DiffDock confidence −2.06), " +
-               "Vina 포켓으로부터 23.5Å 떨어진 별개 부위; 접촉 잔기 Trp280, Asp281, Ile367, " +
-               "Leu374, Tyr387, Tyr388, Pro389." },
+      caption: "Figure 7. Vina 상위 3개 화합물의 구조 기반 도킹 pose, DiffDock으로 교차검증. " +
+               "(A) Pioglitazone(DiffDock confidence −1.06, 셋 중 최고), Vina 포켓으로부터 " +
+               "3.9Å 이내로 수렴; 접촉 잔기 Leu304, Ala309, Leu312, Gly313, Ala314, Val317, " +
+               "Leu322, Val324, Gly352, Thr353, His356, Lys381. (B) Ezetimibe(DiffDock " +
+               "confidence −1.32), 같은 포켓으로부터 3.5Å 이내로 수렴; 접촉 잔기 Leu304, " +
+               "Leu312, Gly313, Ala314, Leu322, Ser323, Val324, Trp349, Trp350, Gly352, " +
+               "Thr353, His356. (C) Resmetirom(DiffDock confidence −2.06), Vina 포켓으로부터 " +
+               "23.5Å 떨어진 별개 부위; 접촉 잔기 Trp280, Asp281, Ile367, Leu374, Tyr387, " +
+               "Tyr388, Pro389." },
   ],
 
   discussion: [
@@ -317,27 +335,94 @@ module.exports = {
     "보여주며, 이번 스크리닝에서 Ezetimibe가 더 정당화될 수 있는 가설 생성적 선도물질임을 " +
     "뒷받침한다.",
 
+    "Ezetimibe의 기존 작용기전 — 장 브러시보더막의 콜레스테롤 수송체 NPC1L1 억제, ANGPTL4와는 " +
+    "무관한 것으로 알려진 기전 — 을 이번 결과에 비추어 재해석할 가치가 있다. 만약 예측된 " +
+    "ANGPTL4 결합 pose가 생화학적으로 확인된다면, Ezetimibe는 진정한 이중 기전(dual-action)의 " +
+    "다중 표적 약물 재창출(multi-target drug repurposing) 사례가 된다: 장에서 NPC1L1을 통해 " +
+    "콜레스테롤 흡수를 억제하는 고전적 효과에 더해, 심장에서 유래한 신호(Angptl4)를 간에서 직접 " +
+    "가로채는 지금까지 알려지지 않은 두 번째 작용을 통해, 심장-간 축이 초래하는 하위 대사적 " +
+    "결과만이 아니라 그 발원지 자체를 차단할 가능성이 생긴다. 같은 이중 기전 논리는 " +
+    "Pioglitazone에도 — 어쩌면 더 강하게 — 적용된다: 이미 인슐린 저항성 치료에 쓰이는 PPAR-γ " +
+    "작용제인 Pioglitazone이 STITCH에서 독립적으로 확인된 Angptl4와의 연관성(3.6절)과 " +
+    "Ezetimibe와 같은 포켓으로 수렴하는 DiffDock 결과(3.9절)를 함께 보면, 이 약물의 알려진 " +
+    "대사 개선 효과 중 일부가 핵수용체 매개 작용에 더해 이 심장 유래 신호를 직접 " +
+    "가로채는 것과도 관련이 있을 가능성이 제기된다. 이 둘 모두 도킹 데이터가 생성한 가설로 " +
+    "제시하는 것이지 확립된 약리기전으로 주장하는 것이 아니며, 정확히 5절에서 제안하는 " +
+    "wet-lab 검증 계획이 확인하도록 설계된 바로 그 가능성이다.",
+
     "몇 가지 한계를 명시해야 한다. 첫째, 본 분석은 소규모 표본(군당 n=5)의 단일 마우스 모델에 " +
     "기반하므로 독립적 재현이 필요하다. 둘째, 심장 측 Angptl4 분비원은 본 연구 자체의 단일세포 " +
-    "데이터가 아니라 독립적인 문헌 보고를 통해서만 확인되었으며, syndecan의 간 내 국소화 역시 " +
-    "마우스 단일세포 검증이 아니라 인간 종간 참조 자료에 의존하였다. 셋째, 로컬 GPU의 부재로 " +
-    "DiffDock은 21개 전체 화합물이 아니라 상위 2개 화합물에 한해 공개 웹 인터페이스를 통해서만 " +
-    "수행되었다. 넷째, 본 연구에서 제시된 모든 결합친화도는 in silico 예측치이며, 어떠한 " +
-    "치료적 주장을 하기에 앞서 Western blot, SPR, ITC 등을 통한 생화학적 검증이 필요하다.",
+    "데이터가 아니라 독립적인 문헌 보고를 통해서만 확인되었다. 셋째, 로컬 GPU의 부재로 " +
+    "DiffDock은 21개 전체 화합물이 아니라 Vina 상위 화합물(Resmetirom, Ezetimibe, 그리고 " +
+    "STITCH에서 이미 독립적으로 실제 ANGPTL4 화학적 파트너로 확인되었기에 포함한 " +
+    "Pioglitazone)에 한해 공개 웹 인터페이스를 통해서만 수행되었다. 넷째, 본 연구에서 제시된 " +
+    "모든 결합친화도는 in silico 예측치이며, 어떠한 치료적 주장을 하기에 앞서 Western blot, " +
+    "SPR, ITC 등을 통한 생화학적 검증이 필요하다.",
   ],
 
-  conclusion:
-    "본 연구는 공개된 간-심장 페어드 마우스 전사체 데이터를 더 엄격한 통계 기준으로 재분석하고, " +
-    "리간드-수용체 인터랙톰 매칭, PPI 네트워크 구축, 네트워크 약리학, druggability 평가, 구조 " +
-    "기반 가상 스크리닝까지 분석을 이어감으로써, 당초 가설이었던 간→심장 방향 대신 심장→간 방향의 " +
-    "Angptl4-Sdc/Cdh5 축을 확인하였다 — 이러한 방향 전환은 실제로 임상적으로 확립된 심장-간 " +
-    "증후군 개념에 대응한다. 네트워크 hub인 Sdc1/Sdc4가 현재 구조적으로 액셔너블하지 않다는 점을 " +
-    "인식하고 구조 기반 스크리닝의 표적을 Angptl4 자체로 재조정한 결과, 두 개의 독립적인 도킹 " +
-    "알고리즘 모두에서 가장 일관되게 교차검증된 후보로 Ezetimibe를 확인하였다. 향후 연구에서는 " +
-    "(1) 동일 개체의 간과 심장을 함께 프로파일링한 단일세포 데이터를 이용한 직접적 세포유형 " +
-    "국소화, (2) GPU 환경에서의 전체 라이브러리 DiffDock 재스크리닝, (3) SPR 또는 ITC를 통한 " +
-    "Ezetimibe-ANGPTL4 결합의 생화학적 검증, (4) HFpEF 마우스 모델에서 Ezetimibe 투여 후 간 " +
-    "표현형 변화에 대한 in vivo 평가가 필요하다.",
+  conclusion: {
+    summary:
+      "본 연구는 공개된 간-심장 페어드 마우스 전사체 데이터를 더 엄격한 통계 기준으로 재분석하고, " +
+      "리간드-수용체 인터랙톰 매칭, PPI 네트워크 구축, 네트워크 약리학, druggability 평가, 구조 " +
+      "기반 가상 스크리닝까지 분석을 이어감으로써, 당초 가설이었던 간→심장 방향 대신 심장→간 " +
+      "방향의 Angptl4-Sdc/Cdh5 축을 확인하였다 — 이러한 방향 전환은 실제로 임상적으로 확립된 " +
+      "심장-간 증후군 개념에 대응한다. 이 국소화는 인간 간 scRNA-seq 아틀라스와 마우스 자체 " +
+      "아틀라스(Tabula Muris) 모두에서 독립적으로 재현되었으며, 네트워크 hub인 Sdc1/Sdc4가 현재 " +
+      "구조적으로 액셔너블하지 않다는 점을 인식하고 구조 기반 스크리닝의 표적을 Angptl4 자체로 " +
+      "재조정한 결과, 여러 독립적인 도킹 알고리즘에 걸쳐 가장 일관되게 교차검증된 후보로 " +
+      "Pioglitazone과 Ezetimibe를 확인하였다 — 특히 Pioglitazone은 STITCH 연관성·Vina 순위· " +
+      "DiffDock 포켓 수렴이라는 세 갈래의 수렴하는 in silico 근거를 갖추었다. 이 결과들은 " +
+      "여전히 in silico 예측에 머물러 있으므로, 아래에서는 일반적인 향후 연구 방향 나열 대신 " +
+      "구체적인 wet-lab 검증 파이프라인을 제시한다.",
+    planIntro:
+      "제안하는 검증 파이프라인은 conditioned-media 패러다임을 따른다 — 스트레스를 받은/분비하는 " +
+      "공여세포가 분비인자를 수용세포로 전달하고, 그 수용세포 측에서 약리학적 차단을 테스트하는 " +
+      "방식으로, 본 연구실의 선행 연구에서 지방세포의 apoptosis 유래 분비인자에 대한 대식세포 및 " +
+      "AML12 간세포의 반응을 모델링할 때 사용한 것과 동일한 전반적 설계이다. 이 패러다임을 본 " +
+      "연구에서 발굴한 심장→간 축에 맞게 적용하면 다음과 같은 구체적 단계가 된다:",
+    steps: [
+      { h: "(1) 세포 모델", p:
+        "Angptl4를 분비하는 공여세포로 1차 마우스 심장 섬유아세포(또는 불멸화된 심장 섬유아세포 " +
+        "주)를 사용하고, 수용세포로는 AML12 마우스 간세포주와 1차 마우스 간성상세포(HSC) 두 " +
+        "종류를 짝짓는다 — 이는 3.4~3.5절에서 Sdc1/Sdc4(간세포)와 하위 섬유화 신호전달(간성상세포)이 " +
+        "각각 국소화된 세포유형과 일치하도록 선정한 것이다."
+      },
+      { h: "(2) 약리학적 차단을 동반한 Conditioned-media 전달", p:
+        "HFpEF 유사 스트레스(예: 기계적 신전, 또는 본 연구의 in vivo 2-hit 요법에 준하는 대사·" +
+        "고혈압 스트레스) 조건의 심장 섬유아세포에서 conditioned media를 수집하고, ELISA로 분비된 " +
+        "Angptl4의 상승을 확인한 뒤, 이 conditioned media를 간세포/간성상세포에 구조적으로 " +
+        "교차검증된 두 후보(Ezetimibe와 Pioglitazone; 3.9절) 각각의 전처리 유무 및 예측된 " +
+        "결합친화도를 포괄하는 용량 범위로 나누어 처리한다. 전체 conditioned-media 설계에 " +
+        "들어가기 전, 재조합 ANGPTL4 단백질을 이용한 단순화된 양성대조군 실험을 병행하여 예비 " +
+        "검증하는 것이 바람직하다."
+      },
+      { h: "(3) 검출", p:
+        "배지 상등액이 아니라 세포 전체 파쇄액(whole-cell lysate)을 수확하여 Western blot을 " +
+        "수행한다 — 기전적 질문은 분비 리간드 자체가 아니라 수용세포 내 신호전달에 관한 것이기 " +
+        "때문이다. 관련 하위 경로의 총단백질과 인산화형을 모두 검출한다(예: TGF-β 연관 섬유화 " +
+        "readout을 위한 SMAD2/3 인산화, 혹은 염증 readout을 위한 NF-κB/p65 인산화), 그리고 " +
+        "fibronectin, collagen I 등 섬유화 표지자를 기능적 종점으로 함께 확인한다."
+      },
+      { h: "(4) 샘플 규모 및 블롯팅 실무", p:
+        "이러한 설계(공여세포 스트레스 조건 × 수용세포 유형 × Ezetimibe 용량, 각 반복포함)는 " +
+        "현실적으로 한 번에 처리·블롯팅하는 샘플이 대략 17개 안팎에 이른다. 이 규모에서는 2차 " +
+        "항체의 균일한 블로킹이 실질적인 실험적 제약이 된다 — 2차 항체 반응 단계에서 넉넉한 " +
+        "양(예: 180mL 규모)의 신선하게 준비한 3% BSA in PBST를 사용하면 멤브레인 전체에 걸쳐 " +
+        "균일한 블로킹과 항체 결합을 확보할 수 있으며, 이는 처리군 간에 예상되는 미세한 신호" +
+        "변화를 레인 간·멤브레인 가장자리 배경 잡음에 묻히지 않고 정확히 잡아내는 데 중요하다."
+      },
+      { h: "(5) In vivo 후속 검증", p:
+        "체외 데이터가 ANGPTL4-Ezetimibe의 직접적 결합과 하위 신호 차단을 뒷받침한다면, 자연스러운 " +
+        "다음 단계는 본 연구와 동일한 2-hit HFpEF 마우스 모델에 Ezetimibe를 투여하여, Ezetimibe " +
+        "고유의 콜레스테롤 저하 효과와 독립적으로 간 섬유화·염증 표지자가 개선되는지 평가하는 " +
+        "것이다(예: 콜레스테롤 흡수 경로만을 분리하는 식이/유전적 대조군을 포함하여)."
+      },
+    ],
+    closing:
+      "이 구체적 파이프라인 외에도, SPR 또는 ITC를 통한 ANGPTL4-Ezetimibe 결합의 생화학적 검증과 " +
+      "GPU 환경에서의 전체 라이브러리 DiffDock 재스크리닝은 여전히 가치 있는 보완적 방향으로 " +
+      "남아있다.",
+  },
 
   tables: [
     {
@@ -417,7 +502,9 @@ module.exports = {
       { file: "13_vina_results_plot.R", desc: "순위화된 Vina 결과를 분류별 막대그래프로 시각화." },
       { file: "14_visualize_poses.py / 15_static_pose_figure.py", desc: "아래 PyMOL 파이프라인을 도입하기 전 시도했던 초기 pose 시각화(py3Dmol 웹 렌더링, 이후 matplotlib 기반 정적 대안)." },
       { file: "16_pymol_pose_render.py", desc: "전용 Miniconda 환경으로 설치한 headless PyMOL(`pymol -cq`)로 최종 출판 품질의 결합 pose figure를 렌더링." },
-      { file: "17_stitch_panels.py", desc: "짝을 이루는 단일 패널 figure(volcano, heatmap, GSEA, docking pose, GO)를 표준 저널 figure 레이아웃에 맞게 (A)/(B) 패널 문자와 함께 하나의 합성 Figure 이미지로 결합." },
+      { file: "17_stitch_panels.py", desc: "짝을 이루는 단일 패널 figure(volcano, heatmap, GSEA, docking pose, GO)를 표준 저널 figure 레이아웃에 맞게 (A)/(B)/(C) 패널 문자와 함께 하나의 합성 Figure 이미지로 결합." },
+      { file: "18_fix_liver_heatmap.R", desc: "캐시된 DESeq2 객체를 재사용해 간 heatmap만 다시 생성 — 행 폰트를 줄이고 캔버스를 늘려 86개 유전자 라벨이 더 이상 겹치지 않도록 조정." },
+      { file: "19_tabula_muris_check.R", desc: "공개 Tabula Muris FACS 간 아틀라스로 Sdc1/Sdc4/Sdc3/Cdh5의 간세포/Kupffer/내피세포 국소화를 마우스 조직에서 직접 교차검증 — 인간 전용 종간 참조라는 한계를 보완." },
     ],
     reproNote:
       "소프트웨어 버전: R 4.5.2(DESeq2, apeglm, clusterProfiler, fgsea, msigdbr, CellChat, igraph, " +
@@ -425,7 +512,8 @@ module.exports = {
       "py3Dmol); AutoDock Vina 1.2.7; PyMOL(오픈소스 빌드, 전용 Miniconda 환경으로 설치); " +
       "Cytoscape 3.10.4(설치 완료, 수동 활용 가능). DiffDock은 이 컴퓨터에 CUDA 지원 GPU가 없어 " +
       "로컬에 설치하지 않았으며, 대신 원 저자 코드(gcorso/DiffDock)를 그대로 구동하는 공개 Gradio " +
-      "웹 인터페이스를 통해 Vina 상위 2개 후보에 한해서만 실행하였다. 저장소의 전체 커밋 이력은 " +
+      "웹 인터페이스를 통해 Vina 상위 화합물(Resmetirom, Ezetimibe, Pioglitazone)에 한해서만 " +
+      "실행하였다. 저장소의 전체 커밋 이력은 " +
       "실제로 수행된 분석 과정 — 최초의 (간→심장) 가설, 그것이 데이터로 뒷받침되지 않는다고 확인된 " +
       "시점, 이후 표적과 스크리닝 전략이 재조정된 과정 — 을 시간순으로 완전하게 기록하고 있다.",
   },
@@ -442,6 +530,8 @@ module.exports = {
         caption: "Figure S2. 간 KEGG 경로 농축분석(유의 경로 9개, padj<0.05). 동일 기준에서 LV는 유의한 KEGG 경로가 없었으며, 이를 생략하지 않고 그대로 보고한다." },
       { file: "figures/Angptl4axis_liver_localization_by_condition.png",
         caption: "Figure S3. 질환 상태(건강 vs. 간경변)별로 나눈 Angptl4 축 유전자의 간 세포유형 국소화(project4 GSE136103 종간 참조). Figure 5에 더해, 단순 발현량뿐 아니라 국소화 패턴 자체가 질환 상태에 따라 달라지는지를 보여주기 위해 추가하였다." },
+      { file: "figures/TabulaMuris_liver_dotplot.png",
+        caption: "Figure S4. Angptl4 축 유전자 국소화의 독립적인 마우스 자체 교차검증(Tabula Muris, FACS/Smart-seq2 간 아틀라스, n=714 세포, 5개 주석 세포유형). Sdc4(91.8%)와 Sdc1(68.3%)은 주로 간세포에서, Sdc3(80.3%)는 Kupffer 세포에서, Cdh5(98.4%)는 간 동양혈관 내피세포에서 검출되어 — bulk 코호트와 동일한 종에서 Figure 5의 인간 아틀라스 패턴을 직접 재현하였다." },
     ],
     tableIntros: {
       S1: "Figure 1A 및 3.1절에서 보고한 86개 유전자 수의 근거가 되는 간 DEG 전체 테이블(DESeq2/apeglm 산출 전체 컬럼: baseMean, log2FoldChange, lfcSE, pvalue, padj, gene_name).",
@@ -501,28 +591,36 @@ module.exports = {
       "함유 세포외 도메인 구조가 확보되는 대로 재검토되어야 한다.",
     ],
     textS2: [
-      "Ezetimibe는 더 신뢰할 수 있는 교차검증 후보로 부상하였다: 결합 부위를 사전에 지정하지 " +
-      "않는 독립적 방법(DiffDock)이 Vina가 제한적으로 탐색한 것과 사실상 동일한 표면 포켓으로 " +
-      "독자적으로 수렴하였으며, 그 confidence 점수 역시 Resmetirom보다 더 우수하였다. 이 " +
-      "부위의 접촉 잔기(Leu304, Leu312, Gly313, Ala314, Leu322, Ser323, Val324, Trp349, " +
-      "Trp350, Gly352, Thr353, His356)는 표면의 우연한 산물이 아니라 실제 소분자 포켓과 " +
-      "부합하는 진짜 소수성 홈을 형성한다.",
+      "Vina 상위 화합물 중 세 개 — Vina 순위 1, 2위인 Resmetirom과 Ezetimibe, 그리고 순위와 " +
+      "무관하게 STITCH에서 이미 독립적으로 실제 ANGPTL4 화학적 파트너로 확인되어 추가한 " +
+      "Pioglitazone — 을 DiffDock으로 교차검증하였다.",
+      "Pioglitazone과 Ezetimibe가 교차검증된 후보로 부상하였다: 결합 부위를 사전에 지정하지 " +
+      "않는 독립적 방법(DiffDock)이 두 화합물 모두에 대해 Vina가 제한적으로 탐색한 것과 사실상 " +
+      "동일한 표면 포켓으로 독자적으로 수렴하였다 — Pioglitazone의 최상위 pose는 Vina 포켓 " +
+      "무게중심으로부터 3.9Å(confidence −1.06, 셋 중 최고), Ezetimibe는 3.5Å(confidence " +
+      "−1.32) 떨어져 있었다. 두 pose는 접촉 잔기 대부분(Leu304, Leu312, Gly313, Ala314, " +
+      "Leu322, Val324, Gly352, Thr353, His356)을 공유하였고, Pioglitazone은 추가로 Ala309, " +
+      "Val317, Lys381과도 접촉하였다. 화학구조가 서로 무관한 두 화합물을 독립적으로 도킹했을 " +
+      "때 이러한 중첩이 나타난다는 사실 자체가, 이 부위가 우연한 표면 함몰이 아니라 실제 " +
+      "도킹 가능한 포켓임을 뒷받침하는 근거이다.",
       "Resmetirom은 사전에 정의된 포켓만을 탐색한 Vina에서 최고 점수를 얻었으나, 제약 없이 " +
       "탐색하는 DiffDock은 완전히 다른 표면 영역(접촉 잔기 Trp280, Asp281, Ile367, Leu374, " +
       "Tyr387, Tyr388, Pro389)을 선호하였다. 이를 얼버무리지 않고 진짜 괴리로 보고한다: " +
       "Resmetirom의 Vina 최고 점수는 'ANGPTL4에서 선호하는 결합 부위라는 강력한 독립적 증거'가 " +
       "아니라, '우리가 탐색한 포켓 내에서 가장 잘 맞는 pose'로 해석해야 한다.",
-      "두 DiffDock confidence 값(Resmetirom −2.06, Ezetimibe −1.32) 모두 해당 방법 자체의 " +
-      "저–중간 신뢰 구간에 속한다(공개된 벤치마크는 confidence 점수 0 이상을 고신뢰로 " +
-      "간주한다). 따라서 두 결과 모두 확정적 결합제로 과대 포장해서는 안 되며, 이번 스크리닝의 " +
-      "가설 생성적 선도물질일 뿐 검증된 hit는 아니다.",
+      "세 DiffDock confidence 값(Resmetirom −2.06, Ezetimibe −1.32, Pioglitazone −1.06) " +
+      "모두 해당 방법 자체의 저–중간 신뢰 구간에 속한다(공개된 벤치마크는 confidence 점수 0 " +
+      "이상을 고신뢰로 간주한다). 따라서 세 결과 모두 확정적 결합제로 과대 포장해서는 안 되며, " +
+      "이번 스크리닝의 가설 생성적 선도물질일 뿐 검증된 hit는 아니다. 다만 세 화합물 중 " +
+      "Pioglitazone은 STITCH 연관성·Vina 순위·DiffDock 포켓 수렴이라는 독립적 근거를 " +
+      "가장 일관되게 갖춘 화합물이다.",
       "DiffDock은 로컬에서 구동하지 않았다: 이 컴퓨터에는 CUDA 지원 GPU가 없어, PyTorch, " +
       "PyTorch Geometric, e3nn, ESM 단백질 언어모델을 포함한 로컬 처음부터의 설치는 단 하나의 " +
       "복합체에 대해서도 CPU 전용 추론을 비현실적으로 느리게 만들었을 것이다. 대신 원 저자 " +
       "코드(gcorso/DiffDock)를 그대로 구동하는 공개 DiffDock Gradio Space" +
-      "(swcanner/DiffDock-Web)를 웹 인터페이스를 통해 승인된 상위 2개 화합물에 한해서만 " +
-      "사용하였으며, 이는 DiffDock을 21개 전체 화합물이 아니라 최종 1~2개 후보로 제한한다는 " +
-      "앞서의 CPU 예산 결정과 일치한다.",
+      "(swcanner/DiffDock-Web)를 웹 인터페이스를 통해 승인된 상위 화합물(Resmetirom, " +
+      "Ezetimibe, Pioglitazone)에 한해서만 사용하였으며, 이는 DiffDock을 21개 전체 화합물이 " +
+      "아니라 최종 소수 후보로 제한한다는 앞서의 CPU 예산 결정과 일치한다.",
     ],
   },
 

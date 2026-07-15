@@ -61,5 +61,5 @@ def stitch(pairs, out_name, align="min"):
 stitch([("Liver_volcano.png", "A"), ("LV_volcano.png", "B")], "Figure1_volcano_combined.png")
 stitch([("Liver_heatmap.png", "A"), ("LV_heatmap.png", "B")], "Figure2_heatmap_combined.png", align="max")
 stitch([("Liver_GSEA_hallmark_top20.png", "A"), ("LV_GSEA_hallmark_top20.png", "B")], "Figure3_GSEA_combined.png")
-stitch([("Ezetimibe_binding_pose_pymol.png", "A"), ("Resmetirom_binding_pose_pymol.png", "B")], "Figure7_pose_combined.png")
+stitch([("Pioglitazone_binding_pose_pymol.png", "A"), ("Ezetimibe_binding_pose_pymol.png", "B"), ("Resmetirom_binding_pose_pymol.png", "C")], "Figure7_pose_combined.png")
 stitch([("Liver_GO_BP_dotplot.png", "A"), ("LV_GO_BP_dotplot.png", "B")], "FigureS_GO_combined.png")
