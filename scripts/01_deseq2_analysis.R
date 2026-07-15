@@ -82,9 +82,16 @@ run_deseq2 <- function(organ_label, counts_path) {
     ann <- data.frame(condition = coldata$condition)
     rownames(ann) <- rownames(coldata)
     show_rows <- nrow(mat_z) <= 100
+    n_genes <- nrow(mat_z)
+    # gene labels overlap once there are too many rows for the default font
+    # size to fit in a fixed-height canvas -> shrink fontsize_row and scale
+    # the canvas height per-row so rows never get thinner than the font needs
+    fontsize_row <- if (n_genes > 50) 7 else 10
+    px_per_row <- if (n_genes > 50) 26 else 20
     png(sprintf("figures/%s_heatmap.png", organ_label), width = 1600,
-        height = max(1200, 20 * min(nrow(mat_z), 100)), res = 200)
+        height = max(1200, px_per_row * min(n_genes, 100)), res = 200)
     pheatmap(mat_z, annotation_col = ann, show_rownames = show_rows,
+             fontsize_row = fontsize_row,
              main = sprintf("%s: significant DEGs (z-score)", organ_label))
     dev.off()
   }
