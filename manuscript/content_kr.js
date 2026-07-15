@@ -10,10 +10,20 @@ module.exports = {
     discussion: "4. 고찰 (Discussion)",
     conclusion: "5. 결론 및 향후 연구 방향 (Conclusion and Future Directions)",
     references: "참고문헌 (References)",
+    graphicalAbstract: "Graphical Abstract",
   },
-  title: "다중장기 전사체 통합분석을 통한 Angptl4-Syndecan/Cadherin 축 매개 " +
-         "심장-간 증후군(Cardiohepatic Syndrome) 신규 표적 발굴 및 구조 기반 약물 스크리닝",
+  title: "심장-간 Angptl4-Sdc/Cdh5 축과 심간증후군(Cardiohepatic Syndrome): 표적 재조정 및 " +
+         "Ezetimibe·Pioglitazone의 구조 기반 약물 재창출",
   studentLine: "202251154 이창우",
+
+  graphicalAbstract: {
+    file: "figures/graphical_abstract.png",
+    caption: "Graphical abstract. 간·좌심실 페어드 전사체 분석은 애초 가설과 반대되는 신호 방향을 " +
+             "드러내어 심장→간 방향의 Angptl4-Sdc/Cdh5 축을 확인시켜 주었다. 네트워크 중심성 분석은 " +
+             "Sdc1/Sdc4를 hub로 지목했으나, 세포외 도메인 결정구조가 없어 구조 기반 스크리닝은 " +
+             "ANGPTL4(PDB 6EUB) 자체로 재조정되었고, 그 결과 STITCH·AutoDock Vina·DiffDock 세 " +
+             "방법 모두에서 수렴하는 재창출 후보물질로 Ezetimibe와 Pioglitazone이 도출되었다.",
+  },
 
   abstract:
     "박출률보존 심부전(HFpEF)과 대사이상 관련 지방성 간질환(MASLD)은 심장-간 축(cardio-hepatic " +
@@ -212,11 +222,11 @@ module.exports = {
       "Gpc4, Hspg2, Ext1, Tnc)로 이루어진 모듈에 속해 있었다(Figure 4). 반면 Cdh5는 Angptl4와만 " +
       "연결된 고립 쌍을 형성하여, syndecan 계열이 이 축의 구조적 중심임을 시사하였다(전체 hub " +
       "유전자 순위는 Supplemental Table S6 참조)." },
-    { type: "figure", file: "figures/Angptl4axis_network.png",
+    { type: "figure", file: "figures/Angptl4axis_network_ggraph.png",
       caption: "Figure 4. Angptl4-Sdc/Cdh5 축을 중심으로 한 STRING 단백질-단백질 상호작용 네트워크" +
                "(confidence≥0.7, 첫 번째 상호작용 파트너 최대 15개 추가). 빨간 노드: seed 유전자" +
                "(Angptl4, Cdh5, Sdc1-4); 파란 노드: STRING 상호작용 파트너. 노드 크기는 degree에 " +
-               "비례한다." },
+               "비례하며, 엣지의 굵기와 불투명도는 STRING confidence score에 비례한다." },
 
     { type: "heading", text: "3.5 종간(Cross-species) 세포유형 국소화" },
     { type: "p", text:
@@ -520,8 +530,8 @@ module.exports = {
 
   supplemental: {
     docTitle: "Supplemental Data",
-    docSubtitle: "다중장기 전사체 통합분석을 통한 Angptl4-Syndecan/Cadherin 축 매개 심장-간 증후군 " +
-                 "신규 표적 발굴 및 구조 기반 약물 스크리닝 — Supplemental Figures, Tables, and Text",
+    docSubtitle: "심장-간 Angptl4-Sdc/Cdh5 축과 심간증후군(Cardiohepatic Syndrome): 표적 재조정 및 " +
+                 "Ezetimibe·Pioglitazone의 구조 기반 약물 재창출 — Supplemental Figures, Tables, and Text",
     labels: { figures: "Supplemental Figures", tables: "Supplemental Tables", text: "Supplemental Text", code: "코드 및 분석 워크플로우" },
     figures: [
       { file: "figures/composite/FigureS_GO_combined.png",

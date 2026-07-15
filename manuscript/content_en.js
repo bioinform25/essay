@@ -11,10 +11,20 @@ module.exports = {
     discussion: "4. Discussion",
     conclusion: "5. Conclusion and Future Directions",
     references: "References",
+    graphicalAbstract: "Graphical Abstract",
   },
-  title: "Multi-Organ Transcriptomic Integration Identifies an Angptl4-Syndecan/Cadherin " +
-         "Axis Underlying Cardiohepatic Syndrome and Guides Structure-Based Drug Screening",
+  title: "A Heart-to-Liver Angptl4-Sdc/Cdh5 Axis in Cardiohepatic Syndrome: Target Redirection " +
+         "and Structure-Based Repurposing of Ezetimibe and Pioglitazone",
   studentLine: "202251154 Changwoo Lee",
+
+  graphicalAbstract: {
+    file: "figures/graphical_abstract.png",
+    caption: "Graphical abstract. Paired liver/left-ventricle transcriptomics reversed the hypothesized " +
+             "signaling direction, identifying a heart-to-liver Angptl4-Sdc/Cdh5 axis; network centrality " +
+             "pointed to Sdc1/Sdc4 as hubs, but the absence of extracellular-domain crystal structures " +
+             "redirected structure-based screening to ANGPTL4 itself (PDB 6EUB), yielding Ezetimibe and " +
+             "Pioglitazone as convergent repurposing candidates across STITCH, AutoDock Vina, and DiffDock.",
+  },
 
   abstract:
     "Heart failure with preserved ejection fraction (HFpEF) and metabolic dysfunction-associated " +
@@ -226,10 +236,11 @@ module.exports = {
       "Figure 4). Cdh5, in contrast, formed an isolated pair with Angptl4 only, suggesting that the " +
       "syndecan family constitutes the structural core of this axis (Supplemental Table S6 lists the " +
       "complete hub-gene ranking)." },
-    { type: "figure", file: "figures/Angptl4axis_network.png",
+    { type: "figure", file: "figures/Angptl4axis_network_ggraph.png",
       caption: "Figure 4. STRING protein-protein interaction network centered on the Angptl4-Sdc/Cdh5 " +
                "axis (confidence≥0.7, +15 first-shell interactors). Red nodes: seed genes (Angptl4, Cdh5, " +
-               "Sdc1-4); blue nodes: STRING interactors. Node size scales with degree." },
+               "Sdc1-4); blue nodes: STRING interactors. Node size scales with degree; edge width and " +
+               "opacity scale with STRING confidence score." },
 
     { type: "heading", text: "3.5 Cross-species cell-type localization" },
     { type: "p", text:
@@ -547,8 +558,8 @@ module.exports = {
 
   supplemental: {
     docTitle: "Supplemental Data",
-    docSubtitle: "Multi-Organ Transcriptomic Integration Identifies an Angptl4-Syndecan/Cadherin " +
-                 "Axis Underlying Cardiohepatic Syndrome and Guides Structure-Based Drug Screening " +
+    docSubtitle: "A Heart-to-Liver Angptl4-Sdc/Cdh5 Axis in Cardiohepatic Syndrome: Target Redirection " +
+                 "and Structure-Based Repurposing of Ezetimibe and Pioglitazone " +
                  "— Supplemental Figures, Tables, and Text",
     labels: { figures: "Supplemental Figures", tables: "Supplemental Tables", text: "Supplemental Text", code: "Code and Analysis Workflow" },
     figures: [

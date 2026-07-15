@@ -18,15 +18,19 @@ function bodyPar(text) {
     alignment: AlignmentType.JUSTIFIED,
   });
 }
-function heading1(text) { return new Paragraph({ text, heading: HeadingLevel.HEADING_1, spacing: { before: 300, after: 150 } }); }
-function heading2(text) { return new Paragraph({ text, heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 } }); }
+function heading1(text, opts = {}) { return new Paragraph({ text, heading: HeadingLevel.HEADING_1, spacing: { before: 300, after: 150 }, ...opts }); }
+function heading2(text, opts = {}) { return new Paragraph({ text, heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 }, ...opts }); }
 
-function figureBlock(relFile, captionText) {
+function figureBlock(relFile, captionText, maxHeightPx) {
   const p = path.join(BASE_DIR, relFile);
   const buf = fs.readFileSync(p);
   const dims = require("image-size").imageSize(buf);
-  const w = USABLE_WIDTH_PX;
-  const h = Math.round(dims.height * (w / dims.width));
+  let w = USABLE_WIDTH_PX;
+  let h = Math.round(dims.height * (w / dims.width));
+  if (maxHeightPx && h > maxHeightPx) {
+    h = maxHeightPx;
+    w = Math.round(dims.width * (h / dims.height));
+  }
   return [
     new Paragraph({
       children: [new ImageRun({ data: buf, transformation: { width: w, height: h }, type: "png" })],
@@ -74,10 +78,12 @@ function build(lang) {
   children.push(bodyPar(content.abstract));
   children.push(bodyPar(content.keywords));
 
-  children.push(new Paragraph({ children: [new PageBreak()] }));
+  // --- Graphical Abstract ---
+  children.push(heading2(L.graphicalAbstract, { pageBreakBefore: true }));
+  children.push(...figureBlock(content.graphicalAbstract.file, content.graphicalAbstract.caption, 720));
 
   // --- Introduction ---
-  children.push(heading1(L.introduction));
+  children.push(heading1(L.introduction, { pageBreakBefore: true }));
   content.introduction.forEach((p) => children.push(bodyPar(p)));
 
   // --- Methods ---
@@ -101,10 +107,8 @@ function build(lang) {
     children.push(simpleTable(t.header, t.rows, t.widths));
   });
 
-  children.push(new Paragraph({ children: [new PageBreak()] }));
-
   // --- Discussion ---
-  children.push(heading1(L.discussion));
+  children.push(heading1(L.discussion, { pageBreakBefore: true }));
   content.discussion.forEach((p) => children.push(bodyPar(p)));
 
   // --- Conclusion ---

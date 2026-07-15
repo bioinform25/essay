@@ -12,8 +12,8 @@ const MARGIN_DXA = 1440;
 const USABLE_WIDTH_DXA = A4_WIDTH_DXA - 2 * MARGIN_DXA;
 const USABLE_WIDTH_PX = Math.round(USABLE_WIDTH_DXA / 1440 * 96);
 
-function heading1(text) { return new Paragraph({ text, heading: HeadingLevel.HEADING_1, spacing: { before: 300, after: 150 } }); }
-function heading2(text) { return new Paragraph({ text, heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 } }); }
+function heading1(text, opts = {}) { return new Paragraph({ text, heading: HeadingLevel.HEADING_1, spacing: { before: 300, after: 150 }, ...opts }); }
+function heading2(text, opts = {}) { return new Paragraph({ text, heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 }, ...opts }); }
 function bodyPar(text) {
   return new Paragraph({ children: [new TextRun({ text, size: 20 })], spacing: { after: 150, line: 320 }, alignment: AlignmentType.JUSTIFIED });
 }
@@ -82,16 +82,12 @@ function build(lang) {
   children.push(new Paragraph({ text: "", spacing: { after: 150 } }));
   children.push(bodyPar(content.codeWalkthrough.reproNote));
 
-  children.push(new Paragraph({ children: [new PageBreak()] }));
-
   // --- Supplemental Figures ---
-  children.push(heading1(S.labels.figures));
+  children.push(heading1(S.labels.figures, { pageBreakBefore: true }));
   S.figures.forEach((f) => children.push(...figureBlock(f.file, f.caption)));
 
-  children.push(new Paragraph({ children: [new PageBreak()] }));
-
   // --- Supplemental Tables ---
-  children.push(heading1(S.labels.tables));
+  children.push(heading1(S.labels.tables, { pageBreakBefore: true }));
 
   const tableSpecs = [
     { key: "S1", file: "Liver_DEG_sig_padj01_lfc1.5.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
@@ -106,17 +102,14 @@ function build(lang) {
   ];
 
   tableSpecs.forEach((spec, idx) => {
-    children.push(heading2(S.tableTitles[spec.key]));
+    children.push(heading2(S.tableTitles[spec.key], idx > 0 ? { pageBreakBefore: true } : {}));
     children.push(italicPar(S.tableIntros[spec.key]));
     const csvPath = spec.file.startsWith("..") ? path.join(RESULTS_DIR, spec.file) : path.join(RESULTS_DIR, spec.file);
     children.push(...csvToTable(csvPath, spec.maxCols, spec.widths));
-    if (idx < tableSpecs.length - 1) children.push(new Paragraph({ children: [new PageBreak()] }));
   });
 
-  children.push(new Paragraph({ children: [new PageBreak()] }));
-
   // --- Supplemental Text ---
-  children.push(heading1(S.labels.text));
+  children.push(heading1(S.labels.text, { pageBreakBefore: true }));
   children.push(heading2(S.textTitles.S1));
   S.textS1.forEach((p) => children.push(bodyPar(p)));
 
