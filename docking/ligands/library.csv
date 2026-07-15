@@ -1,0 +1,22 @@
+label,query_name,cid,smiles,mw
+Linoleic_acid,linoleic acid,5280450,CCCCC/C=C\C/C=C\CCCCCCCC(=O)O,280.4
+Palmitic_acid,palmitic acid,985,CCCCCCCCCCCCCCCC(=O)O,256.42
+Eicosapentaenoic_acid,eicosapentaenoic acid,5282847,CC/C=C/C/C=C/C/C=C/C/C=C/C/C=C/CCCC(=O)O,302.5
+Arachidonic_acid,arachidonic acid,444899,CCCCC/C=C\C/C=C\C/C=C\C/C=C\CCCC(=O)O,304.5
+Pioglitazone,pioglitazone,4829,CCC1=CN=C(C=C1)CCOC2=CC=C(C=C2)CC3C(=O)NC(=O)S3,356.4
+Resmetirom,resmetirom,15981237,CC(C)C1=CC(=NNC1=O)OC2=C(C=C(C=C2Cl)N3C(=O)NC(=O)C(=N3)C#N)Cl,435.2
+Fenofibrate,fenofibrate,3339,CC(C)OC(=O)C(C)(C)OC1=CC=C(C=C1)C(=O)C2=CC=C(C=C2)Cl,360.8
+Bezafibrate,bezafibrate,39042,CC(C)(C(=O)O)OC1=CC=C(C=C1)CCNC(=O)C2=CC=C(C=C2)Cl,361.8
+Ezetimibe,ezetimibe,150311,C1=CC(=CC=C1[C@@H]2[C@H](C(=O)N2C3=CC=C(C=C3)F)CC[C@@H](C4=CC=C(C=C4)F)O)O,409.4
+Atorvastatin,atorvastatin,60823,CC(C)C1=C(C(=C(N1CC[C@H](C[C@H](CC(=O)O)O)O)C2=CC=C(C=C2)F)C3=CC=CC=C3)C(=O)NC4=CC=CC=C4,558.6
+Rosiglitazone,rosiglitazone,77999,CN(CCOC1=CC=C(C=C1)CC2C(=O)NC(=O)S2)C3=CC=CC=N3,357.4
+Empagliflozin,empagliflozin,11949646,C1COC[C@H]1OC2=CC=C(C=C2)CC3=C(C=CC(=C3)[C@H]4[C@@H]([C@H]([C@@H]([C@H](O4)CO)O)O)O)Cl,450.9
+Dapagliflozin,dapagliflozin,9887712,CCOC1=CC=C(C=C1)CC2=C(C=CC(=C2)[C@H]3[C@@H]([C@H]([C@@H]([C@H](O3)CO)O)O)O)Cl,408.9
+Obeticholic_acid,obeticholic acid,447715,CC[C@@H]1[C@@H]2C[C@@H](CC[C@@]2([C@H]3CC[C@]4([C@H]([C@@H]3[C@@H]1O)CC[C@@H]4[C@H](C)CCC(=O)O)C)C)O,420.6
+Icosapent_ethyl,icosapent ethyl,9831415,CC/C=C\C/C=C\C/C=C\C/C=C\C/C=C\CCCC(=O)OCC,330.5
+Metformin,metformin,4091,CN(C)C(=N)N=C(N)N,129.16
+Niacin,niacin,938,C1=CC(=CN=C1)C(=O)O,123.11
+Aspirin,aspirin,2244,CC(=O)OC1=CC=CC=C1C(=O)O,180.16
+Ibuprofen,ibuprofen,3672,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O,206.28
+Caffeine,caffeine,2519,CN1C=NC2=C1C(=O)N(C(=O)N2C)C,194.19
+Metoprolol,metoprolol,4171,CC(C)NCC(COC1=CC=C(C=C1)CCOC)O,267.36
