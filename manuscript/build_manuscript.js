@@ -136,12 +136,14 @@ children.push(...figureBlock("Angptl4axis_liver_localization_dotplot.png",
 children.push(...figureBlock("Vina_screening_ranked.png",
   "Figure 6. AutoDock Vina virtual screening of 21 compounds against the ANGPTL4 fibrinogen-like " +
   "domain (PDB 6EUB), ranked by best binding affinity."));
-children.push(...figureBlock("Ezetimibe_binding_pose.png",
+children.push(...figureBlock("Ezetimibe_binding_pose_pymol.png",
   "Figure 7A. Ezetimibe top DiffDock pose (confidence -1.32), converging within 3.5 A of the " +
-  "Vina-defined pocket."));
-children.push(...figureBlock("Resmetirom_binding_pose.png",
+  "Vina-defined pocket. Contact residues (<4.5 A): Leu304, Leu312, Gly313, Ala314, Leu322, " +
+  "Ser323, Val324, Trp349, Trp350, Gly352, Thr353, His356."));
+children.push(...figureBlock("Resmetirom_binding_pose_pymol.png",
   "Figure 7B. Resmetirom top DiffDock pose (confidence -2.06), 23.5 A from the Vina-defined " +
-  "pocket (a distinct site)."));
+  "pocket (a distinct site). Contact residues (<4.5 A): Trp280, Asp281, Ile367, Leu374, Tyr387, " +
+  "Tyr388, Pro389."));
 
 children.push(heading2("Tables"));
 children.push(new Paragraph({ children: [new TextRun({ text: "Table 1. LV-to-liver ligand-receptor matches (CellChatDB).", size: 18, bold: true })], spacing: { before: 150, after: 80 } }));
