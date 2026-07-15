@@ -77,10 +77,23 @@ module.exports = {
     "statistical threshold and to carry the analysis all the way through ligand-receptor interactome " +
     "matching, a STRING-based PPI network, STITCH network pharmacology, DGIdb druggability assessment, " +
     "and, finally, structure-based virtual screening with AutoDock Vina and DiffDock. This effort builds " +
-    "directly on our own prior work profiling human MASLD liver-fibrosis cohorts (GSE135251 and " +
-    "GSE136103), from which several candidate genes - LUM, THY1, THBS2, EDNRB, and CD44/ITGA1/ITGB1 - " +
-    "were previously nominated; the present study extends that program by moving from mouse to a " +
-    "genuinely inter-organ (liver-heart) axis. Contrary to our initial hypothesis, the data pointed not " +
+    "directly on our own prior work profiling human MASLD liver-fibrosis cohorts. The first (GSE135251, " +
+    "Govaere et al.; 216 liver biopsies, early F0-F1 vs. moderate/advanced F2-F4 fibrosis) was reanalyzed " +
+    "by bulk DESeq2 differential expression, a STRING PPI network restricted to hub genes (degree>=3), " +
+    "and a DGIdb druggability screen that excluded already-canonical fibrosis genes (collagens, the core " +
+    "TGF-beta/myofibroblast axis) to surface seven under-explored druggable candidates: CCL21, CXCL8, " +
+    "CCL20, EPCAM, LUM, THY1, and THBS2. The second (GSE136103, Ramachandran et al., 2019, Nature; a " +
+    "human liver cirrhosis single-cell atlas) was built and annotated from scratch (quality control, " +
+    "Harmony batch integration, clustering, and lineage-signature-based cell-type annotation - full " +
+    "pipeline in Methods 2.6) to localize three of those seven genes (LUM, THY1, THBS2) to activated " +
+    "hepatic stellate cells and to characterize their upstream transcription-factor/miRNA regulators and " +
+    "cell-cell communication partners. Full methodological detail for both prior analyses, written so as " +
+    "to stand on their own without reference to internal project labels, is provided in Supplemental " +
+    "Text S3. The present study extends that program by moving from human to mouse and from a single-" +
+    "organ (liver) to a genuinely inter-organ (liver-heart) axis; the GSE136103 atlas is reused here in " +
+    "an entirely different role, as an independent cross-species reference for localizing this study's " +
+    "own candidate genes (Section 3.5), not as a source of the candidate genes themselves. Contrary to " +
+    "our initial hypothesis, the data pointed not " +
     "toward a liver-secreted factor acting on the heart, but toward the reverse - a heart-secreted " +
     "factor acting on the liver - a direction that in fact aligns closely with the clinically " +
     "established entity of congestive hepatopathy/cardiohepatic syndrome. Rather than treating this " +
@@ -129,10 +142,21 @@ module.exports = {
     },
     { h: "2.6 Cell-type localization", p:
       "Because no single-cell data exist from the same experiment as the bulk cohort, cell-type " +
-      "expression of the final candidate genes was assessed using an already-annotated Seurat object from " +
-      "our own prior work (project4, human liver cirrhosis scRNA-seq, GSE136103; Ramachandran et al., " +
-      "2019), used strictly as an independent, cross-species reference rather than pooled into any " +
-      "statistical test."
+      "expression of the final candidate genes was assessed using an independently-annotated human liver " +
+      "scRNA-seq atlas built in our own prior work from the public GSE136103 dataset (Ramachandran et " +
+      "al., 2019; 20 human liver 10x samples, 5 healthy + 5 cirrhotic, CD45+/CD45- sorted fractions). " +
+      "Briefly, the atlas was constructed as follows: reads were quality-filtered per-sample " +
+      "(nFeature_RNA>300, percent.mt<30, following the original paper's Methods), yielding 60,925 cells; " +
+      "samples were merged and batch-corrected across individual 10x runs with Harmony (RunHarmony, " +
+      "converging in 3 iterations); clusters were called with FindClusters (Harmony embedding, dims 1:15, " +
+      "resolution 0.6, yielding 20 clusters, matching the original paper's reported cluster count at the " +
+      "same resolution); and each cluster was assigned to one of 12 cell lineages by scoring it against " +
+      "the original paper's own supplementary lineage-signature gene sets with Seurat's AddModuleScore, " +
+      "taking the highest-scoring lineage per cluster and cross-checking every assignment against a " +
+      "marker-gene dotplot before finalizing it. This atlas is used here strictly as an independent, " +
+      "cross-species reference for localizing this study's own candidate genes, not pooled into any " +
+      "statistical test. The complete construction pipeline, including quality-control figures and the " +
+      "cluster-annotation table, is described in full in Supplemental Text S3."
     },
     { h: "2.7 STITCH network pharmacology and DGIdb druggability", p:
       "Hub genes from the STRING network were queried against STITCH (Szklarczyk et al., 2016) for known " +
@@ -244,7 +268,8 @@ module.exports = {
 
     { type: "heading", text: "3.5 Cross-species cell-type localization" },
     { type: "p", text:
-      "Reusing our previously annotated human liver scRNA-seq atlas (project4, GSE136103) as an " +
+      "Reusing our previously constructed human liver scRNA-seq atlas (GSE136103; atlas construction " +
+      "pipeline in Methods 2.6 and Supplemental Text S3) as an " +
       "independent cross-species reference, SDC1 and SDC4 localized cleanly to hepatocytes (Figure 5), " +
       "consistent with their ranking as the top network hubs. SDC3 localized to MP (macrophage/Kupffer-" +
       "lineage) cells, and CDH5 localized to endothelia, exactly as expected for this canonical " +
@@ -259,7 +284,8 @@ module.exports = {
       "cell-type assignments substantially strengthens confidence in this localization." },
     { type: "figure", file: "figures/Angptl4axis_liver_localization_dotplot.png",
       caption: "Figure 5. Liver cell-type localization of Angptl4-axis genes, using an independent " +
-               "cross-species reference (project4, human GSE136103). SDC1/SDC4 localize to hepatocytes, " +
+               "cross-species reference (human liver cirrhosis scRNA-seq atlas, GSE136103; construction " +
+               "pipeline in Methods 2.6 and Supplemental Text S3). SDC1/SDC4 localize to hepatocytes, " +
                "consistent with their status as network hubs; CDH5 localizes to endothelia as a positive " +
                "control." },
 
@@ -528,7 +554,7 @@ module.exports = {
       { file: "03_ligand_receptor_matching.R", desc: "Match upregulated DEGs (ligand candidates) against CellChatDB.mouse ligand-receptor pairs, receptor side relaxed to baseMean>=10 expression, tested in both liver-to-LV and LV-to-liver directions." },
       { file: "04_string_ppi_network.R", desc: "Query the STRING API for the combined significant gene set to search directly for cross-organ edges (result: zero in the hypothesized direction)." },
       { file: "05_angptl4_axis_network.R / 05b", desc: "Expand the Angptl4/Cdh5/Sdc1-4 seed set with STRING first-shell interactors, compute degree/betweenness centrality with igraph, and render the network figure." },
-      { file: "06_liver_localization_project4.R", desc: "Reload the previously annotated project4 (GSE136103) Seurat object and generate DotPlots of Angptl4-axis genes across annotated liver cell types." },
+      { file: "06_liver_localization_atlas.R", desc: "Reload the previously constructed and annotated GSE136103 Seurat atlas (construction pipeline in Supplemental Text S3) and generate DotPlots of Angptl4-axis genes across annotated liver cell types." },
       { file: "07_stitch_network_pharmacology.R", desc: "Query the STITCH API for chemical partners of each hub gene and resolve PubChem CIDs to compound names." },
       { file: "08_druggability_dgidb.R", desc: "Query the DGIdb 5.0 GraphQL API for existing drug interactions of each hub gene (human ortholog symbols)." },
       { file: "09_build_ligand_library.py", desc: "Resolve canonical SMILES for the 21-compound docking library from PubChem PUG-REST." },
@@ -568,7 +594,7 @@ module.exports = {
       { file: "figures/Liver_KEGG_dotplot.png",
         caption: "Figure S2. Liver KEGG pathway enrichment (9 significant pathways, padj<0.05). No KEGG pathway reached significance in LV under the same threshold, which is reported here rather than omitted." },
       { file: "figures/Angptl4axis_liver_localization_by_condition.png",
-        caption: "Figure S3. Liver cell-type localization of Angptl4-axis genes, split by disease condition (healthy vs. cirrhotic; project4 GSE136103 cross-species reference). Provided in addition to Figure 5 to show whether localization itself, rather than only expression level, shifts with disease state." },
+        caption: "Figure S3. Liver cell-type localization of Angptl4-axis genes, split by disease condition (healthy vs. cirrhotic; GSE136103 cross-species reference atlas, see Methods 2.6 and Supplemental Text S3 for construction). Provided in addition to Figure 5 to show whether localization itself, rather than only expression level, shifts with disease state." },
       { file: "figures/TabulaMuris_liver_dotplot.png",
         caption: "Figure S4. Independent mouse-native cross-check of Angptl4-axis gene localization (Tabula Muris, FACS/Smart-seq2 liver atlas, n=714 cells, 5 annotated cell types). Sdc4 (91.8%) and Sdc1 (68.3%) were detected predominantly in hepatocytes, Sdc3 in Kupffer cells (80.3%), and Cdh5 in hepatic sinusoidal endothelial cells (98.4%) - reproducing the human-atlas pattern shown in Figure 5 directly in the same species as the bulk cohort." },
     ],
@@ -597,6 +623,7 @@ module.exports = {
     textTitles: {
       S1: "Text S1. Final target selection rationale",
       S2: "Text S2. DiffDock cross-check summary",
+      S3: "Text S3. Methodology of the prior human-cohort analyses cited in this study (GSE135251, GSE136103)",
     },
     textS1: [
       "Five candidates arising from the Angptl4-Sdc/Cdh5 axis were evaluated as the final structure-" +
@@ -664,6 +691,80 @@ module.exports = {
       "Ezetimibe, Pioglitazone), consistent with the earlier CPU-budget decision to restrict DiffDock to " +
       "a handful of final candidates rather than the full 21-compound library.",
     ],
+    textS3: [
+      "The Introduction and Methods 2.6 cite two prior human-cohort re-analyses, carried out by the same " +
+      "author as separate, fully version-controlled projects, as the source of (a) the candidate-gene " +
+      "list that motivated this study's broader research program and (b) the human liver scRNA-seq atlas " +
+      "reused in Section 3.5/Figure 5 as an independent cross-species reference. Because those two prior " +
+      "analyses are not otherwise published, this section documents their methodology and results in " +
+      "full, so that this manuscript is self-contained and does not require access to any external " +
+      "project repository to be understood.",
+
+      "Prior analysis 1 - GSE135251 (bulk RNA-seq, 216 human liver biopsies; Govaere et al., 2020): this " +
+      "public MASLD cohort comprises 206 biopsy-confirmed MASLD/NAFLD patients (fibrosis-staged F0-F4) " +
+      "plus 10 healthy controls. The 10 healthy controls were excluded and the 206 MASLD patients were " +
+      "split into an early-fibrosis group (F0-F1, n=85) and a moderate/advanced-fibrosis group (F2-F4, " +
+      "n=121). Differential expression was computed with DESeq2 (Wald test, apeglm log2FC shrinkage; " +
+      "genes pre-filtered to count>=10 in >=20 samples, 64,258 to 17,421 genes tested), identifying 167 " +
+      "significantly upregulated and 5 significantly downregulated genes in advanced versus early " +
+      "fibrosis (padj<0.05). Gene set enrichment (fgsea, ranked by Wald statistic; MSigDB Hallmark and " +
+      "KEGG_MEDICUS) showed advanced fibrosis enriched for EMT, TNFA/NFKB signaling, and angiogenesis, " +
+      "and depleted for fatty-acid metabolism and oxidative phosphorylation; GO/KEGG over-representation " +
+      "analysis (clusterProfiler) returned extracellular-matrix organization, collagen fibril " +
+      "organization, and integrin signaling as the dominant enriched terms. The 172 significant DEGs were " +
+      "submitted to the STRING API (confidence score>=700) and formed a 157-node, 60-edge network " +
+      "resolving into a chemokine/immune-recruitment module (CXCL8, CXCL1, CXCL6, CCL19, CCL20, CCL21) " +
+      "and a collagen/ECM module anchored on COL1A1. The 15 hub genes (degree>=3) were queried against " +
+      "DGIdb and cross-referenced against a hand-curated list of ~26 already-canonical fibrosis genes " +
+      "(collagens, the core TGF-beta/myofibroblast axis); excluding that canonical set left seven " +
+      "druggable, network-central candidates that had not already been deeply studied in this specific " +
+      "cohort: CCL21, CXCL8, CCL20, EPCAM, LUM, THY1, and THBS2. These seven genes, not literally novel " +
+      "in the broader fibrosis literature but data-driven and network-centrality-ranked in this cohort, " +
+      "are the candidate list referenced in the Introduction.",
+
+      "Prior analysis 2 - GSE136103 (single-cell RNA-seq atlas construction and localization; " +
+      "Ramachandran et al., 2019): this public dataset comprises 20 human liver 10x samples (5 healthy + " +
+      "5 cirrhotic patients, CD45+/CD45- sorted fractions; blood and mouse samples in the same GEO series " +
+      "were excluded as not relevant). Cells were quality-filtered per-sample (nFeature_RNA>300, " +
+      "percent.mt<30, following the original paper's Methods), yielding 60,925 cells, then normalized, " +
+      "scaled, PCA'd, and batch-corrected across individual 10x runs with Harmony (RunHarmony, batch = " +
+      "individual sample, converging in 3 iterations; post-integration UMAP confirmed cells mixed by cell " +
+      "type rather than by patient-of-origin). Clusters were called with FindClusters (Harmony embedding, " +
+      "dims 1:15, resolution 0.6), yielding 20 clusters, matching the original paper's reported cluster " +
+      "count at the same resolution. Each cluster was assigned to one of 12 cell lineages (T cell, ILC, " +
+      "MP, B cell, Plasma cell, pDC, Mast cell, Endothelia, Mesenchyme, Hepatocyte, Cholangiocyte, " +
+      "Cycling) by scoring it with Seurat's AddModuleScore against the original paper's own supplementary " +
+      "lineage-signature gene sets and taking the highest-scoring lineage per cluster, with every " +
+      "assignment cross-checked against a marker-gene dotplot before being finalized. This atlas was " +
+      "then used, in the prior analysis, to localize the seven GSE135251-derived candidate genes: LUM, " +
+      "THY1, and THBS2 all localized specifically to the Mesenchyme cluster (hepatic stellate " +
+      "cells/portal fibroblasts) and were each far more expressed in cirrhotic than healthy liver within " +
+      "that same cell type (e.g. THY1, 5.4% to 41.9% of cells expressing); EPCAM localized just as " +
+      "cleanly to Cholangiocytes, consistent with the cirrhosis-associated ductular reaction; CXCL8 and " +
+      "CCL20 did not resolve to one clear producer cell type. A composition-shift test (chi-square plus " +
+      "per-type proportion tests, BH-adjusted) additionally showed Cholangiocyte proportion nearly " +
+      "tripling in cirrhosis (3.2% to 9.1% of cells) and Endothelia more than doubling (8.9% to 19.3%), " +
+      "while Mesenchyme's own proportion slightly decreased (4.6% to 3.0%) even as LUM/THY1/THBS2 " +
+      "expression within that population rose sharply - i.e., the fibrogenic signal reflects activation " +
+      "of existing stellate cells rather than net stellate-cell expansion.",
+
+      "Relationship to the present study: the present manuscript does not reuse the GSE135251 bulk " +
+      "analysis or its LUM/THY1/THBS2/EPCAM findings at all - that analysis is cited only in the " +
+      "Introduction as motivating background for why a network-centrality-and-druggability screening " +
+      "strategy was judged worth extending to a genuinely inter-organ mouse dataset. The GSE136103 atlas " +
+      "described above, however, is directly reused in Section 3.5/Figure 5 and Supplemental Figure S3 - " +
+      "but in an entirely different role: as an independent, cross-species reference for localizing this " +
+      "study's own candidate genes (Sdc1, Sdc2, Sdc3, Sdc4, Cdh5, Angptl4), which are unrelated to the " +
+      "LUM/THY1/THBS2/EPCAM genes the atlas was originally built to localize. The same limitation flagged " +
+      "in that prior work applies here: GSE135251 and GSE136103 are different patient cohorts with no " +
+      "paired samples, and the present study's own mouse cohort is a third, entirely independent dataset " +
+      "- so every cross-reference among the three (bulk-to-atlas, mouse-to-human) is a plausible " +
+      "biological inference drawn across independent datasets, not a directly matched, within-subject " +
+      "validation. All raw data, analysis code, and full result tables for both prior analyses are " +
+      "version-controlled in their own dedicated repositories (referenced generically above rather than " +
+      "by internal project name, consistent with the rest of this manuscript), and are available from " +
+      "the corresponding author on request.",
+    ],
   },
 
   references: [
@@ -683,5 +784,6 @@ module.exports = {
     "Eberhardt J, Santos-Martins D, Tillack AF, Forli S. AutoDock Vina 1.2.0: New Docking Methods, Expanded Force Field, and Python Bindings. J Chem Inf Model. 2021;61(8):3891-3898.",
     "Corso G, Stärk H, Jing B, Barzilay R, Jaakkola T. DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking. International Conference on Learning Representations (ICLR). 2023.",
     "Ramachandran P, Dobie R, Wilson-Kanamori JR, et al. Resolving the fibrotic niche of human liver cirrhosis at single-cell level. Nature. 2019;575(7783):512-518.",
+    "Govaere O, Cockell S, Tiniakos D, et al. Transcriptomic profiling across the nonalcoholic fatty liver disease spectrum reveals gene signatures for steatohepatitis and fibrosis. Sci Transl Med. 2020;12(572):eaba4448.",
   ],
 };

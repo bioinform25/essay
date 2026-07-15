@@ -72,10 +72,22 @@ module.exports = {
     "본 연구는 이 공개 데이터셋을 훨씬 더 엄격한 통계 기준으로 재분석하고, 리간드-수용체 인터랙톰 " +
     "매칭, STRING 기반 PPI 네트워크, STITCH 네트워크 약리학, DGIdb 약물표적성 평가를 거쳐 최종적으로 " +
     "AutoDock Vina 및 DiffDock을 이용한 구조 기반 가상 스크리닝까지 분석을 이어가는 것을 목표로 " +
-    "하였다. 이는 인간 MASLD 간섬유화 코호트(GSE135251, GSE136103)를 분석한 저자 자신의 선행연구 " +
-    "위에 직접 구축된 것으로, 해당 연구에서 이미 LUM, THY1, THBS2, EDNRB, CD44/ITGA1/ITGB1 등 " +
-    "여러 후보 유전자가 제시된 바 있다. 본 연구는 마우스로, 그리고 진정한 다중 장기(간-심장) 축으로 " +
-    "그 프로그램을 확장한다. 그러나 당초 가설과 달리, 데이터는 간이 분비하는 인자가 심장에 작용하는 " +
+    "하였다. 이는 인간 MASLD 간섬유화 코호트를 분석한 저자 자신의 선행연구 위에 직접 구축된 것이다. " +
+    "첫 번째 선행연구(GSE135251, Govaere et al.; 간생검 216례, 초기 섬유화 F0-F1군 vs. 중등도/" +
+    "진행성 섬유화 F2-F4군)는 bulk DESeq2 차등발현분석, hub 유전자(degree≥3) 중심의 STRING PPI " +
+    "네트워크, 그리고 이미 잘 알려진 섬유화 유전자(collagen 계열, 핵심 TGF-β/근섬유아세포 축)를 " +
+    "제외한 DGIdb druggability 스크리닝을 통해 아직 깊이 다루어지지 않은 druggable 후보 7개 " +
+    "(CCL21, CXCL8, CCL20, EPCAM, LUM, THY1, THBS2)를 도출하였다. 두 번째 선행연구(GSE136103, " +
+    "Ramachandran et al., 2019, Nature; 인간 간경변 단일세포 아틀라스)는 품질관리·Harmony 배치 " +
+    "통합·클러스터링·계통(lineage) 시그니처 기반 세포유형 주석의 전체 파이프라인을 처음부터 직접 " +
+    "구축하여(전체 파이프라인은 Methods 2.6 참조), 위 7개 후보 중 3개(LUM, THY1, THBS2)를 활성화된 " +
+    "간성상세포(activated hepatic stellate cell)에 국소화하고 이들의 상위 전사인자/miRNA 조절자 및 " +
+    "세포 간 신호전달 파트너를 규명하였다. 두 선행연구의 전체 방법론은, 내부 프로젝트 명칭을 " +
+    "참조하지 않고도 그 자체로 이해될 수 있도록 Supplemental Text S3에 완전히 기술하였다. 본 " +
+    "연구는 이 프로그램을 인간에서 마우스로, 그리고 단일 장기(간)에서 진정한 다중 장기(간-심장) 축으로 " +
+    "확장한다. 이때 GSE136103 아틀라스는 완전히 다른 역할로 재사용되는데, 즉 위 후보 유전자들을 다시 " +
+    "다루기 위해서가 아니라 본 연구 자체의 후보 유전자를 국소화하기 위한 독립적인 종간(cross-" +
+    "species) 참조 자료로만 사용된다(3.5절). 그러나 당초 가설과 달리, 데이터는 간이 분비하는 인자가 심장에 작용하는 " +
     "방향이 아니라 그 반대 — 심장이 분비하는 인자가 간에 작용하는 방향 — 을 가리켰으며, 이는 " +
     "임상적으로 이미 확립된 울혈성 간병증(congestive hepatopathy)/심장-간 증후군(cardiohepatic " +
     "syndrome) 개념과 정확히 부합하는 것이었다. 본 연구는 이러한 방향 전환을 실망스러운 결과로 " +
@@ -122,9 +134,19 @@ module.exports = {
     },
     { h: "2.6 세포유형 국소화(Cell-type localization)", p:
       "본 bulk 코호트와 동일한 실험에서 얻어진 단일세포 데이터는 존재하지 않으므로, 최종 후보 " +
-      "유전자의 세포유형별 발현은 저자 자신의 선행연구(project4, 인간 간경변 scRNA-seq, GSE136103; " +
-      "Ramachandran et al., 2019)에서 이미 주석된 Seurat 객체를 독립적인 종간(cross-species) " +
-      "참조 자료로만 활용하여 평가하였으며, 어떠한 통계적 검정에도 직접 결합하지 않았다."
+      "유전자의 세포유형별 발현은 저자 자신의 선행연구에서 공개 GSE136103 데이터(Ramachandran et " +
+      "al., 2019)로부터 직접 구축한 독립적으로 주석된 인간 간 scRNA-seq 아틀라스(20개 인간 간 10x " +
+      "표본, 건강 5례 + 간경변 5례, CD45+/CD45- 분리 분획)를 이용해 평가하였다. 아틀라스 구축 과정은 " +
+      "다음과 같다: 원 논문의 Methods를 따라 표본별로 품질관리 필터링(nFeature_RNA>300, " +
+      "percent.mt<30)을 적용해 60,925개 세포를 확보하였고, Harmony(RunHarmony)로 개별 10x 실행 " +
+      "단위 배치보정을 수행(3회 반복만에 수렴)하였으며, FindClusters(Harmony 임베딩, dims 1:15, " +
+      "resolution 0.6)로 20개 클러스터를 도출(동일 resolution에서 원 논문이 보고한 클러스터 수와 " +
+      "일치)하였고, 각 클러스터는 원 논문 자체의 보충 계통(lineage) 시그니처 유전자 집합에 대해 " +
+      "Seurat의 AddModuleScore로 점수화한 뒤 가장 높은 점수의 계통을 부여하고 marker 유전자 " +
+      "dotplot으로 모든 배정을 교차 검증하여 12개 세포 계통으로 최종 확정하였다. 이 아틀라스는 " +
+      "본 연구의 후보 유전자를 국소화하기 위한 독립적인 종간 참조 자료로만 활용하였으며, 어떠한 " +
+      "통계적 검정에도 직접 결합하지 않았다. 품질관리 그림과 클러스터 주석 표를 포함한 전체 구축 " +
+      "파이프라인은 Supplemental Text S3에 완전히 기술하였다."
     },
     { h: "2.7 STITCH 네트워크 약리학 및 DGIdb druggability 평가", p:
       "STRING 네트워크의 hub 유전자에 대해 STITCH(Szklarczyk et al., 2016)로 기존에 알려지거나 " +
@@ -230,8 +252,8 @@ module.exports = {
 
     { type: "heading", text: "3.5 종간(Cross-species) 세포유형 국소화" },
     { type: "p", text:
-      "저자 자신의 선행연구에서 이미 세포유형이 주석된 인간 간 scRNA-seq 아틀라스(project4, " +
-      "GSE136103)를 독립적인 종간 참조 자료로 재사용한 결과, SDC1과 SDC4는 간세포(hepatocyte)에 " +
+      "저자 자신의 선행연구에서 직접 구축한 인간 간 scRNA-seq 아틀라스(GSE136103; 구축 파이프라인은 " +
+      "Methods 2.6 및 Supplemental Text S3 참조)를 독립적인 종간 참조 자료로 재사용한 결과, SDC1과 SDC4는 간세포(hepatocyte)에 " +
       "뚜렷하게 국소화되어(Figure 5) 이들이 네트워크 hub라는 순위와 일치하는 결과를 보였다. SDC3는 " +
       "MP(대식세포/Kupffer 계열)에, CDH5는 이 전형적인 내피세포 표지자에 대해 예상대로 " +
       "Endothelia에 국소화되어, 국소화 분석 방법론 자체에 대한 내장 양성대조군 역할을 하였다" +
@@ -245,7 +267,8 @@ module.exports = {
       "점은 이 국소화 결과에 대한 신뢰도를 크게 높여준다." },
     { type: "figure", file: "figures/Angptl4axis_liver_localization_dotplot.png",
       caption: "Figure 5. Angptl4 축 유전자의 간 내 세포유형 국소화, 독립적 종간 참조 자료 활용" +
-               "(project4, 인간 GSE136103). SDC1/SDC4는 네트워크 hub라는 지위와 일치하게 " +
+               "(인간 간경변 scRNA-seq 아틀라스, GSE136103; 구축 파이프라인은 Methods 2.6 및 " +
+               "Supplemental Text S3 참조). SDC1/SDC4는 네트워크 hub라는 지위와 일치하게 " +
                "간세포에 국소화되며, CDH5는 양성대조군으로서 Endothelia에 국소화된다." },
 
     { type: "heading", text: "3.6 STITCH 네트워크 약리학" },
@@ -502,7 +525,7 @@ module.exports = {
       { file: "03_ligand_receptor_matching.R", desc: "상향 DEG(후보 리간드)를 CellChatDB.mouse 리간드-수용체 쌍과 매칭. 수용체 측 기준은 baseMean≥10 발현으로 완화하였으며, 간→LV·LV→간 양방향 모두 검증." },
       { file: "04_string_ppi_network.R", desc: "유의 유전자 전체 집합을 STRING API로 조회해 교차-장기 엣지를 직접 탐색(결과: 가설 방향에서 0건)." },
       { file: "05_angptl4_axis_network.R / 05b", desc: "Angptl4/Cdh5/Sdc1-4 seed 세트를 STRING 첫 번째 상호작용 파트너로 확장하고, igraph로 degree/betweenness centrality를 계산해 네트워크 그림을 생성." },
-      { file: "06_liver_localization_project4.R", desc: "이미 주석된 project4(GSE136103) Seurat 객체를 다시 불러와 Angptl4 축 유전자의 간 세포유형별 DotPlot을 생성." },
+      { file: "06_liver_localization_atlas.R", desc: "이미 구축·주석된 GSE136103 Seurat 아틀라스(구축 파이프라인은 Supplemental Text S3 참조)를 다시 불러와 Angptl4 축 유전자의 간 세포유형별 DotPlot을 생성." },
       { file: "07_stitch_network_pharmacology.R", desc: "각 hub 유전자의 화학적 파트너를 STITCH API로 조회하고 PubChem CID를 화합물명으로 변환." },
       { file: "08_druggability_dgidb.R", desc: "각 hub 유전자(인간 오소로그 심볼)의 기존 약물 상호작용을 DGIdb 5.0 GraphQL API로 조회." },
       { file: "09_build_ligand_library.py", desc: "21개 화합물 도킹 라이브러리의 정규 SMILES를 PubChem PUG-REST로 확보." },
@@ -539,7 +562,7 @@ module.exports = {
       { file: "figures/Liver_KEGG_dotplot.png",
         caption: "Figure S2. 간 KEGG 경로 농축분석(유의 경로 9개, padj<0.05). 동일 기준에서 LV는 유의한 KEGG 경로가 없었으며, 이를 생략하지 않고 그대로 보고한다." },
       { file: "figures/Angptl4axis_liver_localization_by_condition.png",
-        caption: "Figure S3. 질환 상태(건강 vs. 간경변)별로 나눈 Angptl4 축 유전자의 간 세포유형 국소화(project4 GSE136103 종간 참조). Figure 5에 더해, 단순 발현량뿐 아니라 국소화 패턴 자체가 질환 상태에 따라 달라지는지를 보여주기 위해 추가하였다." },
+        caption: "Figure S3. 질환 상태(건강 vs. 간경변)별로 나눈 Angptl4 축 유전자의 간 세포유형 국소화(GSE136103 종간 참조 아틀라스; 구축 과정은 Methods 2.6 및 Supplemental Text S3 참조). Figure 5에 더해, 단순 발현량뿐 아니라 국소화 패턴 자체가 질환 상태에 따라 달라지는지를 보여주기 위해 추가하였다." },
       { file: "figures/TabulaMuris_liver_dotplot.png",
         caption: "Figure S4. Angptl4 축 유전자 국소화의 독립적인 마우스 자체 교차검증(Tabula Muris, FACS/Smart-seq2 간 아틀라스, n=714 세포, 5개 주석 세포유형). Sdc4(91.8%)와 Sdc1(68.3%)은 주로 간세포에서, Sdc3(80.3%)는 Kupffer 세포에서, Cdh5(98.4%)는 간 동양혈관 내피세포에서 검출되어 — bulk 코호트와 동일한 종에서 Figure 5의 인간 아틀라스 패턴을 직접 재현하였다." },
     ],
@@ -568,6 +591,7 @@ module.exports = {
     textTitles: {
       S1: "Text S1. 최종 표적 선정 근거",
       S2: "Text S2. DiffDock 교차검증 요약",
+      S3: "Text S3. 본 연구에서 인용한 선행 인간 코호트 분석(GSE135251, GSE136103)의 방법론",
     },
     textS1: [
       "Angptl4-Sdc/Cdh5 축에서 나온 다섯 개 후보 — Angptl4 자체와 그 큐레이션된 수용체 Sdc1, " +
@@ -632,6 +656,73 @@ module.exports = {
       "Ezetimibe, Pioglitazone)에 한해서만 사용하였으며, 이는 DiffDock을 21개 전체 화합물이 " +
       "아니라 최종 소수 후보로 제한한다는 앞서의 CPU 예산 결정과 일치한다.",
     ],
+    textS3: [
+      "서론과 Methods 2.6에서는 같은 저자가 별도의, 완전히 버전관리된 프로젝트로 수행한 두 건의 " +
+      "선행 인간 코호트 재분석을 인용한다 — (a) 본 연구의 더 넓은 연구 프로그램을 촉발한 후보 " +
+      "유전자 목록의 출처, 그리고 (b) 3.5절/Figure 5에서 독립적인 종간 참조 자료로 재사용된 인간 " +
+      "간 scRNA-seq 아틀라스이다. 이 두 선행 분석은 별도로 출판되어 있지 않으므로, 본 절에서는 " +
+      "외부 프로젝트 저장소에 대한 접근 없이도 본 원고만으로 완전히 이해될 수 있도록 그 방법론과 " +
+      "결과를 빠짐없이 기술한다.",
+
+      "선행분석 1 — GSE135251(bulk RNA-seq, 인간 간생검 216례; Govaere et al., 2020): 이 공개 " +
+      "MASLD 코호트는 생검으로 확진된 MASLD/NAFLD 환자 206명(섬유화 병기 F0-F4)과 건강대조군 " +
+      "10명으로 구성된다. 건강대조군 10명은 제외하고, 206명의 MASLD 환자를 초기 섬유화군(F0-F1, " +
+      "n=85)과 중등도/진행성 섬유화군(F2-F4, n=121)으로 나누었다. 차등발현은 DESeq2(Wald test, " +
+      "apeglm log2FC 축소; count≥10인 유전자를 ≥20개 표본에서 사전 필터링, 64,258개에서 " +
+      "17,421개 유전자로 검정 대상 축소)로 계산하였으며, 진행성 대 초기 섬유화에서 유의하게 " +
+      "상향된 유전자 167개, 하향된 유전자 5개를 확인하였다(padj<0.05). 유전자 집합 농축분석" +
+      "(fgsea, Wald 통계량으로 순위화; MSigDB Hallmark 및 KEGG_MEDICUS)은 진행성 섬유화에서 " +
+      "EMT, TNFA/NFKB 신호전달, 혈관신생이 농축되고 지방산대사·산화적인산화가 결핍됨을 보였고, " +
+      "GO/KEGG 과대표현분석(clusterProfiler)은 세포외기질 조직화, 콜라겐 원섬유 조직화, 인테그린 " +
+      "신호전달을 주요 농축 용어로 반환하였다. 유의 DEG 172개를 STRING API(confidence " +
+      "score≥700)에 조회하여 157개 노드, 60개 엣지의 네트워크를 구성하였으며, 이는 케모카인/면역 " +
+      "동원 모듈(CXCL8, CXCL1, CXCL6, CCL19, CCL20, CCL21)과 COL1A1을 중심으로 한 콜라겐/ECM " +
+      "모듈로 나뉘었다. hub 유전자 15개(degree≥3)를 DGIdb에 조회하고, 이미 잘 알려진 섬유화 " +
+      "유전자 약 26개(collagen 계열, 핵심 TGF-β/근섬유아세포 축)의 수기 큐레이션 목록과 " +
+      "대조하여 이 목록을 제외한 결과, 이 특정 코호트에서 아직 깊이 다루어지지 않은 druggable, " +
+      "네트워크 중심적 후보 7개가 남았다: CCL21, CXCL8, CCL20, EPCAM, LUM, THY1, THBS2. 이 7개 " +
+      "유전자는 넓은 섬유화 문헌에서 문자 그대로 신규는 아니지만, 이 코호트에서 데이터 기반·" +
+      "네트워크 중심성 순위로 도출된 후보로서 서론에서 언급한 후보 목록이다.",
+
+      "선행분석 2 — GSE136103(단일세포 RNA-seq 아틀라스 구축 및 국소화; Ramachandran et al., " +
+      "2019): 이 공개 데이터셋은 인간 간 10x 표본 20개(건강 5례 + 간경변 5례, CD45+/CD45- 분리 " +
+      "분획; 동일 GEO series의 혈액 및 마우스 표본은 본 질문과 무관하여 제외)로 구성된다. 원 " +
+      "논문의 Methods를 따라 표본별로 세포를 품질관리 필터링(nFeature_RNA>300, percent.mt<30)해 " +
+      "60,925개 세포를 확보한 뒤, 정규화·스케일링·PCA를 거쳐 Harmony(RunHarmony, batch=개별 " +
+      "표본, 3회 반복만에 수렴; 통합 후 UMAP에서 세포가 환자 출처가 아니라 세포유형별로 잘 " +
+      "혼합됨을 확인)로 개별 10x 실행 단위 배치보정을 수행하였다. FindClusters(Harmony 임베딩, " +
+      "dims 1:15, resolution 0.6)로 20개 클러스터를 도출하였으며, 이는 동일 resolution에서 원 " +
+      "논문이 보고한 클러스터 수와 일치한다. 각 클러스터는 원 논문 자체의 보충 계통(lineage) " +
+      "시그니처 유전자 집합에 대해 Seurat의 AddModuleScore로 점수화하고 가장 높은 점수의 계통을 " +
+      "부여하는 방식으로 12개 세포 계통(T cell, ILC, MP, B cell, Plasma cell, pDC, Mast cell, " +
+      "Endothelia, Mesenchyme, Hepatocyte, Cholangiocyte, Cycling) 중 하나로 배정되었으며, 모든 " +
+      "배정은 marker 유전자 dotplot으로 최종 확정 전 교차 검증되었다. 이 아틀라스는 선행연구에서 " +
+      "GSE135251에서 도출된 7개 후보 유전자를 국소화하는 데 사용되었다: LUM, THY1, THBS2는 모두 " +
+      "Mesenchyme 클러스터(간성상세포/문맥 섬유아세포)에 특이적으로 국소화되었고 건강 대비 " +
+      "간경변에서 동일 세포유형 내 발현이 훨씬 높았다(예: THY1은 발현 세포 비율이 5.4%에서 " +
+      "41.9%로 증가). EPCAM은 Cholangiocyte에 그만큼 명확하게 국소화되어 간경변 관련 담관반응" +
+      "(ductular reaction)과 일치하였고, CXCL8과 CCL20은 하나의 뚜렷한 생산 세포유형으로 " +
+      "수렴하지 않았다. 구성비 변화 검정(카이제곱 및 유형별 비율 검정, BH 보정)은 추가로 " +
+      "Cholangiocyte 비율이 간경변에서 거의 3배(3.2%에서 9.1%)로, Endothelia는 2배 이상(8.9%에서 " +
+      "19.3%)으로 증가한 반면, Mesenchyme 자체 비율은 LUM/THY1/THBS2 발현이 급격히 증가하는 " +
+      "가운데서도 오히려 소폭 감소(4.6%에서 3.0%)함을 보였다 — 즉 섬유화 신호는 성상세포의 순 " +
+      "증식이 아니라 기존 성상세포의 활성화를 반영한다.",
+
+      "본 연구와의 관계: 본 원고는 GSE135251 bulk 분석이나 그 LUM/THY1/THBS2/EPCAM 결과를 " +
+      "전혀 재사용하지 않는다 — 해당 분석은 서론에서 네트워크 중심성·druggability 기반 " +
+      "스크리닝 전략을 진정한 다중 장기 마우스 데이터셋으로 확장할 가치가 있다고 판단한 배경으로만 " +
+      "인용된다. 반면 위에서 기술한 GSE136103 아틀라스는 3.5절/Figure 5 및 Supplemental Figure " +
+      "S3에서 직접 재사용되지만, 완전히 다른 역할로 사용된다 — 즉 아틀라스가 원래 국소화하도록 " +
+      "구축되었던 LUM/THY1/THBS2/EPCAM 유전자와는 무관한, 본 연구 자체의 후보 유전자(Sdc1, " +
+      "Sdc2, Sdc3, Sdc4, Cdh5, Angptl4)를 국소화하기 위한 독립적인 종간 참조 자료로만 사용된다. " +
+      "선행연구에서 밝힌 것과 동일한 한계가 여기에도 적용된다: GSE135251과 GSE136103은 짝지어진 " +
+      "표본이 없는 서로 다른 환자 코호트이며, 본 연구 자체의 마우스 코호트는 이와 완전히 " +
+      "독립적인 세 번째 데이터셋이다 — 따라서 세 데이터셋 간의 모든 교차 참조(bulk-아틀라스 간, " +
+      "마우스-인간 간)는 개체 내에서 직접 매칭된 검증이 아니라, 독립적인 데이터셋들에 걸쳐 도출한 " +
+      "타당한 생물학적 추론이다. 두 선행 분석의 원본 데이터, 분석 코드, 전체 결과표는 모두 " +
+      "각자의 전용 저장소에 버전관리되어 있으며(본 원고의 다른 부분과 일관되게 내부 프로젝트 " +
+      "명칭이 아니라 일반적으로 지칭하였다), 교신저자에게 요청 시 열람 가능하다.",
+    ],
   },
 
   references: [
@@ -651,5 +742,6 @@ module.exports = {
     "Eberhardt J, Santos-Martins D, Tillack AF, Forli S. AutoDock Vina 1.2.0: New Docking Methods, Expanded Force Field, and Python Bindings. J Chem Inf Model. 2021;61(8):3891-3898.",
     "Corso G, Stärk H, Jing B, Barzilay R, Jaakkola T. DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking. International Conference on Learning Representations (ICLR). 2023.",
     "Ramachandran P, Dobie R, Wilson-Kanamori JR, et al. Resolving the fibrotic niche of human liver cirrhosis at single-cell level. Nature. 2019;575(7783):512-518.",
+    "Govaere O, Cockell S, Tiniakos D, et al. Transcriptomic profiling across the nonalcoholic fatty liver disease spectrum reveals gene signatures for steatohepatitis and fibrosis. Sci Transl Med. 2020;12(572):eaba4448.",
   ],
 };

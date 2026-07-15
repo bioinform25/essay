@@ -116,6 +116,9 @@ function build(lang) {
   children.push(heading2(S.textTitles.S2));
   S.textS2.forEach((p) => children.push(bodyPar(p)));
 
+  children.push(heading2(S.textTitles.S3, { pageBreakBefore: true }));
+  S.textS3.forEach((p) => children.push(bodyPar(p)));
+
   const doc = new Document({
     sections: [{
       properties: {
