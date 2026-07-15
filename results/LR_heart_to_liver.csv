@@ -1,0 +1,6 @@
+"interaction_name","ligand","receptor","pathway_name","annotation","evidence","receptor_also_DEG"
+"ANGPTL4_CDH5","Angptl4","Cdh5","ANGPTL","Secreted Signaling","PMID: 30049845",FALSE
+"ANGPTL4_SDC1","Angptl4","Sdc1","ANGPTL","Secreted Signaling","PMID: 29017031",FALSE
+"ANGPTL4_SDC2","Angptl4","Sdc2","ANGPTL","Secreted Signaling","PMID: 29017031",FALSE
+"ANGPTL4_SDC3","Angptl4","Sdc3","ANGPTL","Secreted Signaling","PMID: 29017031",FALSE
+"ANGPTL4_SDC4","Angptl4","Sdc4","ANGPTL","Secreted Signaling","PMID: 29017031",FALSE
