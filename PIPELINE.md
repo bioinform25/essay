@@ -92,3 +92,25 @@ HFpEF를 유발"이라는 방향의 반대편 축을 다루게 된다. 간→심
 Results/Limitations에 정직하게 함께 보고한다 (숨기지 않음).
 
 **진행 상태:** Phase 2 계속 (Angptl4-Sdc/Cdh5 축 중심 네트워크 확장 + STITCH + 세포유형 localization)
+
+## 9. 중간 업데이트 (2026-07-15, 계속) — Phase 2~4 완료
+
+- **Phase 2 완료**: STRING 확장 네트워크에서 Sdc1(degree 16)/Sdc4(degree 14)가 진짜 hub로 확인.
+  Cdh5는 Angptl4와만 연결된 고립 쌍. project4의 인간 GSE136103 재사용 localization: SDC1/SDC4
+  → Hepatocyte(허브 순위와 일치), SDC3 → MP/Kupffer, CDH5 → Endothelia(positive control).
+  STITCH: Angptl4는 지방산/PPAR 경로 대사물 + Pioglitazone(승인 약물)과 연관: Sdc1-4/Cdh5는
+  기존 approved drug 연관성 거의 없음(좋은 신호).
+- **Phase 3 완료**: DGIdb 결과, network hub인 Sdc1/Sdc4는 PDB 구조가 세포질 PDZ-결합 꼬리
+  부분만 존재해 세포외 리간드 결합면 도킹에 쓸 수 없음 확인. 최종 target을 **ANGPTL4의
+  C-말단 fibrinogen-like domain(PDB 6EUB, 2.3Å)**으로 재조정 — DGIdb 0건(완전 미개발
+  타겟), 실제 결정구조 존재, 우리 DEG 분석 + 독립적 2024 단일세포 논문(심장 섬유아세포
+  분비 확인)으로 이중 검증됨. 상세 근거는 `results/target_selection_rationale.md`.
+- **Phase 4 완료**: AutoDock Vina(21개 화합물, 심혈관대사 약물+지방산+대조군)로 1차
+  스크리닝 → 1위 Resmetirom(-9.07 kcal/mol, 사용자가 "학술제 준비" 문서에서 직접 언급한
+  바로 그 2024 FDA 승인 MASH 신약), 2위 Ezetimibe(-8.88). DiffDock(공개 웹 인터페이스,
+  로컬 GPU 부재로 인한 대안) 교차검증 결과 **Ezetimibe만 Vina 포켓과 3.5Å 이내로 수렴**
+  (독립적인 blind docking 방법으로 같은 자리 확인), Resmetirom은 완전히 다른 부위(23.5Å)에
+  결합 — Ezetimibe가 더 신뢰할 수 있는 최종 후보로 재확인됨. 상세 내용은
+  `results/diffdock_crosscheck_summary.md`.
+
+**다음 단계:** 논문 본문 + supplemental data docx 작성 (모든 figure 캡션 잘림 여부 확인 포함)
