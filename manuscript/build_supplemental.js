@@ -6,8 +6,7 @@ const {
   ImageRun, Table, TableRow, TableCell, WidthType, PageBreak,
 } = require("docx");
 
-const RESULTS_DIR = path.join(__dirname, "..", "results");
-const FIG_DIR = path.join(__dirname, "..", "figures");
+const BASE_DIR = path.join(__dirname, "..");
 const A4_WIDTH_DXA = 11906;
 const MARGIN_DXA = 1440;
 const USABLE_WIDTH_DXA = A4_WIDTH_DXA - 2 * MARGIN_DXA;
@@ -18,9 +17,12 @@ function heading2(text) { return new Paragraph({ text, heading: HeadingLevel.HEA
 function bodyPar(text) {
   return new Paragraph({ children: [new TextRun({ text, size: 20 })], spacing: { after: 150, line: 320 }, alignment: AlignmentType.JUSTIFIED });
 }
+function italicPar(text) {
+  return new Paragraph({ children: [new TextRun({ text, size: 19, italics: true })], spacing: { after: 150, line: 300 } });
+}
 
-function figureBlock(filename, captionText) {
-  const p = path.join(FIG_DIR, filename);
+function figureBlock(relFile, captionText) {
+  const p = path.join(BASE_DIR, relFile);
   const buf = fs.readFileSync(p);
   const dims = require("image-size").imageSize(buf);
   const w = USABLE_WIDTH_PX;
@@ -52,104 +54,92 @@ function csvToTable(csvPath, maxCols, colWidthsDxa) {
   })];
 }
 
-const children = [];
+function build(lang) {
+  const content = require(`./content_${lang}.js`);
+  const S = content.supplemental;
+  const RESULTS_DIR = path.join(BASE_DIR, "results");
+  const children = [];
 
-children.push(new Paragraph({
-  children: [new TextRun({ text: "Supplemental Data", bold: true, size: 32 })],
-  alignment: AlignmentType.CENTER, spacing: { after: 100 },
-}));
-children.push(new Paragraph({
-  children: [new TextRun({
-    text: "다중장기 전사체 통합분석을 통한 Angptl4-Syndecan/Cadherin 축 매개 심장-간 증후군 " +
-          "신규 표적 발굴 및 구조 기반 약물 스크리닝 — Supplemental Figures and Tables",
-    size: 20, italics: true,
-  })],
-  alignment: AlignmentType.CENTER, spacing: { after: 400 },
-}));
+  children.push(new Paragraph({ children: [new TextRun({ text: S.docTitle, bold: true, size: 32 })], alignment: AlignmentType.CENTER, spacing: { after: 100 } }));
+  children.push(new Paragraph({ children: [new TextRun({ text: S.docSubtitle, size: 20, italics: true })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }));
 
-// --- Supplemental Figures ---
-children.push(heading1("Supplemental Figures"));
+  // --- Code and Analysis Workflow (new) ---
+  children.push(heading1(S.labels.code));
+  children.push(bodyPar(content.codeWalkthrough.intro));
+  const cw = content.codeWalkthrough.items;
+  const mkCell = (text, bold) => new TableCell({
+    children: [new Paragraph({ children: [new TextRun({ text, size: 17, bold: !!bold })] })],
+    margins: { top: 60, bottom: 60, left: 80, right: 80 },
+  });
+  children.push(new Table({
+    width: { size: USABLE_WIDTH_DXA, type: WidthType.DXA },
+    columnWidths: [2800, 6226],
+    rows: [
+      new TableRow({ children: [mkCell("Script", true), mkCell(lang === "kr" ? "설명" : "Description", true)] }),
+      ...cw.map((it) => new TableRow({ children: [mkCell(it.file), mkCell(it.desc)] })),
+    ],
+  }));
+  children.push(new Paragraph({ text: "", spacing: { after: 150 } }));
+  children.push(bodyPar(content.codeWalkthrough.reproNote));
 
-children.push(...figureBlock("Liver_GO_BP_dotplot.png", "Figure S1. Liver GO Biological Process enrichment (34 significant terms, padj<0.05)."));
-children.push(...figureBlock("LV_GO_BP_dotplot.png", "Figure S2. LV GO Biological Process enrichment (10 significant terms, padj<0.05)."));
-children.push(...figureBlock("Liver_KEGG_dotplot.png", "Figure S3. Liver KEGG pathway enrichment (9 significant pathways, padj<0.05). No KEGG pathway reached significance in LV."));
-children.push(...figureBlock("Angptl4axis_liver_localization_by_condition.png", "Figure S4. Liver localization of Angptl4-axis genes split by condition (healthy vs. cirrhotic; project4 GSE136103 cross-species reference)."));
+  children.push(new Paragraph({ children: [new PageBreak()] }));
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
+  // --- Supplemental Figures ---
+  children.push(heading1(S.labels.figures));
+  S.figures.forEach((f) => children.push(...figureBlock(f.file, f.caption)));
 
-// --- Supplemental Tables ---
-children.push(heading1("Supplemental Tables"));
+  children.push(new Paragraph({ children: [new PageBreak()] }));
 
-children.push(heading2("Table S1. Full significant DEG list, Liver (n=86, padj<0.01, |log2FC|>1.5)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "Liver_DEG_sig_padj01_lfc1.5.csv"), 7,
-  [2400, 1100, 1300, 1000, 1300, 1226, 1700]));
+  // --- Supplemental Tables ---
+  children.push(heading1(S.labels.tables));
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S2. Full significant DEG list, LV (n=20, padj<0.01, |log2FC|>1.5)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "LV_DEG_sig_padj01_lfc1.5.csv"), 7,
-  [2400, 1100, 1300, 1000, 1300, 1226, 1700]));
+  const tableSpecs = [
+    { key: "S1", file: "Liver_DEG_sig_padj01_lfc1.5.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
+    { key: "S2", file: "LV_DEG_sig_padj01_lfc1.5.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
+    { key: "S3", file: "Liver_GO_BP.csv", maxCols: 6, widths: [1400, 3200, 1300, 1300, 1300, 926] },
+    { key: "S4", file: "LV_GO_BP.csv", maxCols: 6, widths: [1400, 3200, 1300, 1300, 1300, 926] },
+    { key: "S5", file: "Liver_KEGG.csv", maxCols: 6, widths: [1000, 3200, 1300, 1300, 1300, 1226] },
+    { key: "S6", file: "Angptl4axis_hub_genes.csv", maxCols: null, widths: null },
+    { key: "S7", file: path.join("..", "docking", "results", "vina_summary.csv"), maxCols: null, widths: null },
+    { key: "S8", file: "STITCH_hub_gene_chemical_partners.csv", maxCols: null, widths: null },
+    { key: "S9", file: "DGIdb_druggability_summary.csv", maxCols: null, widths: null },
+  ];
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S3. Liver GO-BP enrichment (full, padj<0.05)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "Liver_GO_BP.csv"), 6,
-  [1400, 3200, 1300, 1300, 1300, 926]));
+  tableSpecs.forEach((spec, idx) => {
+    children.push(heading2(S.tableTitles[spec.key]));
+    children.push(italicPar(S.tableIntros[spec.key]));
+    const csvPath = spec.file.startsWith("..") ? path.join(RESULTS_DIR, spec.file) : path.join(RESULTS_DIR, spec.file);
+    children.push(...csvToTable(csvPath, spec.maxCols, spec.widths));
+    if (idx < tableSpecs.length - 1) children.push(new Paragraph({ children: [new PageBreak()] }));
+  });
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S4. LV GO-BP enrichment (full, padj<0.05)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "LV_GO_BP.csv"), 6,
-  [1400, 3200, 1300, 1300, 1300, 926]));
+  children.push(new Paragraph({ children: [new PageBreak()] }));
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S5. Liver KEGG pathway enrichment (full, padj<0.05)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "Liver_KEGG.csv"), 6,
-  [1000, 3200, 1300, 1300, 1300, 1226]));
+  // --- Supplemental Text ---
+  children.push(heading1(S.labels.text));
+  children.push(heading2(S.textTitles.S1));
+  S.textS1.forEach((p) => children.push(bodyPar(p)));
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S6. STRING network hub genes (Angptl4-Sdc/Cdh5 axis + first-shell interactors)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "Angptl4axis_hub_genes.csv")));
+  children.push(heading2(S.textTitles.S2));
+  S.textS2.forEach((p) => children.push(bodyPar(p)));
 
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S7. Full AutoDock Vina ranking (all 21 compounds)"));
-children.push(...csvToTable(path.join(__dirname, "..", "docking", "results", "vina_summary.csv")));
-
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S8. STITCH chemical partners of Angptl4-axis genes (full)"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "STITCH_hub_gene_chemical_partners.csv")));
-
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(heading2("Table S9. DGIdb druggability summary"));
-children.push(...csvToTable(path.join(RESULTS_DIR, "DGIdb_druggability_summary.csv")));
-
-children.push(new Paragraph({ children: [new PageBreak()] }));
-
-// --- Supplemental Text ---
-children.push(heading1("Supplemental Text"));
-children.push(heading2("Text S1. Final target selection rationale"));
-const rationale = fs.readFileSync(path.join(RESULTS_DIR, "target_selection_rationale.md"), "utf-8");
-rationale.split("\n").filter((l) => l.trim() && !l.startsWith("#") && !l.startsWith("|")).forEach((line) => {
-  children.push(bodyPar(line.replace(/\*\*/g, "").replace(/`/g, "")));
-});
-
-children.push(heading2("Text S2. DiffDock cross-check summary"));
-const crosscheck = fs.readFileSync(path.join(RESULTS_DIR, "diffdock_crosscheck_summary.md"), "utf-8");
-crosscheck.split("\n").filter((l) => l.trim() && !l.startsWith("#") && !l.startsWith("|")).forEach((line) => {
-  children.push(bodyPar(line.replace(/\*\*/g, "").replace(/`/g, "")));
-});
-
-const doc = new Document({
-  sections: [{
-    properties: {
-      page: {
-        size: { width: A4_WIDTH_DXA, height: 16838 },
-        margin: { top: MARGIN_DXA, bottom: MARGIN_DXA, left: MARGIN_DXA, right: MARGIN_DXA },
+  const doc = new Document({
+    sections: [{
+      properties: {
+        page: {
+          size: { width: A4_WIDTH_DXA, height: 16838 },
+          margin: { top: MARGIN_DXA, bottom: MARGIN_DXA, left: MARGIN_DXA, right: MARGIN_DXA },
+        },
       },
-    },
-    children,
-  }],
-});
+      children,
+    }],
+  });
 
-Packer.toBuffer(doc).then((buf) => {
-  const outPath = path.join(__dirname, "supplemental_data.docx");
-  fs.writeFileSync(outPath, buf);
-  console.log("Wrote", outPath);
-});
+  return Packer.toBuffer(doc).then((buf) => {
+    const outPath = path.join(__dirname, `supplemental_data_${lang.toUpperCase()}.docx`);
+    fs.writeFileSync(outPath, buf);
+    console.log("Wrote", outPath);
+  });
+}
+
+Promise.all([build("kr"), build("en")]);

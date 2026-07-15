@@ -1,0 +1,574 @@
+// English-language manuscript content. Figures are interleaved with the
+// Results text as {type:'figure'} blocks, placed immediately after the
+// paragraph that first describes them (journal convention).
+module.exports = {
+  lang: "en",
+  labels: {
+    abstract: "Abstract",
+    introduction: "1. Introduction",
+    methods: "2. Methods",
+    results: "3. Results",
+    discussion: "4. Discussion",
+    conclusion: "5. Conclusion and Future Directions",
+    references: "References",
+  },
+  title: "Multi-Organ Transcriptomic Integration Identifies an Angptl4-Syndecan/Cadherin " +
+         "Axis Underlying Cardiohepatic Syndrome and Guides Structure-Based Drug Screening",
+  studentLine: "202251154 Changwoo Lee",
+
+  abstract:
+    "Heart failure with preserved ejection fraction (HFpEF) and metabolic dysfunction-associated " +
+    "steatotic liver disease (MASLD) are increasingly recognized as bidirectionally linked through a " +
+    "cardio-hepatic axis, yet the molecular mediators of this crosstalk remain incompletely defined. " +
+    "We reanalyzed a paired bulk RNA-seq dataset (liver and left ventricle from the same C57BL/6N mice, " +
+    "chow vs. a 2-hit HFpEF diet, n=5/group; Zenodo 12794566) using a stricter statistical threshold " +
+    "(padj<0.01, |log2FC|>1.5) than the original publication. Contrary to our initial hypothesis of a " +
+    "liver-to-heart signal, curated ligand-receptor annotation (CellChatDB) and STRING protein-protein " +
+    "interaction network analysis found no cross-organ edge in that direction, but identified a heart-to-" +
+    "liver candidate axis: Angptl4 (upregulated in HFpEF left ventricle) paired with Cdh5/Sdc1-4 " +
+    "(expressed in liver). Reusing an independently annotated human liver single-cell atlas (GSE136103), " +
+    "Sdc1/Sdc4 localized to hepatocytes, consistent with their status as the top network hubs (degree 16 " +
+    "and 14, respectively). However, all available crystal structures of Sdc1/Sdc4 cover non-extracellular " +
+    "fragments unsuitable for structure-based docking, so we redirected structure-based screening to " +
+    "ANGPTL4's C-terminal fibrinogen-like domain (PDB 6EUB) - a genuinely undrugged target (zero DGIdb " +
+    "drug interactions) independently validated by a 2024 single-cell study showing cardiac-fibroblast-" +
+    "specific ANGPTL4 secretion in HFpEF. AutoDock Vina screening of 21 compounds (cardiometabolic drugs, " +
+    "endogenous fatty acids, and unrelated controls) ranked Resmetirom (the first FDA-approved MASH drug) " +
+    "and Ezetimibe as the top two hits (-9.07 and -8.88 kcal/mol). An orthogonal, box-free DiffDock cross-" +
+    "check showed Ezetimibe's top pose converging within 3.5 A of the Vina-defined pocket, while " +
+    "Resmetirom's top pose landed 23.5 A away at a distinct site - reframing Ezetimibe, not the top Vina " +
+    "scorer, as the more cross-validated candidate. This work illustrates how a rigorously reanalyzed, " +
+    "genuinely null result can redirect a network pharmacology pipeline toward a clinically relevant, " +
+    "testable hypothesis.",
+
+  keywords: "Keywords: HFpEF, MASLD, cardio-hepatic axis, ANGPTL4, network pharmacology, molecular docking",
+
+  introduction: [
+    "Metabolic dysfunction-associated steatotic liver disease (MASLD) has superseded the purely " +
+    "descriptive term \"non-alcoholic fatty liver disease\" (NAFLD), reflecting a paradigm in which " +
+    "systemic metabolic dysfunction - insulin resistance, obesity, and dyslipidemia - is understood to " +
+    "interact directly with the liver rather than merely coexist with it (Rinella et al., 2023). Over " +
+    "the past three years, the focus of liver-disease research has likewise shifted from purely " +
+    "intrahepatic pathology toward inter-organ crosstalk, driven in part by the observation that the " +
+    "leading cause of death in MASLD/MASH patients is cardiovascular disease rather than cirrhosis. This " +
+    "epidemiological fact has accelerated interest in the cardio-hepatic axis.",
+
+    "Heart failure with preserved ejection fraction (HFpEF) is a central phenotype of this cardio-hepatic " +
+    "interaction. A recent study was the first to systematically profile the liver and heart of the same " +
+    "animals in a 2-hit HFpEF mouse model (combined metabolic and hypertensive stress) and nominated " +
+    "Saa1/Saa4 as candidate liver-to-heart mediators (Strocchi et al., 2024). A follow-up study used " +
+    "hepatocyte-specific secretome labeling to show that the liver's secreted cytokine signature is " +
+    "altered under HFpEF (Schütte et al., 2025). However, neither study extended beyond the systems-" +
+    "biology discovery stage into protein-protein interaction (PPI) network construction, network " +
+    "pharmacology, or structure-based virtual screening.",
+
+    "The present study set out to reanalyze this public dataset under a substantially stricter " +
+    "statistical threshold and to carry the analysis all the way through ligand-receptor interactome " +
+    "matching, a STRING-based PPI network, STITCH network pharmacology, DGIdb druggability assessment, " +
+    "and, finally, structure-based virtual screening with AutoDock Vina and DiffDock. This effort builds " +
+    "directly on our own prior work profiling human MASLD liver-fibrosis cohorts (GSE135251 and " +
+    "GSE136103), from which several candidate genes - LUM, THY1, THBS2, EDNRB, and CD44/ITGA1/ITGB1 - " +
+    "were previously nominated; the present study extends that program by moving from mouse to a " +
+    "genuinely inter-organ (liver-heart) axis. Contrary to our initial hypothesis, the data pointed not " +
+    "toward a liver-secreted factor acting on the heart, but toward the reverse - a heart-secreted " +
+    "factor acting on the liver - a direction that in fact aligns closely with the clinically " +
+    "established entity of congestive hepatopathy/cardiohepatic syndrome. Rather than treating this " +
+    "reversal as a disappointment, we report it as a genuine finding and follow it through to a " +
+    "druggability assessment and a compound-level screen."
+  ],
+
+  methods: [
+    { h: "2.1 Dataset", p:
+      "This study reused publicly deposited data (Zenodo record 12794566) from Strocchi et al. (2024), " +
+      "published in Circulation Research. Male C57BL/6N mice were subjected for 8 weeks to a 2-hit " +
+      "HFpEF-inducing regimen (combined metabolic and hypertensive stress; HFpEF group, n=5) or a normal " +
+      "chow diet (Chow group, n=5), after which liver and left-ventricular (LV) tissue were each " +
+      "profiled by bulk RNA-seq. We used the deposited raw count matrices and phenotypic metadata " +
+      "(echocardiographic indices, organ weights) as-is. Because liver and LV were sampled from the same " +
+      "animals rather than from independently recruited cohorts, this dataset constitutes a genuine " +
+      "paired multi-organ resource, appropriate for addressing inter-organ crosstalk."
+    },
+    { h: "2.2 Differential expression analysis", p:
+      "DESeq2 (Love et al., 2014) was applied independently to each organ. Genes were pre-filtered to " +
+      "those with a raw count ≥10 in at least 5 of the 10 samples, and log2 fold changes were shrunk " +
+      "using apeglm (Zhu et al., 2019). We defined significant DEGs using a threshold stricter than the " +
+      "conventional padj<0.05 - specifically padj<0.01 and |log2FC|>1.5 - to minimize false positives."
+    },
+    { h: "2.3 GSEA, GO, and KEGG enrichment", p:
+      "GSEA against the Hallmark gene set collection (msigdbr, Mus musculus) was performed with fgsea " +
+      "(Korotkevich et al., 2019). Because apeglm-shrunk results omit the Wald statistic, the ranking " +
+      "metric was reconstructed as sign(log2FC) x (-log10 p-value). For the significant DEG lists, " +
+      "clusterProfiler (Wu et al., 2021) was used for GO Biological Process and KEGG (organism=mmu) " +
+      "over-representation analysis (BH-adjusted padj<0.05)."
+    },
+    { h: "2.4 Ligand-receptor interactome matching", p:
+      "Upregulated DEGs from each organ were treated as candidate ligands and matched against CellChatDB." +
+      "mouse's curated ligand-receptor pairs (Jin et al., 2021). Requiring that both the ligand and its " +
+      "receptor independently clear genome-wide significance is unnecessarily strict, since a receptor " +
+      "can transduce a signal without itself being transcriptionally altered; we therefore relaxed the " +
+      "receptor-side criterion to \"detectably expressed\" in the target organ (baseMean≥10). Both the " +
+      "liver-to-LV and LV-to-liver directions were tested."
+    },
+    { h: "2.5 STRING protein-protein interaction network", p:
+      "Matched genes and up to 15 additional first-shell interactors were queried against the STRING " +
+      "API (Szklarczyk et al., 2023; mouse taxid 10090, confidence score≥0.7). Degree and betweenness " +
+      "centrality were computed with igraph to identify hub genes. Cytoscape 3.10.4 was installed for " +
+      "visualization, but its CyREST interface proved unreliable in this environment, so the final " +
+      "network figure was generated with igraph instead (Cytoscape remains available for manual use)."
+    },
+    { h: "2.6 Cell-type localization", p:
+      "Because no single-cell data exist from the same experiment as the bulk cohort, cell-type " +
+      "expression of the final candidate genes was assessed using an already-annotated Seurat object from " +
+      "our own prior work (project4, human liver cirrhosis scRNA-seq, GSE136103; Ramachandran et al., " +
+      "2019), used strictly as an independent, cross-species reference rather than pooled into any " +
+      "statistical test."
+    },
+    { h: "2.7 STITCH network pharmacology and DGIdb druggability", p:
+      "Hub genes from the STRING network were queried against STITCH (Szklarczyk et al., 2016) for known " +
+      "or predicted chemical interactions, with compound names resolved via the PubChem PUG-REST API. " +
+      "Druggability was assessed via the DGIdb 5.0 GraphQL API (Cannon et al., 2024), querying the human " +
+      "ortholog symbol of each gene for existing drug interactions."
+    },
+    { h: "2.8 Target structure acquisition", p:
+      "PDB cross-references for each candidate gene were retrieved via the UniProt REST API, and each " +
+      "structure was individually inspected on RCSB PDB to determine which domain (extracellular, " +
+      "transmembrane, or cytoplasmic) it actually represents."
+    },
+    { h: "2.9 Structure-based virtual screening with AutoDock Vina", p:
+      "Water molecules and the crystallization additive (1PE, pentaethylene glycol) were removed from " +
+      "the final target structure (PDB 6EUB); the single alternate-location residue was resolved to " +
+      "conformer A. Meeko (mk_prepare_receptor) was used to generate a PDBQT file, and the docking box " +
+      "(24x24x24 A3) was centered on the centroid of the 1PE site - the only small-molecule-occupied " +
+      "surface pocket observed in the crystal structure. The ligand library comprised 21 compounds with " +
+      "SMILES retrieved from PubChem, spanning three categories: (1) fatty acids and Pioglitazone, " +
+      "identified by STITCH as genuine ANGPTL4 chemical partners; (2) Resmetirom, Fenofibrate, " +
+      "Bezafibrate, Ezetimibe, Atorvastatin, Rosiglitazone, Empagliflozin, Dapagliflozin, Obeticholic " +
+      "acid, Icosapent ethyl, Metformin, and Niacin, i.e. approved or late-stage cardiometabolic/MASH " +
+      "drugs; and (3) Aspirin, Ibuprofen, Caffeine, and Metoprolol as mechanistically unrelated controls. " +
+      "Three-dimensional conformers were generated with RDKit (ETKDGv3, MMFF94) and converted to PDBQT " +
+      "with Meeko (mk_prepare_ligand), then docked with AutoDock Vina 1.2.7 (Eberhardt et al., 2021) at " +
+      "exhaustiveness=16, num_modes=5, seed=42."
+    },
+    { h: "2.10 DiffDock cross-validation", p:
+      "Because this machine has no CUDA-capable GPU, a from-scratch local DiffDock (Corso et al., 2023) " +
+      "installation was judged impractical for CPU-only inference. Instead, a publicly hosted Gradio " +
+      "Space running the original inference code (gcorso/DiffDock; mirrored at swcanner/DiffDock-Web) was " +
+      "used to cross-validate the top two Vina hits (Resmetirom, Ezetimibe) only. Unlike Vina, DiffDock " +
+      "performs blind docking without a predefined binding site, so agreement between the two methods on " +
+      "the pose location constitutes an independent structural check rather than a simple re-ranking " +
+      "(10 samples per complex, seed unfixed)."
+    },
+  ],
+
+  resultsBlocks: [
+    { type: "heading", text: "3.1 Organ-specific differential expression" },
+    { type: "p", text:
+      "We first examined organ-specific transcriptional changes in mice exposed to the 2-hit HFpEF " +
+      "regimen. At padj<0.01 and |log2FC|>1.5, 86 genes were significantly differentially expressed in " +
+      "the liver (48 up, 38 down) and 20 in the LV (15 up, 5 down) (Figure 1A, 1B; Supplemental Table " +
+      "S1, S2 list every gene). Unsupervised hierarchical clustering of these DEGs cleanly separated " +
+      "Chow from HFpEF samples in both organs (Figure 2A, 2B). In the liver, acute-phase and " +
+      "inflammation-associated transcripts (Dsg1c, Per2, Saa2, Lcn2) were upregulated, whereas numerous " +
+      "cytochrome P450 family members were downregulated, consistent with disturbed lipid metabolism; in " +
+      "the LV, Chrna2, Hmgcs2, and Mmp12 were upregulated and Cyp1a1 was downregulated." },
+    { type: "figure", file: "figures/composite/Figure1_volcano_combined.png",
+      caption: "Figure 1. Organ-specific differential gene expression under HFpEF vs. Chow. (A) Liver " +
+               "volcano plot. (B) Left-ventricle (LV) volcano plot. Genes meeting the significance " +
+               "threshold (padj<0.01, |log2FC|>1.5) are shown in red; representative genes are labeled. " +
+               "Full DEG lists are provided in Supplemental Table S1 (liver) and S2 (LV)." },
+    { type: "figure", file: "figures/composite/Figure2_heatmap_combined.png",
+      caption: "Figure 2. Hierarchical clustering of significant DEGs (z-scored variance-stabilized " +
+               "counts). (A) Liver (n=86 DEGs). (B) LV (n=20 DEGs). Both tissues show unsupervised " +
+               "separation of Chow and HFpEF samples." },
+    { type: "p", text:
+      "We next asked whether the two candidate mediators nominated by the original study, Saa1 and Saa4 " +
+      "(Strocchi et al., 2024), replicated under our stricter criteria. Both genes trended in the same " +
+      "direction as previously reported (Saa1, log2FC=1.16, padj=5.9x10-5; Saa4, log2FC=0.53, padj=0.011) " +
+      "but neither cleared our |log2FC|>1.5 cutoff. We interpret this as a genuine effect-size limitation " +
+      "rather than a false-positive finding in the original report - both genes are statistically robust " +
+      "but their fold-change falls short of our more conservative threshold." },
+
+    { type: "heading", text: "3.2 Pathway-level enrichment (GSEA, GO, KEGG)" },
+    { type: "p", text:
+      "Hallmark GSEA identified 19 significantly enriched pathways in the liver and 17 in the LV " +
+      "(padj<0.05; Figure 3A, 3B). In the liver, MTORC1_SIGNALING, CHOLESTEROL_HOMEOSTASIS, and " +
+      "MYC_TARGETS_V1 were downregulated while INTERFERON_ALPHA_RESPONSE was upregulated. In the LV, " +
+      "ADIPOGENESIS, FATTY_ACID_METABOLISM, OXIDATIVE_PHOSPHORYLATION, PEROXISOME, and " +
+      "BILE_ACID_METABOLISM were all markedly upregulated, indicating a shift of cardiac metabolism " +
+      "toward lipid handling and mitochondrial pathways under HFpEF stress - a pattern consistent with " +
+      "the mitochondrial dysfunction reported in prior HFpEF literature. GO Biological Process analysis " +
+      "returned 34 significant terms in the liver and 10 in the LV, and KEGG returned 9 significant " +
+      "pathways in the liver and none in the LV (Supplemental Figure S1, S2; Supplemental Table S3-S5)." },
+    { type: "figure", file: "figures/composite/Figure3_GSEA_combined.png",
+      caption: "Figure 3. Hallmark gene set enrichment analysis (GSEA). (A) Liver. (B) LV. Bars show the " +
+               "normalized enrichment score (NES) for pathways significant at padj<0.05. Full GO-BP and " +
+               "KEGG results are provided in Supplemental Figure S1-S2 and Supplemental Table S3-S5." },
+
+    { type: "heading", text: "3.3 Ligand-receptor interactome matching reveals a reversed axis" },
+    { type: "p", text:
+      "We had hypothesized that a liver-secreted factor drives HFpEF-associated cardiac remodeling. " +
+      "Contrary to this expectation, neither CellChatDB matching nor an unrestricted STRING-based search " +
+      "(confidence≥0.7) returned a single liver-to-LV edge. In the reverse direction, however, CellChatDB " +
+      "returned five matches: Angptl4, significantly upregulated in the LV, is a curated ligand of Cdh5, " +
+      "Sdc1, Sdc2, Sdc3, and Sdc4, all of which are expressed in liver (Table 1). We therefore reoriented " +
+      "the candidate axis from liver-to-heart to heart-to-liver. This reversed direction is not an ad hoc " +
+      "correction; it corresponds precisely to the clinically recognized entity of congestive " +
+      "hepatopathy/cardiohepatic syndrome, in which cardiac dysfunction secondarily injures the liver." },
+
+    { type: "heading", text: "3.4 STRING network analysis nominates Sdc1/Sdc4 as hub genes" },
+    { type: "p", text:
+      "Expanding Angptl4/Cdh5/Sdc1-4 with their first-shell STRING interactors (41 edges total) revealed " +
+      "Sdc1 (degree=16, betweenness=64.3) and Sdc4 (degree=14, betweenness=45.1) as clear network hubs, " +
+      "embedded in a module of heparan-sulfate-proteoglycan-related genes (Gpc1, Gpc4, Hspg2, Ext1, Tnc; " +
+      "Figure 4). Cdh5, in contrast, formed an isolated pair with Angptl4 only, suggesting that the " +
+      "syndecan family constitutes the structural core of this axis (Supplemental Table S6 lists the " +
+      "complete hub-gene ranking)." },
+    { type: "figure", file: "figures/Angptl4axis_network.png",
+      caption: "Figure 4. STRING protein-protein interaction network centered on the Angptl4-Sdc/Cdh5 " +
+               "axis (confidence≥0.7, +15 first-shell interactors). Red nodes: seed genes (Angptl4, Cdh5, " +
+               "Sdc1-4); blue nodes: STRING interactors. Node size scales with degree." },
+
+    { type: "heading", text: "3.5 Cross-species cell-type localization" },
+    { type: "p", text:
+      "Reusing our previously annotated human liver scRNA-seq atlas (project4, GSE136103) as an " +
+      "independent cross-species reference, SDC1 and SDC4 localized cleanly to hepatocytes (Figure 5), " +
+      "consistent with their ranking as the top network hubs. SDC3 localized to MP (macrophage/Kupffer-" +
+      "lineage) cells, and CDH5 localized to endothelia, exactly as expected for this canonical " +
+      "endothelial marker - serving as a built-in positive control for the localization approach " +
+      "(Supplemental Figure S3 shows the same analysis split by disease condition)." },
+    { type: "figure", file: "figures/Angptl4axis_liver_localization_dotplot.png",
+      caption: "Figure 5. Liver cell-type localization of Angptl4-axis genes, using an independent " +
+               "cross-species reference (project4, human GSE136103). SDC1/SDC4 localize to hepatocytes, " +
+               "consistent with their status as network hubs; CDH5 localizes to endothelia as a positive " +
+               "control." },
+
+    { type: "heading", text: "3.6 STITCH network pharmacology" },
+    { type: "p", text:
+      "STITCH queries showed that Angptl4 is linked to endogenous fatty-acid metabolites (linoleic, " +
+      "palmitic, arachidonic, and eicosapentaenoic acids) and to Pioglitazone, an approved PPAR agonist " +
+      "(Table 2). Sdc1, Sdc2, Sdc3, and Cdh5, in contrast, returned only structural or metabolic partners " +
+      "(iduronic acid, a heparan/dermatan sulfate glycosaminoglycan building block; calcium cation), with " +
+      "essentially no association to existing therapeutic compounds (Supplemental Table S8 lists the " +
+      "complete result)." },
+
+    { type: "heading", text: "3.7 Druggability assessment and final target selection" },
+    { type: "p", text:
+      "DGIdb returned 3 drug interactions for Sdc1 (heparin, indatuximab ravtansine - an antibody-drug " +
+      "conjugate), 1 for Sdc4 (repotrectinib, an oncology kinase inhibitor with no plausible mechanistic " +
+      "link, most likely a text-mining artifact), and 1 for Cdh5 (FX06, a fibrin-derived peptide), while " +
+      "Sdc3 and Angptl4 returned zero interactions each (Table 3; Supplemental Table S9). Critically, " +
+      "however, UniProt/PDB inspection showed that every available crystal structure of the network hubs " +
+      "Sdc1 and Sdc4 covers non-extracellular fragments only - for example, PDB 8BLV resolves the Sdc4 " +
+      "cytoplasmic tail in complex with the syntenin PDZ domain, not the heparan-sulfate-bearing " +
+      "ectodomain that would engage a secreted ligand such as Angptl4 - rendering them structurally " +
+      "unactionable for small-molecule docking. We therefore redirected the final target to Angptl4 " +
+      "itself: it is completely undrugged in DGIdb, its C-terminal fibrinogen-like domain has a solved " +
+      "2.3-A crystal structure with a visible ligand-accommodating surface (PDB 6EUB), and it is " +
+      "independently validated both by our own DEG analysis and by a 2024 single-cell study demonstrating " +
+      "cardiac-fibroblast-specific ANGPTL4 secretion in HFpEF (Li et al., 2024) (full rationale in " +
+      "Supplemental Text S1)." },
+
+    { type: "heading", text: "3.8 Structure-based virtual screening with AutoDock Vina" },
+    { type: "p", text:
+      "Docking of 21 compounds against the ANGPTL4 fibrinogen-like domain ranked Resmetirom " +
+      "(-9.07 kcal/mol), Ezetimibe (-8.88), Pioglitazone (-8.28), Fenofibrate (-8.21), and Empagliflozin " +
+      "(-8.14) as the top five hits (Figure 6; Table 4; Supplemental Table S7 lists the full ranking of " +
+      "all 21 compounds). As a group, the cardiometabolic-drug category scored more favorably than the " +
+      "fatty-acid and unrelated-control categories, with Metformin (-4.65) and Caffeine (-5.36) scoring " +
+      "weakest - a pattern broadly consistent with a mechanistically informed screen, although we note " +
+      "that molecular size and rotatable-bond count can also influence Vina scores and should temper any " +
+      "absolute ranking across compounds of very different size." },
+    { type: "figure", file: "figures/Vina_screening_ranked.png",
+      caption: "Figure 6. AutoDock Vina virtual screening of 21 compounds against the ANGPTL4 fibrinogen-" +
+               "like domain (PDB 6EUB), ranked by best binding affinity. Dashed line: -8.0 kcal/mol " +
+               "reference threshold. Full results in Supplemental Table S7." },
+
+    { type: "heading", text: "3.9 DiffDock cross-validation reframes the leading candidate" },
+    { type: "p", text:
+      "Applying blind docking (no predefined binding site) to the top two Vina hits produced a striking " +
+      "divergence. Ezetimibe's top-ranked pose (confidence -1.32) fell within 3.5 A of the Vina-defined " +
+      "pocket centroid, i.e., two independent methods converged on essentially the same site (Figure 7A). " +
+      "Resmetirom's top-ranked pose (confidence -2.06), in contrast, localized 23.5 A away, at an " +
+      "entirely different surface region (Figure 7B; Supplemental Text S2 gives full contact-residue " +
+      "detail). Both DiffDock confidence values fall within that method's low-to-moderate range and " +
+      "should not be over-interpreted as confirmed binding; nonetheless, on a strictly comparative basis, " +
+      "Ezetimibe - not the top Vina scorer - emerges as the more structurally consistent candidate across " +
+      "two independent docking algorithms." },
+    { type: "figure", file: "figures/composite/Figure7_pose_combined.png",
+      caption: "Figure 7. Structure-based docking poses of the top two AutoDock Vina hits, cross-" +
+               "validated by DiffDock. (A) Ezetimibe (DiffDock confidence -1.32), converging within 3.5 A " +
+               "of the Vina-defined pocket; contact residues Leu304, Leu312, Gly313, Ala314, Leu322, " +
+               "Ser323, Val324, Trp349, Trp350, Gly352, Thr353, His356. (B) Resmetirom (DiffDock " +
+               "confidence -2.06), 23.5 A from the Vina-defined pocket at a distinct site; contact " +
+               "residues Trp280, Asp281, Ile367, Leu374, Tyr387, Tyr388, Pro389." },
+  ],
+
+  discussion: [
+    "This study set out to reanalyze a recently deposited paired liver-heart mouse cohort under a " +
+    "stricter statistical threshold, but its most important finding is that our starting hypothesis - a " +
+    "liver-secreted factor driving HFpEF-associated cardiac remodeling - was not supported by the data. " +
+    "The absence of any liver-to-heart cross-organ edge in either CellChatDB matching or an unrestricted " +
+    "STRING search (Figure 4; Section 3.3) should be read as a genuine, database-level signal for this " +
+    "particular model and statistical threshold, not as a methodological failure.",
+
+    "The heart-to-liver Angptl4-Sdc/Cdh5 axis identified instead aligns closely with congestive " +
+    "hepatopathy and the emerging concept of cardiohepatic syndrome, both long recognized in clinical " +
+    "medicine. The independent 2024 single-cell finding that Angptl4 is secreted specifically by cardiac " +
+    "fibroblasts and suppresses angiogenesis in the HFpEF heart (Li et al., 2024) reproduces our own bulk " +
+    "DEG result (Figure 1B) using an entirely different experimental modality - a cross-validation that " +
+    "considerably strengthens confidence in this axis.",
+
+    "The most centrally connected genes in our network analysis, Sdc1 and Sdc4 (Figure 4), turned out " +
+    "not to be structurally actionable: every deposited crystal structure covers a domain other than the " +
+    "extracellular ligand-binding surface. This dissociation between \"most important by network " +
+    "centrality\" and \"currently actionable by structure-based methods\" is a practical limitation that " +
+    "is not always made explicit in network pharmacology studies that promote hub genes directly to " +
+    "final targets; we chose not to paper over this gap and instead redirected the docking campaign to " +
+    "Angptl4 itself (Section 3.7, Supplemental Text S1).",
+
+    "The divergence between AutoDock Vina and DiffDock for Resmetirom and Ezetimibe (Figure 7) is " +
+    "similarly informative. Vina reports a relative ranking within a single predefined pocket, whereas " +
+    "DiffDock searches the entire protein surface; agreement between the two on pose location is " +
+    "therefore independent evidence that a site is biologically meaningful rather than a scoring " +
+    "artifact of one method. That Resmetirom scored best on Vina yet was preferentially placed by " +
+    "DiffDock at a completely different site illustrates the risk of selecting a final candidate from a " +
+    "single docking algorithm, and supports Ezetimibe as the more defensible hypothesis-generating lead " +
+    "from this screen.",
+
+    "Several limitations should be noted. First, this analysis rests on a single mouse model with a " +
+    "small sample size (n=5/group), and independent replication is warranted. Second, the cardiac source " +
+    "of Angptl4 was confirmed only through an independent literature report rather than through single-" +
+    "cell data generated in this study, and the hepatic localization of the syndecans relies on a human, " +
+    "cross-species reference rather than mouse single-cell validation. Third, DiffDock was run through a " +
+    "public web interface for only the top two compounds because of the absence of a local GPU, rather " +
+    "than across the full 21-compound library. Fourth, all binding affinities reported here are in " +
+    "silico predictions; biochemical confirmation (e.g., Western blot, SPR, or ITC) will be required " +
+    "before any therapeutic claim can be made.",
+  ],
+
+  conclusion:
+    "By reanalyzing a publicly available paired liver-heart mouse transcriptome dataset under stricter " +
+    "statistical criteria and carrying the analysis through ligand-receptor interactome matching, PPI " +
+    "network construction, network pharmacology, druggability assessment, and structure-based virtual " +
+    "screening, we identified a heart-to-liver Angptl4-Sdc/Cdh5 axis in place of our originally " +
+    "hypothesized liver-to-heart direction - a reversal that in fact corresponds to the clinically " +
+    "established cardiohepatic syndrome. Recognizing that the network hubs Sdc1/Sdc4 are not currently " +
+    "structurally actionable, we redirected structure-based screening to Angptl4 itself, and identified " +
+    "Ezetimibe as the candidate most consistently cross-validated by two independent docking algorithms. " +
+    "Future work should pursue (1) direct cell-type localization using single-cell data collected from " +
+    "both liver and heart of the same animals, (2) full-library DiffDock re-screening on a GPU-equipped " +
+    "system, (3) biochemical confirmation of Ezetimibe-ANGPTL4 binding by SPR or ITC, and (4) in vivo " +
+    "assessment of hepatic phenotype following Ezetimibe administration in the HFpEF mouse model.",
+
+  tables: [
+    {
+      title: "Table 1. LV-to-liver ligand-receptor matches (CellChatDB).",
+      header: ["Interaction", "Ligand", "Receptor", "Pathway", "Evidence"],
+      widths: [2200, 1300, 1300, 1500, 2726],
+      rows: [
+        ["ANGPTL4_CDH5", "Angptl4", "Cdh5", "ANGPTL", "PMID: 30049845"],
+        ["ANGPTL4_SDC1", "Angptl4", "Sdc1", "ANGPTL", "PMID: 29017031"],
+        ["ANGPTL4_SDC2", "Angptl4", "Sdc2", "ANGPTL", "PMID: 29017031"],
+        ["ANGPTL4_SDC3", "Angptl4", "Sdc3", "ANGPTL", "PMID: 29017031"],
+        ["ANGPTL4_SDC4", "Angptl4", "Sdc4", "ANGPTL", "PMID: 29017031"],
+      ],
+    },
+    {
+      title: "Table 2. STITCH-identified chemical partners of Angptl4-axis genes (selected).",
+      header: ["Gene", "Compound"],
+      widths: [3013, 6013],
+      rows: [
+        ["Angptl4", "Linoleic acid (9,12-octadecadienoic acid)"],
+        ["Angptl4", "Palmitic acid"],
+        ["Angptl4", "Eicosapentaenoic acid"],
+        ["Angptl4", "Pioglitazone (approved drug)"],
+        ["Sdc1 / Sdc2 / Sdc3", "Iduronic acid (heparan/dermatan sulfate GAG unit)"],
+        ["Cdh5", "Calcium cation"],
+      ],
+    },
+    {
+      title: "Table 3. DGIdb druggability summary for Angptl4-axis genes.",
+      header: ["Gene", "# interactions", "# approved", "Example drugs"],
+      widths: [1800, 1800, 1500, 3926],
+      rows: [
+        ["SDC2", "1", "0", "Heparan sulfate"],
+        ["SDC4", "1", "1", "Repotrectinib (likely unrelated text-mining hit)"],
+        ["CDH5", "1", "0", "FX06 (peptide)"],
+        ["SDC3", "0", "0", "-"],
+        ["SDC1", "3", "0", "Heparin; Indatuximab ravtansine (ADC)"],
+        ["ANGPTL4", "0", "0", "- (genuinely undrugged; final target)"],
+      ],
+    },
+    {
+      title: "Table 4. AutoDock Vina top 5 hits vs ANGPTL4 (PDB 6EUB).",
+      header: ["Rank", "Compound", "Best affinity (kcal/mol)", "Class"],
+      widths: [900, 2500, 3100, 2526],
+      rows: [
+        ["1", "Resmetirom", "-9.07", "Cardiometabolic/MASH drug"],
+        ["2", "Ezetimibe", "-8.88", "Cardiometabolic/MASH drug"],
+        ["3", "Pioglitazone", "-8.28", "Cardiometabolic/MASH drug"],
+        ["4", "Fenofibrate", "-8.21", "Cardiometabolic/MASH drug"],
+        ["5", "Empagliflozin", "-8.14", "Cardiometabolic/MASH drug"],
+      ],
+    },
+  ],
+
+  codeWalkthrough: {
+    intro:
+      "All code, intermediate results, and figures for this study are version-controlled at " +
+      "github.com/bioinform25/essay. The repository is organized into scripts/ (analysis code, run in " +
+      "the numeric order below), results/ (CSV outputs and text summaries), figures/ (all PNG figures, " +
+      "with composite multi-panel images under figures/composite/), docking/ (receptor/ligand PDBQT " +
+      "files and Vina/DiffDock outputs), and manuscript/ (this document's build scripts and content). " +
+      "The list below walks through every script in execution order so that the analysis can be fully " +
+      "reproduced or audited step by step.",
+    items: [
+      { file: "00_check_packages.R / 00b-00d", desc: "Verify/install required R packages (DESeq2, clusterProfiler, fgsea, msigdbr, EnhancedVolcano, pheatmap, igraph, CellChat, RCy3) before running the pipeline." },
+      { file: "01_deseq2_analysis.R", desc: "Load the Zenodo raw count matrices and metadata, run DESeq2 independently for Liver and LV, apply apeglm shrinkage, export full and significant (padj<0.01, |log2FC|>1.5) DEG tables, volcano plots, and heatmaps." },
+      { file: "02_gsea_go_kegg.R", desc: "Hallmark GSEA (fgsea) ranked by sign(log2FC)*-log10(p), plus GO-BP and KEGG over-representation analysis (clusterProfiler) on the significant DEG lists, for each organ." },
+      { file: "03_ligand_receptor_matching.R", desc: "Match upregulated DEGs (ligand candidates) against CellChatDB.mouse ligand-receptor pairs, receptor side relaxed to baseMean>=10 expression, tested in both liver-to-LV and LV-to-liver directions." },
+      { file: "04_string_ppi_network.R", desc: "Query the STRING API for the combined significant gene set to search directly for cross-organ edges (result: zero in the hypothesized direction)." },
+      { file: "05_angptl4_axis_network.R / 05b", desc: "Expand the Angptl4/Cdh5/Sdc1-4 seed set with STRING first-shell interactors, compute degree/betweenness centrality with igraph, and render the network figure." },
+      { file: "06_liver_localization_project4.R", desc: "Reload the previously annotated project4 (GSE136103) Seurat object and generate DotPlots of Angptl4-axis genes across annotated liver cell types." },
+      { file: "07_stitch_network_pharmacology.R", desc: "Query the STITCH API for chemical partners of each hub gene and resolve PubChem CIDs to compound names." },
+      { file: "08_druggability_dgidb.R", desc: "Query the DGIdb 5.0 GraphQL API for existing drug interactions of each hub gene (human ortholog symbols)." },
+      { file: "09_build_ligand_library.py", desc: "Resolve canonical SMILES for the 21-compound docking library from PubChem PUG-REST." },
+      { file: "10_prepare_receptor.py", desc: "Strip waters/crystallization additives from PDB 6EUB, compute the 1PE-site centroid as the docking box center, and generate a receptor PDBQT with Meeko." },
+      { file: "11_prepare_ligands.py", desc: "Generate 3D conformers (RDKit ETKDGv3/MMFF94) for all 21 ligands and convert to PDBQT with Meeko." },
+      { file: "12_run_vina_screening.py", desc: "Run AutoDock Vina for every ligand against the prepared receptor and collate best binding affinities." },
+      { file: "13_vina_results_plot.R", desc: "Render the ranked Vina results as a categorized bar chart." },
+      { file: "14_visualize_poses.py / 15_static_pose_figure.py", desc: "Early-stage pose visualization attempts (py3Dmol web-rendering, then a matplotlib-based static fallback) before the PyMOL pipeline below was added." },
+      { file: "16_pymol_pose_render.py", desc: "Headless PyMOL (installed via a dedicated Miniconda environment) rendering of the final publication-quality binding-pose figures, run via `pymol -cq`." },
+      { file: "17_stitch_panels.py", desc: "Combine paired single-panel figures (volcano, heatmap, GSEA, docking pose, GO) into single composite Figure images with panel letters (A)/(B), matching standard journal figure layout." },
+    ],
+    reproNote:
+      "Software versions: R 4.5.2 (DESeq2, apeglm, clusterProfiler, fgsea, msigdbr, CellChat, igraph, " +
+      "httr/jsonlite, EnhancedVolcano, pheatmap); Python 3.14 (RDKit, Meeko, PyMuPDF, matplotlib, " +
+      "py3Dmol); AutoDock Vina 1.2.7; PyMOL (open-source build, installed via a dedicated Miniconda " +
+      "environment); Cytoscape 3.10.4 (installed, available for manual use). DiffDock was not installed " +
+      "locally (no CUDA-capable GPU on this machine) and was instead run through a publicly hosted " +
+      "Gradio Space mirroring the original gcorso/DiffDock inference code, for the top two Vina " +
+      "candidates only. The full commit history of the repository constitutes a complete, chronological " +
+      "log of the analysis as it was actually performed, including the initial (liver-to-heart) " +
+      "hypothesis, the point at which it was found unsupported, and the subsequent re-direction of the " +
+      "target and screening strategy.",
+  },
+
+  supplemental: {
+    docTitle: "Supplemental Data",
+    docSubtitle: "Multi-Organ Transcriptomic Integration Identifies an Angptl4-Syndecan/Cadherin " +
+                 "Axis Underlying Cardiohepatic Syndrome and Guides Structure-Based Drug Screening " +
+                 "— Supplemental Figures, Tables, and Text",
+    labels: { figures: "Supplemental Figures", tables: "Supplemental Tables", text: "Supplemental Text", code: "Code and Analysis Workflow" },
+    figures: [
+      { file: "figures/composite/FigureS_GO_combined.png",
+        caption: "Figure S1. GO Biological Process enrichment. (A) Liver (34 significant terms, padj<0.05). (B) LV (10 significant terms, padj<0.05). Complements the Hallmark GSEA in Figure 3 with a complementary, non-overlapping ontology." },
+      { file: "figures/Liver_KEGG_dotplot.png",
+        caption: "Figure S2. Liver KEGG pathway enrichment (9 significant pathways, padj<0.05). No KEGG pathway reached significance in LV under the same threshold, which is reported here rather than omitted." },
+      { file: "figures/Angptl4axis_liver_localization_by_condition.png",
+        caption: "Figure S3. Liver cell-type localization of Angptl4-axis genes, split by disease condition (healthy vs. cirrhotic; project4 GSE136103 cross-species reference). Provided in addition to Figure 5 to show whether localization itself, rather than only expression level, shifts with disease state." },
+    ],
+    tableIntros: {
+      S1: "Complete Liver DEG table underlying Figure 1A and the 86-gene count reported in Section 3.1 (all columns from the DESeq2/apeglm output: baseMean, log2FoldChange, lfcSE, pvalue, padj, gene_name).",
+      S2: "Complete LV DEG table underlying Figure 1B and the 20-gene count reported in Section 3.1.",
+      S3: "Complete Liver GO-BP enrichment table underlying Figure S1A.",
+      S4: "Complete LV GO-BP enrichment table underlying Figure S1B.",
+      S5: "Complete Liver KEGG enrichment table underlying Figure S2.",
+      S6: "Complete STRING network hub-gene ranking (degree, betweenness) underlying the discussion of Sdc1/Sdc4 centrality in Section 3.4.",
+      S7: "Complete AutoDock Vina ranking for all 21 screened compounds (Section 3.8), including the fatty-acid and unrelated-control categories omitted from the main-text Table 4 top-5 summary.",
+      S8: "Complete STITCH chemical-partner query results for all Angptl4-axis genes (Section 3.6), including compound identity resolved via PubChem.",
+      S9: "Complete DGIdb druggability query results underlying Table 3 and the target-selection rationale in Section 3.7.",
+    },
+    tableTitles: {
+      S1: "Table S1. Full significant DEG list, Liver (n=86, padj<0.01, |log2FC|>1.5)",
+      S2: "Table S2. Full significant DEG list, LV (n=20, padj<0.01, |log2FC|>1.5)",
+      S3: "Table S3. Liver GO-BP enrichment (full, padj<0.05)",
+      S4: "Table S4. LV GO-BP enrichment (full, padj<0.05)",
+      S5: "Table S5. Liver KEGG pathway enrichment (full, padj<0.05)",
+      S6: "Table S6. STRING network hub genes (Angptl4-Sdc/Cdh5 axis + first-shell interactors)",
+      S7: "Table S7. Full AutoDock Vina ranking (all 21 compounds)",
+      S8: "Table S8. STITCH chemical partners of Angptl4-axis genes (full)",
+      S9: "Table S9. DGIdb druggability summary",
+    },
+    textTitles: {
+      S1: "Text S1. Final target selection rationale",
+      S2: "Text S2. DiffDock cross-check summary",
+    },
+    textS1: [
+      "Five candidates arising from the Angptl4-Sdc/Cdh5 axis were evaluated as the final structure-" +
+      "based screening target: Angptl4 itself, and its four curated receptors Sdc1, Sdc2, Sdc3, and Cdh5.",
+      "Sdc1 is the top network hub (degree 16) and localizes to hepatocytes, but DGIdb lists 3 existing " +
+      "interactions (heparin, and the antibody-drug conjugate indatuximab ravtansine) and, more " +
+      "importantly, its only solved structures (e.g., PDB 4GVC/4GVD/6EJE) cover small ectodomain " +
+      "fragments rather than a druggable ligand-binding pocket.",
+      "Sdc4 is the second network hub (degree 14) and also localizes to hepatocytes, but its only solved " +
+      "structures (e.g., PDB 8BLV) resolve the cytoplasmic tail in complex with the syntenin PDZ domain " +
+      "- the opposite side of the membrane from where a secreted ligand such as Angptl4 would engage - " +
+      "and DGIdb's single hit (repotrectinib, an oncology kinase inhibitor) has no plausible mechanistic " +
+      "connection to Sdc4 and is most likely a text-mining artifact.",
+      "Sdc3 has no solved structure at all and zero DGIdb interactions; while genuinely undrugged, it is " +
+      "simply not structurally actionable.",
+      "Cdh5 is an isolated node in the network (linked to Angptl4 only) and localizes to endothelia " +
+      "(the expected, canonical result for this marker, serving as a positive control for the " +
+      "localization method rather than a disease-specific finding). Its one DGIdb hit, FX06, is a " +
+      "fibrin-derived peptide, not a small molecule.",
+      "Angptl4 itself was therefore selected: it has zero DGIdb drug interactions (genuinely undrugged); " +
+      "its C-terminal fibrinogen-like domain has a solved 2.3-A crystal structure (PDB 6EUB) with a " +
+      "visible, ligand-accommodating surface (a pentaethylene glycol molecule from the crystallization " +
+      "buffer occupies this site in the deposited structure, marking a real surface pocket rather than a " +
+      "computationally predicted one); and it is validated by two independent lines of evidence - our " +
+      "own stricter DEG reanalysis (LV upregulated, Section 3.1) and an independent 2024 single-cell " +
+      "study demonstrating cardiac-fibroblast-specific Angptl4 secretion in HFpEF (Li et al., 2024).",
+      "We explicitly note the resulting limitation: this choice reframes the docking target from the " +
+      "network-centrality hub genes (Sdc1/Sdc4) to the ligand itself, purely because of a structural-" +
+      "biology constraint (no usable receptor ectodomain structure), not because the network analysis " +
+      "itself pointed away from the syndecans. Sdc1/Sdc4 remain the top computational hubs of this axis " +
+      "and should be revisited once a structure of their heparan-sulfate-bearing ectodomain becomes " +
+      "available.",
+    ],
+    textS2: [
+      "Ezetimibe emerged as the more cross-validated candidate: an orthogonal, box-free method " +
+      "(DiffDock) independently converged on essentially the same surface pocket that Vina was " +
+      "constrained to search, and did so with a better confidence score than Resmetirom. The contact " +
+      "residues at this site (Leu304, Leu312, Gly313, Ala314, Leu322, Ser323, Val324, Trp349, Trp350, " +
+      "Gly352, Thr353, His356) form a real hydrophobic groove consistent with a genuine small-molecule " +
+      "pocket rather than a surface artifact.",
+      "Resmetirom scored best on Vina, which only searched the predefined pocket, but DiffDock's " +
+      "unconstrained search preferred a completely different surface region (contact residues Trp280, " +
+      "Asp281, Ile367, Leu374, Tyr387, Tyr388, Pro389). We report this as a genuine discrepancy rather " +
+      "than smoothing it over: Resmetirom's top Vina score should be read as \"the best-fitting pose " +
+      "within the pocket we searched,\" not as strong independent evidence that this is its preferred " +
+      "binding site on ANGPTL4.",
+      "Both DiffDock confidence scores (-2.06 for Resmetirom, -1.32 for Ezetimibe) fall within that " +
+      "method's own low-to-moderate confidence range (published benchmarks treat a confidence score " +
+      "above 0 as high-confidence), so neither result should be oversold as a confirmed binder - both " +
+      "remain hypothesis-generating leads from this screen, not validated hits.",
+      "DiffDock was not run locally: this machine has no CUDA-capable GPU, and a local from-scratch " +
+      "install (PyTorch, PyTorch Geometric, e3nn, and the ESM protein language model) would have made " +
+      "CPU-only inference impractically slow for even a single complex. Instead, a publicly running " +
+      "DiffDock Gradio Space (swcanner/DiffDock-Web, mirroring the original gcorso/DiffDock inference " +
+      "code) was used via its web interface for the two approved top-hit compounds only, consistent with " +
+      "the earlier CPU-budget decision to restrict DiffDock to the final 1-2 candidates rather than the " +
+      "full 21-compound library.",
+    ],
+  },
+
+  references: [
+    "Rinella ME, Lazarus JV, Ratziu V, et al. A multisociety Delphi consensus statement on new fatty liver disease nomenclature. J Hepatol. 2023;79(6):1542-1556.",
+    "Strocchi S, Liu L, Wang R, et al. Systems Biology Approach Uncovers Candidates for Liver-Heart Interorgan Crosstalk in HFpEF. Circ Res. 2024;135(8):873-876.",
+    "Schütte JP, Markus N, Grein S, et al. Cell Type–Specific Secretome Analysis Reveals Liver-Heart Crosstalk in HFpEF. Circ Res. 2025;136(11):1516-1518.",
+    "Li G, Zhao H, Cheng Z, Liu J, Li G, Guo Y. Single-cell transcriptomic profiling of heart reveals ANGPTL4 linking fibroblasts and angiogenesis in heart failure with preserved ejection fraction. J Adv Res. 2024.",
+    "Love MI, Huber W, Anders S. Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biol. 2014;15:550.",
+    "Zhu A, Ibrahim JG, Love MI. Heavy-tailed prior distributions for sequence count data: removing the noise and preserving large differences. Bioinformatics. 2019;35(12):2084-2092.",
+    "Korotkevich G, Sukhov V, Budin N, Shpak B, Artyomov MN, Sergushichev A. Fast gene set enrichment analysis. bioRxiv. 2019. doi:10.1101/060012",
+    "Wu T, Hu E, Xu S, et al. clusterProfiler 4.0: A universal enrichment tool for interpreting omics data. Innovation (Camb). 2021;2(3):100141.",
+    "Szklarczyk D, Kirsch R, Koutrouli M, et al. The STRING database in 2023: protein-protein association networks and functional enrichment analyses for any sequenced genome of interest. Nucleic Acids Res. 2023;51(D1):D638-D646.",
+    "Szklarczyk D, Santos Delgado A, von Mering C, Jensen LJ, Bork P, Kuhn M. STITCH 5: augmenting protein-chemical interaction networks with tissue and affinity data. Nucleic Acids Res. 2016;44(D1):D380-D384.",
+    "Jin S, Guerrero-Juarez CF, Zhang L, et al. Inference and analysis of cell-cell communication using CellChat. Nat Commun. 2021;12:1088.",
+    "Cannon M, Stevenson J, Stahl K, et al. DGIdb 5.0: rebuilding the drug-gene interaction database for precision medicine and drug discovery platforms. Nucleic Acids Res. 2024;52(D1):D1227-D1235.",
+    "Biterova EI, Esmaeeli M, Alanen HI, Saaranen M, Ruddock LW. Structures of Angptl3 and Angptl4, modulators of triglyceride levels and coronary artery disease. Sci Rep. 2018;8:6752.",
+    "Eberhardt J, Santos-Martins D, Tillack AF, Forli S. AutoDock Vina 1.2.0: New Docking Methods, Expanded Force Field, and Python Bindings. J Chem Inf Model. 2021;61(8):3891-3898.",
+    "Corso G, Stärk H, Jing B, Barzilay R, Jaakkola T. DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking. International Conference on Learning Representations (ICLR). 2023.",
+    "Ramachandran P, Dobie R, Wilson-Kanamori JR, et al. Resolving the fibrotic niche of human liver cirrhosis at single-cell level. Nature. 2019;575(7783):512-518.",
+  ],
+};

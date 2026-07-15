@@ -1,0 +1,47 @@
+"""Stitch paired sub-figures into single composite Figure images (panel A / B
+side by side, with a bold panel-letter tag), matching the convention seen in
+published papers (e.g. Fig. 1A-D combined as one figure with one legend)."""
+from PIL import Image, ImageDraw, ImageFont
+import os
+
+FIG_DIR = "figures"
+OUT_DIR = "figures/composite"
+os.makedirs(OUT_DIR, exist_ok=True)
+
+try:
+    FONT = ImageFont.truetype("arialbd.ttf", 56)
+except Exception:
+    FONT = ImageFont.load_default()
+
+GAP = 30
+PAD = 10
+
+
+def stitch(pairs, out_name):
+    """pairs: list of (image_filename, letter) to place left-to-right."""
+    imgs = [Image.open(os.path.join(FIG_DIR, fn)).convert("RGB") for fn, _ in pairs]
+    target_h = min(im.height for im in imgs)
+    resized = []
+    for im in imgs:
+        w = int(im.width * (target_h / im.height))
+        resized.append(im.resize((w, target_h), Image.LANCZOS))
+
+    total_w = sum(im.width for im in resized) + GAP * (len(resized) - 1)
+    canvas = Image.new("RGB", (total_w, target_h), "white")
+    x = 0
+    draw = ImageDraw.Draw(canvas)
+    for (im, (fn, letter)) in zip(resized, pairs):
+        canvas.paste(im, (x, 0))
+        draw.text((x + PAD, PAD), letter, fill="black", font=FONT)
+        x += im.width + GAP
+
+    out_path = os.path.join(OUT_DIR, out_name)
+    canvas.save(out_path)
+    print("Wrote", out_path, canvas.size)
+
+
+stitch([("Liver_volcano.png", "A"), ("LV_volcano.png", "B")], "Figure1_volcano_combined.png")
+stitch([("Liver_heatmap.png", "A"), ("LV_heatmap.png", "B")], "Figure2_heatmap_combined.png")
+stitch([("Liver_GSEA_hallmark_top20.png", "A"), ("LV_GSEA_hallmark_top20.png", "B")], "Figure3_GSEA_combined.png")
+stitch([("Ezetimibe_binding_pose_pymol.png", "A"), ("Resmetirom_binding_pose_pymol.png", "B")], "Figure7_pose_combined.png")
+stitch([("Liver_GO_BP_dotplot.png", "A"), ("LV_GO_BP_dotplot.png", "B")], "FigureS_GO_combined.png")
