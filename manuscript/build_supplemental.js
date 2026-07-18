@@ -3,8 +3,9 @@ const path = require("path");
 const { parse } = require("csv-parse/sync");
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType,
-  ImageRun, Table, TableRow, TableCell, WidthType, PageBreak,
+  ImageRun, Table, TableRow, TableCell, WidthType, PageBreak, ExternalHyperlink,
 } = require("docx");
+const CITATIONS = require("./citations.js");
 
 const BASE_DIR = path.join(__dirname, "..");
 const A4_WIDTH_DXA = 11906;
@@ -12,10 +13,29 @@ const MARGIN_DXA = 1440;
 const USABLE_WIDTH_DXA = A4_WIDTH_DXA - 2 * MARGIN_DXA;
 const USABLE_WIDTH_PX = Math.round(USABLE_WIDTH_DXA / 1440 * 96);
 
+const CITATION_PATTERN = new RegExp(
+  "(" + Object.keys(CITATIONS.inText)
+    .sort((a, b) => b.length - a.length)
+    .map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|") + ")",
+  "g"
+);
+
+function linkifyCitations(text, size) {
+  return text.split(CITATION_PATTERN).filter(Boolean).map((part) => {
+    const url = CITATIONS.inText[part];
+    if (!url) return new TextRun({ text: part, size });
+    return new ExternalHyperlink({
+      link: url,
+      children: [new TextRun({ text: part, size, color: "0563C1", underline: {} })],
+    });
+  });
+}
+
 function heading1(text, opts = {}) { return new Paragraph({ text, heading: HeadingLevel.HEADING_1, spacing: { before: 300, after: 150 }, ...opts }); }
 function heading2(text, opts = {}) { return new Paragraph({ text, heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 }, ...opts }); }
 function bodyPar(text) {
-  return new Paragraph({ children: [new TextRun({ text, size: 20 })], spacing: { after: 150, line: 320 }, alignment: AlignmentType.JUSTIFIED });
+  return new Paragraph({ children: linkifyCitations(text, 20), spacing: { after: 150, line: 320 }, alignment: AlignmentType.JUSTIFIED });
 }
 function italicPar(text) {
   return new Paragraph({ children: [new TextRun({ text, size: 19, italics: true })], spacing: { after: 150, line: 300 } });

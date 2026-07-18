@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType,
-  ImageRun, Table, TableRow, TableCell, WidthType, PageBreak,
+  ImageRun, Table, TableRow, TableCell, WidthType, PageBreak, ExternalHyperlink,
 } = require("docx");
+const CITATIONS = require("./citations.js");
 
 const BASE_DIR = path.join(__dirname, "..");
 const A4_WIDTH_DXA = 11906;
@@ -11,9 +12,31 @@ const MARGIN_DXA = 1440;
 const USABLE_WIDTH_DXA = A4_WIDTH_DXA - 2 * MARGIN_DXA;
 const USABLE_WIDTH_PX = Math.round(USABLE_WIDTH_DXA / 1440 * 96);
 
+const CITATION_PATTERN = new RegExp(
+  "(" + Object.keys(CITATIONS.inText)
+    .sort((a, b) => b.length - a.length)
+    .map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|") + ")",
+  "g"
+);
+
+// Splits body text on known "Author et al., Year" citation keys and renders
+// each as a clickable ExternalHyperlink to its DOI, matching the inline
+// linked-citation convention used in most published PDFs.
+function linkifyCitations(text, size) {
+  return text.split(CITATION_PATTERN).filter(Boolean).map((part) => {
+    const url = CITATIONS.inText[part];
+    if (!url) return new TextRun({ text: part, size });
+    return new ExternalHyperlink({
+      link: url,
+      children: [new TextRun({ text: part, size, color: "0563C1", underline: {} })],
+    });
+  });
+}
+
 function bodyPar(text) {
   return new Paragraph({
-    children: [new TextRun({ text, size: 22 })],
+    children: linkifyCitations(text, 22),
     spacing: { after: 200, line: 360 },
     alignment: AlignmentType.JUSTIFIED,
   });
@@ -120,8 +143,12 @@ function build(lang) {
   // --- References ---
   children.push(heading1(L.references));
   content.references.forEach((r, i) => {
+    const url = CITATIONS.referenceUrls[i];
+    const refChild = url
+      ? new ExternalHyperlink({ link: url, children: [new TextRun({ text: r, size: 20, color: "0563C1", underline: {} })] })
+      : new TextRun({ text: r, size: 20 });
     children.push(new Paragraph({
-      children: [new TextRun({ text: `${i + 1}. ${r}`, size: 20 })],
+      children: [new TextRun({ text: `${i + 1}. `, size: 20 }), refChild],
       spacing: { after: 120 },
     }));
   });
