@@ -21,12 +21,16 @@ function italicPar(text) {
   return new Paragraph({ children: [new TextRun({ text, size: 19, italics: true })], spacing: { after: 150, line: 300 } });
 }
 
-function figureBlock(relFile, captionText) {
+function figureBlock(relFile, captionText, maxHeightPx) {
   const p = path.join(BASE_DIR, relFile);
   const buf = fs.readFileSync(p);
   const dims = require("image-size").imageSize(buf);
-  const w = USABLE_WIDTH_PX;
-  const h = Math.round(dims.height * (w / dims.width));
+  let w = USABLE_WIDTH_PX;
+  let h = Math.round(dims.height * (w / dims.width));
+  if (maxHeightPx && h > maxHeightPx) {
+    h = maxHeightPx;
+    w = Math.round(dims.width * (h / dims.height));
+  }
   return [
     new Paragraph({ children: [new ImageRun({ data: buf, transformation: { width: w, height: h }, type: "png" })], alignment: AlignmentType.CENTER, spacing: { before: 200, after: 100 } }),
     new Paragraph({ children: [new TextRun({ text: captionText, size: 18, italics: true })], alignment: AlignmentType.CENTER, spacing: { after: 300 } }),
@@ -84,7 +88,7 @@ function build(lang) {
 
   // --- Supplemental Figures ---
   children.push(heading1(S.labels.figures, { pageBreakBefore: true }));
-  S.figures.forEach((f) => children.push(...figureBlock(f.file, f.caption)));
+  S.figures.forEach((f) => children.push(...figureBlock(f.file, f.caption, f.maxHeightPx)));
 
   // --- Supplemental Tables ---
   children.push(heading1(S.labels.tables, { pageBreakBefore: true }));
@@ -117,7 +121,10 @@ function build(lang) {
   S.textS2.forEach((p) => children.push(bodyPar(p)));
 
   children.push(heading2(S.textTitles.S3, { pageBreakBefore: true }));
-  S.textS3.forEach((p) => children.push(bodyPar(p)));
+  S.textS3.forEach((block) => {
+    if (block.type === "figure") children.push(...figureBlock(block.file, block.caption));
+    else children.push(bodyPar(block.text));
+  });
 
   const doc = new Document({
     sections: [{

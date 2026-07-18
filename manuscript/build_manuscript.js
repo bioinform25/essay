@@ -90,21 +90,19 @@ function build(lang) {
   children.push(heading1(L.methods));
   content.methods.forEach((m) => { children.push(heading2(m.h)); children.push(bodyPar(m.p)); });
 
-  // --- Results (figures interleaved) ---
+  // --- Results (figures and tables interleaved) ---
   children.push(heading1(L.results));
   content.resultsBlocks.forEach((block) => {
     if (block.type === "heading") children.push(heading2(block.text));
     else if (block.type === "p") children.push(bodyPar(block.text));
     else if (block.type === "figure") children.push(...figureBlock(block.file, block.caption));
-  });
-
-  // --- Tables ---
-  content.tables.forEach((t) => {
-    children.push(new Paragraph({
-      children: [new TextRun({ text: t.title, size: 18, bold: true })],
-      spacing: { before: 200, after: 80 },
-    }));
-    children.push(simpleTable(t.header, t.rows, t.widths));
+    else if (block.type === "table") {
+      children.push(new Paragraph({
+        children: [new TextRun({ text: block.title, size: 18, bold: true })],
+        spacing: { before: 200, after: 80 },
+      }));
+      children.push(simpleTable(block.header, block.rows, block.widths));
+    }
   });
 
   // --- Discussion ---

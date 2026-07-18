@@ -1,8 +1,12 @@
 # Phase 2 (step 3a): liver-side cell-type localization of the Angptl4-axis
-# receptors, reusing project4's already-annotated human GSE136103 liver Seurat
-# object (cross-species check note: project4 is human, this essay's DEG axis
-# is mouse -- used here only as an independent cross-species localization
-# reference, not pooled into any statistical test).
+# receptors, reusing a previously built, independently-annotated human liver
+# scRNA-seq atlas (GSE136103, Ramachandran et al. 2019; QC -> Harmony
+# integration -> clustering -> lineage-signature annotation). The full atlas
+# construction pipeline is described in Supplemental Text S3 -- it is not
+# rebuilt in this repository, only its final annotated object is reloaded
+# here. Cross-species note: the atlas is human, this essay's DEG axis is
+# mouse -- used here only as an independent cross-species localization
+# reference, not pooled into any statistical test.
 suppressPackageStartupMessages({
   library(Seurat)
   library(dplyr)
@@ -24,7 +28,7 @@ if ("cell_type" %in% colnames(obj@meta.data) && length(present) > 0) {
   Idents(obj) <- obj$cell_type
   p <- DotPlot(obj, features = present) + RotatedAxis() +
     labs(title = "Liver localization of Angptl4-axis genes",
-         subtitle = "project4 GSE136103 (human), cross-species reference") +
+         subtitle = "GSE136103 (human liver cirrhosis atlas), cross-species reference") +
     theme(plot.title = element_text(size = 14), plot.subtitle = element_text(size = 11))
   ggsave("figures/Angptl4axis_liver_localization_dotplot.png", p, width = 9, height = 6, dpi = 200)
 
@@ -32,7 +36,7 @@ if ("cell_type" %in% colnames(obj@meta.data) && length(present) > 0) {
     p2 <- DotPlot(obj, features = present, group.by = "cell_type", split.by = "condition") +
       RotatedAxis() +
       labs(title = "Liver localization by condition",
-           subtitle = "project4 GSE136103 (human), cross-species reference") +
+           subtitle = "GSE136103 (human liver cirrhosis atlas), cross-species reference") +
       theme(plot.title = element_text(size = 14), plot.subtitle = element_text(size = 11))
     ggsave("figures/Angptl4axis_liver_localization_by_condition.png", p2, width = 10, height = 6, dpi = 200)
   }

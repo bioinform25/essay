@@ -218,11 +218,22 @@ module.exports = {
       "OXIDATIVE_PHOSPHORYLATION, PEROXISOME, BILE_ACID_METABOLISM이 모두 뚜렷하게 상향되어, " +
       "HFpEF 스트레스 하에서 심장 대사가 지질 처리 및 미토콘드리아 경로 쪽으로 전환되고 있음을 " +
       "시사하였다 — 이는 기존 HFpEF 문헌에서 보고된 미토콘드리아 기능장애와 일치하는 패턴이다. " +
+      "이러한 농축 신호의 형태를 요약 지표인 NES만이 아니라 직접 확인하기 위해, 각 장기에서 가장 " +
+      "유의한 상위 2개 경로에 대한 고전적인 running-enrichment-score plot을 제시하였다(Figure " +
+      "3C-F): 간에서는 MTORC1_SIGNALING과 CHOLESTEROL_HOMEOSTASIS 모두 running score가 초반부터 " +
+      "급격하게 음의 방향으로 몰려 있고 0 부근으로 되돌아오지 않아, 분산된 신호가 아니라 뚜렷하게 " +
+      "집중된 결핍 신호임을 보여주었다. LV에서는 ADIPOGENESIS와 FATTY_ACID_METABOLISM이 정반대 " +
+      "패턴 — 즉시 상승해 지속되는 양의 농축 — 을 보여, 소수의 이상치 유전자가 아니라 일관된 대사 " +
+      "전환에 의한 신호임을 시사하였다. " +
       "GO Biological Process 분석에서는 간 34개, LV 10개의 유의 항목이, KEGG에서는 간 9개, LV " +
       "0개의 유의 경로가 확인되었다(Supplemental Figure S1, S2; Supplemental Table S3-S5)." },
     { type: "figure", file: "figures/composite/Figure3_GSEA_combined.png",
-      caption: "Figure 3. Hallmark 유전자집합농축분석(GSEA). (A) 간. (B) LV. 막대는 padj<0.05로 " +
-               "유의한 경로의 정규화농축점수(NES)를 나타낸다. GO-BP 및 KEGG 전체 결과는 " +
+      caption: "Figure 3. Hallmark 유전자집합농축분석(GSEA). (A) 간, (B) LV 막대그래프는 padj<0.05로 " +
+               "유의한 모든 경로의 정규화농축점수(NES)를 나타낸다. (C-F) 각 장기에서 가장 유의한 " +
+               "상위 2개 경로에 대한 고전적 GSEA running-enrichment-score plot(초록선: running ES; " +
+               "검은 눈금: 유전자집합 hit 위치; 빨강-파랑 막대: ranked list 상 위치; 회색: ranking " +
+               "metric 크기): (C) 간 MTORC1_SIGNALING, (D) 간 CHOLESTEROL_HOMEOSTASIS, (E) LV " +
+               "ADIPOGENESIS, (F) LV FATTY_ACID_METABOLISM. GO-BP 및 KEGG 전체 결과는 " +
                "Supplemental Figure S1-S2 및 Supplemental Table S3-S5에 수록하였다." },
 
     { type: "heading", text: "3.3 리간드-수용체 인터랙톰 매칭: 축의 방향 재조정" },
@@ -235,6 +246,17 @@ module.exports = {
       "이에 따라 후보 축의 방향을 간→심장에서 심장→간으로 재조정하였다. 이 방향 전환은 임시방편적인 " +
       "수정이 아니라, 심장의 기능장애가 이차적으로 간을 손상시키는 임상적으로 이미 확립된 " +
       "울혈성 간병증/심장-간 증후군 개념과 정확히 대응한다." },
+    { type: "table",
+      title: "Table 1. LV→간 리간드-수용체 매칭 결과 (CellChatDB).",
+      header: ["Interaction", "리간드", "수용체", "Pathway", "근거"],
+      widths: [2200, 1300, 1300, 1500, 2726],
+      rows: [
+        ["ANGPTL4_CDH5", "Angptl4", "Cdh5", "ANGPTL", "PMID: 30049845"],
+        ["ANGPTL4_SDC1", "Angptl4", "Sdc1", "ANGPTL", "PMID: 29017031"],
+        ["ANGPTL4_SDC2", "Angptl4", "Sdc2", "ANGPTL", "PMID: 29017031"],
+        ["ANGPTL4_SDC3", "Angptl4", "Sdc3", "ANGPTL", "PMID: 29017031"],
+        ["ANGPTL4_SDC4", "Angptl4", "Sdc4", "ANGPTL", "PMID: 29017031"],
+      ] },
 
     { type: "heading", text: "3.4 STRING 네트워크 분석: Sdc1/Sdc4가 hub 유전자로 확인됨" },
     { type: "p", text:
@@ -278,6 +300,18 @@ module.exports = {
       "Cdh5는 구조적·대사적 파트너(헤파란/더마탄 황산 글리코사미노글리칸 구성 성분인 iduronic " +
       "acid; calcium cation)만을 반환하여, 기존 치료 약물과의 연관성은 사실상 없었다(전체 결과는 " +
       "Supplemental Table S8 참조)." },
+    { type: "table",
+      title: "Table 2. Angptl4 축 유전자의 STITCH 화학적 파트너 (선별).",
+      header: ["유전자", "화합물"],
+      widths: [3013, 6013],
+      rows: [
+        ["Angptl4", "리놀레산 (9,12-octadecadienoic acid)"],
+        ["Angptl4", "팔미트산"],
+        ["Angptl4", "에이코사펜타엔산(EPA)"],
+        ["Angptl4", "Pioglitazone (승인 약물)"],
+        ["Sdc1 / Sdc2 / Sdc3", "Iduronic acid (헤파란/더마탄 황산 GAG 구성 성분)"],
+        ["Cdh5", "칼슘 양이온"],
+      ] },
 
     { type: "heading", text: "3.7 Druggability 평가 및 최종 표적 선정" },
     { type: "p", text:
@@ -293,6 +327,18 @@ module.exports = {
       "2.3Å 결정구조(PDB 6EUB)가 리간드 수용 가능한 표면과 함께 존재하며, 본 연구 자체의 DEG 분석과 " +
       "심장 섬유아세포 특이적 ANGPTL4 분비를 HFpEF에서 확인한 2024년 독립적 단일세포 연구(Li et " +
       "al., 2024) 양쪽으로부터 이중 검증되었다(상세 근거는 Supplemental Text S1 참조)." },
+    { type: "table",
+      title: "Table 3. Angptl4 축 유전자의 DGIdb druggability 요약.",
+      header: ["유전자", "상호작용 수", "승인 약물 수", "예시 약물"],
+      widths: [1800, 1800, 1500, 3926],
+      rows: [
+        ["SDC2", "1", "0", "Heparan sulfate"],
+        ["SDC4", "1", "1", "Repotrectinib (텍스트마이닝 오탐 가능성)"],
+        ["CDH5", "1", "0", "FX06 (펩타이드)"],
+        ["SDC3", "0", "0", "-"],
+        ["SDC1", "3", "0", "Heparin; Indatuximab ravtansine (ADC)"],
+        ["ANGPTL4", "0", "0", "- (완전 미개발, 최종 표적)"],
+      ] },
 
     { type: "heading", text: "3.8 AutoDock Vina 구조 기반 가상 스크리닝" },
     { type: "p", text:
@@ -307,6 +353,17 @@ module.exports = {
       caption: "Figure 6. ANGPTL4 fibrinogen-like domain(PDB 6EUB)에 대한 21개 화합물의 AutoDock " +
                "Vina 가상 스크리닝, 최고 결합친화도 순 정렬. 점선: -8.0 kcal/mol 참고 기준선. " +
                "전체 결과는 Supplemental Table S7 참조." },
+    { type: "table",
+      title: "Table 4. ANGPTL4(PDB 6EUB)에 대한 AutoDock Vina 상위 5개 화합물.",
+      header: ["순위", "화합물", "최고 결합친화도 (kcal/mol)", "분류"],
+      widths: [900, 2500, 3100, 2526],
+      rows: [
+        ["1", "Resmetirom", "-9.07", "심혈관대사/MASH 약물"],
+        ["2", "Ezetimibe", "-8.88", "심혈관대사/MASH 약물"],
+        ["3", "Pioglitazone", "-8.28", "심혈관대사/MASH 약물"],
+        ["4", "Fenofibrate", "-8.21", "심혈관대사/MASH 약물"],
+        ["5", "Empagliflozin", "-8.14", "심혈관대사/MASH 약물"],
+      ] },
 
     { type: "heading", text: "3.9 DiffDock 교차검증: 선두 후보의 재조정" },
     { type: "p", text:
@@ -457,59 +514,6 @@ module.exports = {
       "남아있다.",
   },
 
-  tables: [
-    {
-      title: "Table 1. LV→간 리간드-수용체 매칭 결과 (CellChatDB).",
-      header: ["Interaction", "리간드", "수용체", "Pathway", "근거"],
-      widths: [2200, 1300, 1300, 1500, 2726],
-      rows: [
-        ["ANGPTL4_CDH5", "Angptl4", "Cdh5", "ANGPTL", "PMID: 30049845"],
-        ["ANGPTL4_SDC1", "Angptl4", "Sdc1", "ANGPTL", "PMID: 29017031"],
-        ["ANGPTL4_SDC2", "Angptl4", "Sdc2", "ANGPTL", "PMID: 29017031"],
-        ["ANGPTL4_SDC3", "Angptl4", "Sdc3", "ANGPTL", "PMID: 29017031"],
-        ["ANGPTL4_SDC4", "Angptl4", "Sdc4", "ANGPTL", "PMID: 29017031"],
-      ],
-    },
-    {
-      title: "Table 2. Angptl4 축 유전자의 STITCH 화학적 파트너 (선별).",
-      header: ["유전자", "화합물"],
-      widths: [3013, 6013],
-      rows: [
-        ["Angptl4", "리놀레산 (9,12-octadecadienoic acid)"],
-        ["Angptl4", "팔미트산"],
-        ["Angptl4", "에이코사펜타엔산(EPA)"],
-        ["Angptl4", "Pioglitazone (승인 약물)"],
-        ["Sdc1 / Sdc2 / Sdc3", "Iduronic acid (헤파란/더마탄 황산 GAG 구성 성분)"],
-        ["Cdh5", "칼슘 양이온"],
-      ],
-    },
-    {
-      title: "Table 3. Angptl4 축 유전자의 DGIdb druggability 요약.",
-      header: ["유전자", "상호작용 수", "승인 약물 수", "예시 약물"],
-      widths: [1800, 1800, 1500, 3926],
-      rows: [
-        ["SDC2", "1", "0", "Heparan sulfate"],
-        ["SDC4", "1", "1", "Repotrectinib (텍스트마이닝 오탐 가능성)"],
-        ["CDH5", "1", "0", "FX06 (펩타이드)"],
-        ["SDC3", "0", "0", "-"],
-        ["SDC1", "3", "0", "Heparin; Indatuximab ravtansine (ADC)"],
-        ["ANGPTL4", "0", "0", "- (완전 미개발, 최종 표적)"],
-      ],
-    },
-    {
-      title: "Table 4. ANGPTL4(PDB 6EUB)에 대한 AutoDock Vina 상위 5개 화합물.",
-      header: ["순위", "화합물", "최고 결합친화도 (kcal/mol)", "분류"],
-      widths: [900, 2500, 3100, 2526],
-      rows: [
-        ["1", "Resmetirom", "-9.07", "심혈관대사/MASH 약물"],
-        ["2", "Ezetimibe", "-8.88", "심혈관대사/MASH 약물"],
-        ["3", "Pioglitazone", "-8.28", "심혈관대사/MASH 약물"],
-        ["4", "Fenofibrate", "-8.21", "심혈관대사/MASH 약물"],
-        ["5", "Empagliflozin", "-8.14", "심혈관대사/MASH 약물"],
-      ],
-    },
-  ],
-
   codeWalkthrough: {
     intro:
       "본 연구의 모든 코드, 중간 결과, figure는 github.com/bioinform25/essay에서 버전관리되고 " +
@@ -538,6 +542,12 @@ module.exports = {
       { file: "17_stitch_panels.py", desc: "짝을 이루는 단일 패널 figure(volcano, heatmap, GSEA, docking pose, GO)를 표준 저널 figure 레이아웃에 맞게 (A)/(B)/(C) 패널 문자와 함께 하나의 합성 Figure 이미지로 결합." },
       { file: "18_fix_liver_heatmap.R", desc: "캐시된 DESeq2 객체를 재사용해 간 heatmap만 다시 생성 — 행 폰트를 줄이고 캔버스를 늘려 86개 유전자 라벨이 더 이상 겹치지 않도록 조정." },
       { file: "19_tabula_muris_check.R", desc: "공개 Tabula Muris FACS 간 아틀라스로 Sdc1/Sdc4/Sdc3/Cdh5의 간세포/Kupffer/내피세포 국소화를 마우스 조직에서 직접 교차검증 — 인간 전용 종간 참조라는 한계를 보완." },
+      { file: "20_check_ggraph.R", desc: "Figure 4 재구축 전 ggraph/tidygraph/ggrepel 패키지 설치 여부 확인." },
+      { file: "21_network_ggraph.R", desc: "ggraph/tidygraph/ggrepel로 Figure 4(STRING 네트워크) 재구축: 노드 크기는 degree, 엣지 굵기/불투명도는 STRING confidence, 겹치지 않는 repelled 유전자 라벨 적용." },
+      { file: "22_check_score_range.R", desc: "STRING 엣지 score 컬럼이 이미 0-1 사이 비율(0-1000이 아님)임을 확인하는 디버그 스크립트 — script 21 초기 버전의 나눗셈 버그를 수정하는 근거로 사용." },
+      { file: "23_graphical_abstract.py", desc: "데이터부터 재창출 후보물질까지 연구 전체 워크플로우를 요약하는 graphical abstract 파이프라인 도식(matplotlib) 생성." },
+      { file: "24_gsea_running_score.R", desc: "clusterProfiler::GSEA로 Hallmark GSEA를 재실행(script 02의 fgsea와 동일한 랭킹 지표 사용)하고, enrichplot::gseaplot2로 각 장기 상위 2개 pathway에 대한 고전적 running-enrichment-score plot을 생성 — Figure 3C-F로 추가." },
+      { file: "25_umap_featureplot_condition.R", desc: "GSE136103 아틀라스에서 Sdc1/Sdc4/Angptl4에 대해 조건별(healthy/cirrhotic)로 나눈 UMAP FeaturePlot(Seurat) 생성 — 기존 dot plot과 합쳐 Figure S3 구성." },
     ],
     reproNote:
       "소프트웨어 버전: R 4.5.2(DESeq2, apeglm, clusterProfiler, fgsea, msigdbr, CellChat, igraph, " +
@@ -561,8 +571,8 @@ module.exports = {
         caption: "Figure S1. GO Biological Process 농축분석. (A) 간(유의 항목 34개, padj<0.05). (B) LV(유의 항목 10개, padj<0.05). Figure 3의 Hallmark GSEA와 겹치지 않는 상보적 온톨로지로 결과를 보완한다." },
       { file: "figures/Liver_KEGG_dotplot.png",
         caption: "Figure S2. 간 KEGG 경로 농축분석(유의 경로 9개, padj<0.05). 동일 기준에서 LV는 유의한 KEGG 경로가 없었으며, 이를 생략하지 않고 그대로 보고한다." },
-      { file: "figures/Angptl4axis_liver_localization_by_condition.png",
-        caption: "Figure S3. 질환 상태(건강 vs. 간경변)별로 나눈 Angptl4 축 유전자의 간 세포유형 국소화(GSE136103 종간 참조 아틀라스; 구축 과정은 Methods 2.6 및 Supplemental Text S3 참조). Figure 5에 더해, 단순 발현량뿐 아니라 국소화 패턴 자체가 질환 상태에 따라 달라지는지를 보여주기 위해 추가하였다." },
+      { file: "figures/composite/FigureS3_condition_combined.png", maxHeightPx: 700,
+        caption: "Figure S3. 질환 상태(건강 vs. 간경변)별로 나눈 Angptl4 축 유전자의 간 세포유형 국소화(GSE136103 종간 참조 아틀라스; 구축 과정은 Methods 2.6 및 Supplemental Text S3 참조). Figure 5에 더해, 단순 발현량뿐 아니라 국소화 패턴 자체가 질환 상태에 따라 달라지는지를 보여주기 위해 추가하였다. (A) 전체 6개 축 유전자에 대한 dot plot(y축에 세포유형 표기). (B) UMAP feature plot(SDC1, SDC4, ANGPTL4), 건강 vs. 간경변을 나란히 배치하여 세포유형별 요약 수치가 아니라 발현 세포의 UMAP 전체 상 분포 변화로 동일한 변화를 보여준다. 클러스터 정체성은 (A)의 dot plot 및 Supplemental Text S3의 주석된 UMAP과 일치한다." },
       { file: "figures/TabulaMuris_liver_dotplot.png",
         caption: "Figure S4. Angptl4 축 유전자 국소화의 독립적인 마우스 자체 교차검증(Tabula Muris, FACS/Smart-seq2 간 아틀라스, n=714 세포, 5개 주석 세포유형). Sdc4(91.8%)와 Sdc1(68.3%)은 주로 간세포에서, Sdc3(80.3%)는 Kupffer 세포에서, Cdh5(98.4%)는 간 동양혈관 내피세포에서 검출되어 — bulk 코호트와 동일한 종에서 Figure 5의 인간 아틀라스 패턴을 직접 재현하였다." },
     ],
@@ -657,71 +667,97 @@ module.exports = {
       "아니라 최종 소수 후보로 제한한다는 앞서의 CPU 예산 결정과 일치한다.",
     ],
     textS3: [
-      "서론과 Methods 2.6에서는 같은 저자가 별도의, 완전히 버전관리된 프로젝트로 수행한 두 건의 " +
-      "선행 인간 코호트 재분석을 인용한다 — (a) 본 연구의 더 넓은 연구 프로그램을 촉발한 후보 " +
-      "유전자 목록의 출처, 그리고 (b) 3.5절/Figure 5에서 독립적인 종간 참조 자료로 재사용된 인간 " +
-      "간 scRNA-seq 아틀라스이다. 이 두 선행 분석은 별도로 출판되어 있지 않으므로, 본 절에서는 " +
-      "외부 프로젝트 저장소에 대한 접근 없이도 본 원고만으로 완전히 이해될 수 있도록 그 방법론과 " +
-      "결과를 빠짐없이 기술한다.",
+      { type: "p", text:
+        "서론과 Methods 2.6에서는 같은 저자가 별도의, 완전히 버전관리된 프로젝트로 수행한 두 건의 " +
+        "선행 인간 코호트 재분석을 인용한다 — (a) 본 연구의 더 넓은 연구 프로그램을 촉발한 후보 " +
+        "유전자 목록의 출처, 그리고 (b) 3.5절/Figure 5에서 독립적인 종간 참조 자료로 재사용된 인간 " +
+        "간 scRNA-seq 아틀라스이다. 이 두 선행 분석은 별도로 출판되어 있지 않으므로, 본 절에서는 " +
+        "외부 프로젝트 저장소에 대한 접근 없이도 본 원고만으로 완전히 이해될 수 있도록 그 방법론과 " +
+        "결과를 각각의 핵심 figure와 함께 빠짐없이 기술한다." },
 
-      "선행분석 1 — GSE135251(bulk RNA-seq, 인간 간생검 216례; Govaere et al., 2020): 이 공개 " +
-      "MASLD 코호트는 생검으로 확진된 MASLD/NAFLD 환자 206명(섬유화 병기 F0-F4)과 건강대조군 " +
-      "10명으로 구성된다. 건강대조군 10명은 제외하고, 206명의 MASLD 환자를 초기 섬유화군(F0-F1, " +
-      "n=85)과 중등도/진행성 섬유화군(F2-F4, n=121)으로 나누었다. 차등발현은 DESeq2(Wald test, " +
-      "apeglm log2FC 축소; count≥10인 유전자를 ≥20개 표본에서 사전 필터링, 64,258개에서 " +
-      "17,421개 유전자로 검정 대상 축소)로 계산하였으며, 진행성 대 초기 섬유화에서 유의하게 " +
-      "상향된 유전자 167개, 하향된 유전자 5개를 확인하였다(padj<0.05). 유전자 집합 농축분석" +
-      "(fgsea, Wald 통계량으로 순위화; MSigDB Hallmark 및 KEGG_MEDICUS)은 진행성 섬유화에서 " +
-      "EMT, TNFA/NFKB 신호전달, 혈관신생이 농축되고 지방산대사·산화적인산화가 결핍됨을 보였고, " +
-      "GO/KEGG 과대표현분석(clusterProfiler)은 세포외기질 조직화, 콜라겐 원섬유 조직화, 인테그린 " +
-      "신호전달을 주요 농축 용어로 반환하였다. 유의 DEG 172개를 STRING API(confidence " +
-      "score≥700)에 조회하여 157개 노드, 60개 엣지의 네트워크를 구성하였으며, 이는 케모카인/면역 " +
-      "동원 모듈(CXCL8, CXCL1, CXCL6, CCL19, CCL20, CCL21)과 COL1A1을 중심으로 한 콜라겐/ECM " +
-      "모듈로 나뉘었다. hub 유전자 15개(degree≥3)를 DGIdb에 조회하고, 이미 잘 알려진 섬유화 " +
-      "유전자 약 26개(collagen 계열, 핵심 TGF-β/근섬유아세포 축)의 수기 큐레이션 목록과 " +
-      "대조하여 이 목록을 제외한 결과, 이 특정 코호트에서 아직 깊이 다루어지지 않은 druggable, " +
-      "네트워크 중심적 후보 7개가 남았다: CCL21, CXCL8, CCL20, EPCAM, LUM, THY1, THBS2. 이 7개 " +
-      "유전자는 넓은 섬유화 문헌에서 문자 그대로 신규는 아니지만, 이 코호트에서 데이터 기반·" +
-      "네트워크 중심성 순위로 도출된 후보로서 서론에서 언급한 후보 목록이다.",
+      { type: "p", text:
+        "선행분석 1 — GSE135251(bulk RNA-seq, 인간 간생검 216례; Govaere et al., 2020): 이 공개 " +
+        "MASLD 코호트는 생검으로 확진된 MASLD/NAFLD 환자 206명(섬유화 병기 F0-F4)과 건강대조군 " +
+        "10명으로 구성된다. 건강대조군 10명은 제외하고, 206명의 MASLD 환자를 초기 섬유화군(F0-F1, " +
+        "n=85)과 중등도/진행성 섬유화군(F2-F4, n=121)으로 나누었다. 차등발현은 DESeq2(Wald test, " +
+        "apeglm log2FC 축소; count≥10인 유전자를 ≥20개 표본에서 사전 필터링, 64,258개에서 " +
+        "17,421개 유전자로 검정 대상 축소)로 계산하였으며, 진행성 대 초기 섬유화에서 유의하게 " +
+        "상향된 유전자 167개, 하향된 유전자 5개를 확인하였다(padj<0.05). 유전자 집합 농축분석" +
+        "(fgsea, Wald 통계량으로 순위화; MSigDB Hallmark 및 KEGG_MEDICUS)은 진행성 섬유화에서 " +
+        "EMT, TNFA/NFKB 신호전달, 혈관신생이 농축되고 지방산대사·산화적인산화가 결핍됨을 보였고, " +
+        "GO/KEGG 과대표현분석(clusterProfiler)은 세포외기질 조직화, 콜라겐 원섬유 조직화, 인테그린 " +
+        "신호전달을 주요 농축 용어로 반환하였다. 유의 DEG 172개를 STRING API(confidence " +
+        "score≥700)에 조회하여 157개 노드, 60개 엣지의 네트워크를 구성하였으며, 이는 케모카인/면역 " +
+        "동원 모듈(CXCL8, CXCL1, CXCL6, CCL19, CCL20, CCL21)과 COL1A1을 중심으로 한 콜라겐/ECM " +
+        "모듈로 나뉘었다(아래 그림). hub 유전자 15개(degree≥3)를 DGIdb에 조회하고, 이미 잘 알려진 섬유화 " +
+        "유전자 약 26개(collagen 계열, 핵심 TGF-β/근섬유아세포 축)의 수기 큐레이션 목록과 " +
+        "대조하여 이 목록을 제외한 결과, 이 특정 코호트에서 아직 깊이 다루어지지 않은 druggable, " +
+        "네트워크 중심적 후보 7개가 남았다: CCL21, CXCL8, CCL20, EPCAM, LUM, THY1, THBS2. 이 7개 " +
+        "유전자는 넓은 섬유화 문헌에서 문자 그대로 신규는 아니지만, 이 코호트에서 데이터 기반·" +
+        "네트워크 중심성 순위로 도출된 후보로서 서론에서 언급한 후보 목록이다." },
+      { type: "figure", file: "figures/prior_analyses/GSE135251_ppi_hub_network.png",
+        caption: "GSE135251 hub 유전자 PPI 네트워크(선행분석 1). 빨강: 7개 신규 druggable 후보; " +
+                 "파랑: 이미 잘 알려진/druggable하지 않은 섬유화 유전자. 케모카인/면역 동원 클러스터와 " +
+                 "COL1A1 중심의 콜라겐/ECM 클러스터 두 모듈로 나뉜다." },
 
-      "선행분석 2 — GSE136103(단일세포 RNA-seq 아틀라스 구축 및 국소화; Ramachandran et al., " +
-      "2019): 이 공개 데이터셋은 인간 간 10x 표본 20개(건강 5례 + 간경변 5례, CD45+/CD45- 분리 " +
-      "분획; 동일 GEO series의 혈액 및 마우스 표본은 본 질문과 무관하여 제외)로 구성된다. 원 " +
-      "논문의 Methods를 따라 표본별로 세포를 품질관리 필터링(nFeature_RNA>300, percent.mt<30)해 " +
-      "60,925개 세포를 확보한 뒤, 정규화·스케일링·PCA를 거쳐 Harmony(RunHarmony, batch=개별 " +
-      "표본, 3회 반복만에 수렴; 통합 후 UMAP에서 세포가 환자 출처가 아니라 세포유형별로 잘 " +
-      "혼합됨을 확인)로 개별 10x 실행 단위 배치보정을 수행하였다. FindClusters(Harmony 임베딩, " +
-      "dims 1:15, resolution 0.6)로 20개 클러스터를 도출하였으며, 이는 동일 resolution에서 원 " +
-      "논문이 보고한 클러스터 수와 일치한다. 각 클러스터는 원 논문 자체의 보충 계통(lineage) " +
-      "시그니처 유전자 집합에 대해 Seurat의 AddModuleScore로 점수화하고 가장 높은 점수의 계통을 " +
-      "부여하는 방식으로 12개 세포 계통(T cell, ILC, MP, B cell, Plasma cell, pDC, Mast cell, " +
-      "Endothelia, Mesenchyme, Hepatocyte, Cholangiocyte, Cycling) 중 하나로 배정되었으며, 모든 " +
-      "배정은 marker 유전자 dotplot으로 최종 확정 전 교차 검증되었다. 이 아틀라스는 선행연구에서 " +
-      "GSE135251에서 도출된 7개 후보 유전자를 국소화하는 데 사용되었다: LUM, THY1, THBS2는 모두 " +
-      "Mesenchyme 클러스터(간성상세포/문맥 섬유아세포)에 특이적으로 국소화되었고 건강 대비 " +
-      "간경변에서 동일 세포유형 내 발현이 훨씬 높았다(예: THY1은 발현 세포 비율이 5.4%에서 " +
-      "41.9%로 증가). EPCAM은 Cholangiocyte에 그만큼 명확하게 국소화되어 간경변 관련 담관반응" +
-      "(ductular reaction)과 일치하였고, CXCL8과 CCL20은 하나의 뚜렷한 생산 세포유형으로 " +
-      "수렴하지 않았다. 구성비 변화 검정(카이제곱 및 유형별 비율 검정, BH 보정)은 추가로 " +
-      "Cholangiocyte 비율이 간경변에서 거의 3배(3.2%에서 9.1%)로, Endothelia는 2배 이상(8.9%에서 " +
-      "19.3%)으로 증가한 반면, Mesenchyme 자체 비율은 LUM/THY1/THBS2 발현이 급격히 증가하는 " +
-      "가운데서도 오히려 소폭 감소(4.6%에서 3.0%)함을 보였다 — 즉 섬유화 신호는 성상세포의 순 " +
-      "증식이 아니라 기존 성상세포의 활성화를 반영한다.",
+      { type: "p", text:
+        "선행분석 2 — GSE136103(단일세포 RNA-seq 아틀라스 구축 및 국소화; Ramachandran et al., " +
+        "2019): 이 공개 데이터셋은 인간 간 10x 표본 20개(건강 5례 + 간경변 5례, CD45+/CD45- 분리 " +
+        "분획; 동일 GEO series의 혈액 및 마우스 표본은 본 질문과 무관하여 제외)로 구성된다. 원 " +
+        "논문의 Methods를 따라 표본별로 세포를 품질관리 필터링(nFeature_RNA>300, percent.mt<30)해 " +
+        "60,925개 세포를 확보한 뒤, 정규화·스케일링·PCA를 거쳐 Harmony(RunHarmony, batch=개별 " +
+        "표본, 3회 반복만에 수렴; 통합 후 UMAP에서 세포가 환자 출처가 아니라 세포유형별로 잘 " +
+        "혼합됨을 확인)로 개별 10x 실행 단위 배치보정을 수행하였다. FindClusters(Harmony 임베딩, " +
+        "dims 1:15, resolution 0.6)로 20개 클러스터를 도출하였으며, 이는 동일 resolution에서 원 " +
+        "논문이 보고한 클러스터 수와 일치한다. 각 클러스터는 원 논문 자체의 보충 계통(lineage) " +
+        "시그니처 유전자 집합에 대해 Seurat의 AddModuleScore로 점수화하고 가장 높은 점수의 계통을 " +
+        "부여하는 방식으로 12개 세포 계통(T cell, ILC, MP, B cell, Plasma cell, pDC, Mast cell, " +
+        "Endothelia, Mesenchyme, Hepatocyte, Cholangiocyte, Cycling) 중 하나로 배정되었으며, 모든 " +
+        "배정은 marker 유전자 dotplot으로 최종 확정 전 교차 검증되었다(아래 주석된 UMAP — " +
+        "본 연구 Figure S3B의 FeaturePlot에도 재사용된 것과 동일한 임베딩)." },
+      { type: "figure", file: "figures/prior_analyses/GSE136103_umap_annotated.png",
+        caption: "GSE136103 주석된 UMAP(선행분석 2), 12개 세포 계통, 60,925개 세포. Figure 5, " +
+                 "Figure S3, Figure S3B FeaturePlot 모두 이와 동일한 임베딩을 기반으로 한다." },
 
-      "본 연구와의 관계: 본 원고는 GSE135251 bulk 분석이나 그 LUM/THY1/THBS2/EPCAM 결과를 " +
-      "전혀 재사용하지 않는다 — 해당 분석은 서론에서 네트워크 중심성·druggability 기반 " +
-      "스크리닝 전략을 진정한 다중 장기 마우스 데이터셋으로 확장할 가치가 있다고 판단한 배경으로만 " +
-      "인용된다. 반면 위에서 기술한 GSE136103 아틀라스는 3.5절/Figure 5 및 Supplemental Figure " +
-      "S3에서 직접 재사용되지만, 완전히 다른 역할로 사용된다 — 즉 아틀라스가 원래 국소화하도록 " +
-      "구축되었던 LUM/THY1/THBS2/EPCAM 유전자와는 무관한, 본 연구 자체의 후보 유전자(Sdc1, " +
-      "Sdc2, Sdc3, Sdc4, Cdh5, Angptl4)를 국소화하기 위한 독립적인 종간 참조 자료로만 사용된다. " +
-      "선행연구에서 밝힌 것과 동일한 한계가 여기에도 적용된다: GSE135251과 GSE136103은 짝지어진 " +
-      "표본이 없는 서로 다른 환자 코호트이며, 본 연구 자체의 마우스 코호트는 이와 완전히 " +
-      "독립적인 세 번째 데이터셋이다 — 따라서 세 데이터셋 간의 모든 교차 참조(bulk-아틀라스 간, " +
-      "마우스-인간 간)는 개체 내에서 직접 매칭된 검증이 아니라, 독립적인 데이터셋들에 걸쳐 도출한 " +
-      "타당한 생물학적 추론이다. 두 선행 분석의 원본 데이터, 분석 코드, 전체 결과표는 모두 " +
-      "각자의 전용 저장소에 버전관리되어 있으며(본 원고의 다른 부분과 일관되게 내부 프로젝트 " +
-      "명칭이 아니라 일반적으로 지칭하였다), 교신저자에게 요청 시 열람 가능하다.",
+      { type: "p", text:
+        "이 아틀라스는 선행연구에서 " +
+        "GSE135251에서 도출된 7개 후보 유전자를 국소화하는 데 사용되었다(아래 그림): LUM, THY1, THBS2는 모두 " +
+        "Mesenchyme 클러스터(간성상세포/문맥 섬유아세포)에 특이적으로 국소화되었고 건강 대비 " +
+        "간경변에서 동일 세포유형 내 발현이 훨씬 높았다(예: THY1은 발현 세포 비율이 5.4%에서 " +
+        "41.9%로 증가). EPCAM은 Cholangiocyte에 그만큼 명확하게 국소화되어 간경변 관련 담관반응" +
+        "(ductular reaction)과 일치하였고, CXCL8과 CCL20은 하나의 뚜렷한 생산 세포유형으로 " +
+        "수렴하지 않았다." },
+      { type: "figure", file: "figures/prior_analyses/GSE136103_candidate_gene_dotplot.png",
+        caption: "GSE136103에서 GSE135251 유래 7개 후보 유전자의 국소화(선행분석 2), 조건별 " +
+                 "분리. LUM/THY1/THBS2는 Mesenchyme에 국소화되며 간경변에서 급격히 증가한다; " +
+                 "EPCAM은 Cholangiocyte에 국소화된다." },
+
+      { type: "p", text:
+        "구성비 변화 검정(카이제곱 및 유형별 비율 검정, BH 보정)은 추가로 " +
+        "Cholangiocyte 비율이 간경변에서 거의 3배(3.2%에서 9.1%)로, Endothelia는 2배 이상(8.9%에서 " +
+        "19.3%)으로 증가한 반면, Mesenchyme 자체 비율은 LUM/THY1/THBS2 발현이 급격히 증가하는 " +
+        "가운데서도 오히려 소폭 감소(4.6%에서 3.0%)함을 보였다 — 즉 섬유화 신호는 성상세포의 순 " +
+        "증식이 아니라 기존 성상세포의 활성화를 반영한다." },
+      { type: "figure", file: "figures/prior_analyses/GSE136103_composition_barplot.png",
+        caption: "GSE136103 세포유형 구성비, 건강 vs. 간경변(선행분석 2). Cholangiocyte와 " +
+                 "Endothelia 비율은 간경변에서 증가하지만, Mesenchyme 비율은 섬유화 유전자 발현 " +
+                 "증가에도 불구하고 증가하지 않는다 — 증식이 아니라 활성화." },
+
+      { type: "p", text:
+        "본 연구와의 관계: 본 원고는 GSE135251 bulk 분석이나 그 LUM/THY1/THBS2/EPCAM 결과를 " +
+        "전혀 재사용하지 않는다 — 해당 분석은 서론에서 네트워크 중심성·druggability 기반 " +
+        "스크리닝 전략을 진정한 다중 장기 마우스 데이터셋으로 확장할 가치가 있다고 판단한 배경으로만 " +
+        "인용된다. 반면 위에서 기술한 GSE136103 아틀라스는 3.5절/Figure 5 및 Supplemental Figure " +
+        "S3에서 직접 재사용되지만, 완전히 다른 역할로 사용된다 — 즉 아틀라스가 원래 국소화하도록 " +
+        "구축되었던 LUM/THY1/THBS2/EPCAM 유전자와는 무관한, 본 연구 자체의 후보 유전자(Sdc1, " +
+        "Sdc2, Sdc3, Sdc4, Cdh5, Angptl4)를 국소화하기 위한 독립적인 종간 참조 자료로만 사용된다. " +
+        "선행연구에서 밝힌 것과 동일한 한계가 여기에도 적용된다: GSE135251과 GSE136103은 짝지어진 " +
+        "표본이 없는 서로 다른 환자 코호트이며, 본 연구 자체의 마우스 코호트는 이와 완전히 " +
+        "독립적인 세 번째 데이터셋이다 — 따라서 세 데이터셋 간의 모든 교차 참조(bulk-아틀라스 간, " +
+        "마우스-인간 간)는 개체 내에서 직접 매칭된 검증이 아니라, 독립적인 데이터셋들에 걸쳐 도출한 " +
+        "타당한 생물학적 추론이다. 두 선행 분석의 원본 데이터, 분석 코드, 전체 결과표는 모두 " +
+        "각자의 전용 저장소에 버전관리되어 있으며(본 원고의 다른 부분과 일관되게 내부 프로젝트 " +
+        "명칭이 아니라 일반적으로 지칭하였다), 교신저자에게 요청 시 열람 가능하다." },
     ],
   },
 
