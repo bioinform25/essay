@@ -73,24 +73,25 @@ module.exports = {
     "biology discovery stage into protein-protein interaction (PPI) network construction, network " +
     "pharmacology, or structure-based virtual screening.",
 
-    "The present study set out to reanalyze this public dataset under a substantially stricter " +
-    "statistical threshold and to carry the analysis all the way through ligand-receptor interactome " +
-    "matching, a STRING-based PPI network, STITCH network pharmacology, DGIdb druggability assessment, " +
-    "and, finally, structure-based virtual screening with AutoDock Vina and DiffDock. This effort builds " +
-    "directly on our own prior work profiling human MASLD liver-fibrosis cohorts. The first (GSE135251, " +
-    "Govaere et al.; 216 liver biopsies, early F0-F1 vs. moderate/advanced F2-F4 fibrosis) was reanalyzed " +
-    "by bulk DESeq2 differential expression, a STRING PPI network restricted to hub genes (degree>=3), " +
-    "and a DGIdb druggability screen that excluded already-canonical fibrosis genes (collagens, the core " +
-    "TGF-beta/myofibroblast axis) to surface seven under-explored druggable candidates: CCL21, CXCL8, " +
-    "CCL20, EPCAM, LUM, THY1, and THBS2. The second (GSE136103, Ramachandran et al., 2019, Nature; a " +
-    "human liver cirrhosis single-cell atlas) was built and annotated from scratch (quality control, " +
-    "Harmony batch integration, clustering, and lineage-signature-based cell-type annotation - full " +
-    "pipeline in Methods 2.6) to localize three of those seven genes (LUM, THY1, THBS2) to activated " +
-    "hepatic stellate cells and to characterize their upstream transcription-factor/miRNA regulators and " +
-    "cell-cell communication partners. Full methodological detail for both prior analyses, written so as " +
-    "to stand on their own without reference to internal project labels, is provided in Supplemental " +
-    "Text S3. The present study extends that program by moving from human to mouse and from a single-" +
-    "organ (liver) to a genuinely inter-organ (liver-heart) axis; the GSE136103 atlas is reused here in " +
+    "This study's investigation proceeded in three stages. First, we reanalyzed a public human MASLD " +
+    "liver-fibrosis cohort (GSE135251, Govaere et al.; 216 liver biopsies, early F0-F1 vs. " +
+    "moderate/advanced F2-F4 fibrosis) by bulk DESeq2 differential expression, a STRING PPI network " +
+    "restricted to hub genes (degree>=3), and a DGIdb druggability screen that excluded already-canonical " +
+    "fibrosis genes (collagens, the core TGF-beta/myofibroblast axis) to surface seven under-explored " +
+    "druggable candidates: CCL21, CXCL8, CCL20, EPCAM, LUM, THY1, and THBS2. Second, we built and " +
+    "annotated a human liver single-cell atlas from scratch (GSE136103, Ramachandran et al., 2019, " +
+    "Nature; a human liver cirrhosis single-cell dataset; quality control, Harmony batch integration, " +
+    "clustering, and lineage-signature-based cell-type annotation - full pipeline in Methods 2.6) to " +
+    "localize three of those seven genes (LUM, THY1, THBS2) to activated hepatic stellate cells and to " +
+    "characterize their upstream transcription-factor/miRNA regulators and cell-cell communication " +
+    "partners. Full methodological detail for both analyses, written so as to stand on their own, is " +
+    "provided in Supplemental Text S3. Third, and central to this study, we set out to reanalyze the " +
+    "paired mouse liver-heart dataset described below under a substantially stricter statistical " +
+    "threshold and to carry the analysis all the way through ligand-receptor interactome matching, a " +
+    "STRING-based PPI network, STITCH network pharmacology, DGIdb druggability assessment, and, finally, " +
+    "structure-based virtual screening with AutoDock Vina and DiffDock - extending the program above by " +
+    "moving from human to mouse and from a single-organ (liver) to a genuinely inter-organ (liver-heart) " +
+    "axis; the GSE136103 atlas built in the second stage is reused here in " +
     "an entirely different role, as an independent cross-species reference for localizing this study's " +
     "own candidate genes (Section 3.5), not as a source of the candidate genes themselves. Contrary to " +
     "our initial hypothesis, the data pointed not " +
@@ -143,8 +144,9 @@ module.exports = {
     { h: "2.6 Cell-type localization", p:
       "Because no single-cell data exist from the same experiment as the bulk cohort, cell-type " +
       "expression of the final candidate genes was assessed using an independently-annotated human liver " +
-      "scRNA-seq atlas built in our own prior work from the public GSE136103 dataset (Ramachandran et " +
-      "al., 2019; 20 human liver 10x samples, 5 healthy + 5 cirrhotic, CD45+/CD45- sorted fractions). " +
+      "scRNA-seq atlas that we constructed, as an earlier stage of this study, from the public GSE136103 " +
+      "dataset (Ramachandran et al., 2019; 20 human liver 10x samples, 5 healthy + 5 cirrhotic, " +
+      "CD45+/CD45- sorted fractions). " +
       "Briefly, the atlas was constructed as follows: reads were quality-filtered per-sample " +
       "(nFeature_RNA>300, percent.mt<30, following the original paper's Methods), yielding 60,925 cells; " +
       "samples were merged and batch-corrected across individual 10x runs with Harmony (RunHarmony, " +
@@ -291,7 +293,7 @@ module.exports = {
 
     { type: "heading", text: "3.5 Cross-species cell-type localization" },
     { type: "p", text:
-      "Reusing our previously constructed human liver scRNA-seq atlas (GSE136103; atlas construction " +
+      "Using the human liver scRNA-seq atlas constructed as an earlier stage of this study (GSE136103; atlas construction " +
       "pipeline in Methods 2.6 and Supplemental Text S3) as an " +
       "independent cross-species reference, SDC1 and SDC4 localized cleanly to hepatocytes (Figure 5), " +
       "consistent with their ranking as the top network hubs. SDC3 localized to MP (macrophage/Kupffer-" +
@@ -635,7 +637,7 @@ module.exports = {
     textTitles: {
       S1: "Text S1. Final target selection rationale",
       S2: "Text S2. DiffDock cross-check summary",
-      S3: "Text S3. Methodology of the prior human-cohort analyses cited in this study (GSE135251, GSE136103)",
+      S3: "Text S3. Full methodology of the human-cohort analyses underlying this study (GSE135251, GSE136103)",
     },
     textS1: [
       "Five candidates arising from the Angptl4-Sdc/Cdh5 axis were evaluated as the final structure-" +
@@ -705,16 +707,15 @@ module.exports = {
     ],
     textS3: [
       { type: "p", text:
-        "The Introduction and Methods 2.6 cite two prior human-cohort re-analyses, carried out by the same " +
-        "author as separate, fully version-controlled projects, as the source of (a) the candidate-gene " +
-        "list that motivated this study's broader research program and (b) the human liver scRNA-seq atlas " +
-        "reused in Section 3.5/Figure 5 as an independent cross-species reference. Because those two prior " +
-        "analyses are not otherwise published, this section documents their methodology and results in " +
-        "full, with the key figures from each, so that this manuscript is self-contained and does not " +
-        "require access to any external project repository to be understood." },
+        "The Introduction and Methods 2.6 describe the first two stages of this study's investigation: " +
+        "(a) a human-cohort bulk RNA-seq analysis that identified the candidate-gene list motivating this " +
+        "study's broader research program, and (b) the human liver scRNA-seq atlas built for use in " +
+        "Section 3.5/Figure 5 as an independent cross-species reference. Because these two analyses are " +
+        "not otherwise published, this section documents their methodology and results in " +
+        "full, with the key figures from each, so that this manuscript is fully self-contained." },
 
       { type: "p", text:
-        "Prior analysis 1 - GSE135251 (bulk RNA-seq, 216 human liver biopsies; Govaere et al., 2020): this " +
+        "Analysis 1 - GSE135251 (bulk RNA-seq, 216 human liver biopsies; Govaere et al., 2020): this " +
         "public MASLD cohort comprises 206 biopsy-confirmed MASLD/NAFLD patients (fibrosis-staged F0-F4) " +
         "plus 10 healthy controls. The 10 healthy controls were excluded and the 206 MASLD patients were " +
         "split into an early-fibrosis group (F0-F1, n=85) and a moderate/advanced-fibrosis group (F2-F4, " +
@@ -736,12 +737,12 @@ module.exports = {
         "in the broader fibrosis literature but data-driven and network-centrality-ranked in this cohort, " +
         "are the candidate list referenced in the Introduction." },
       { type: "figure", file: "figures/prior_analyses/GSE135251_ppi_hub_network.png",
-        caption: "GSE135251 hub-gene PPI network (prior analysis 1). Red: the seven novel druggable " +
+        caption: "GSE135251 hub-gene PPI network (Analysis 1). Red: the seven novel druggable " +
                  "candidates; blue: canonical fibrosis genes / not druggable. Two modules resolve: a " +
                  "chemokine/immune-recruitment cluster and a collagen/ECM cluster anchored on COL1A1." },
 
       { type: "p", text:
-        "Prior analysis 2 - GSE136103 (single-cell RNA-seq atlas construction and localization; " +
+        "Analysis 2 - GSE136103 (single-cell RNA-seq atlas construction and localization; " +
         "Ramachandran et al., 2019): this public dataset comprises 20 human liver 10x samples (5 healthy + " +
         "5 cirrhotic patients, CD45+/CD45- sorted fractions; blood and mouse samples in the same GEO series " +
         "were excluded as not relevant). Cells were quality-filtered per-sample (nFeature_RNA>300, " +
@@ -757,11 +758,11 @@ module.exports = {
         "assignment cross-checked against a marker-gene dotplot before being finalized (annotated UMAP " +
         "below - the same embedding reused for the Figure S3B feature plots in the main analysis)." },
       { type: "figure", file: "figures/prior_analyses/GSE136103_umap_annotated.png",
-        caption: "GSE136103 annotated UMAP (prior analysis 2), 12 cell lineages, 60,925 cells. This is the " +
+        caption: "GSE136103 annotated UMAP (Analysis 2), 12 cell lineages, 60,925 cells. This is the " +
                  "same embedding underlying Figure 5, Figure S3, and the FeaturePlots in Figure S3B." },
 
       { type: "p", text:
-        "This atlas was then used, in the prior analysis, to localize the seven GSE135251-derived " +
+        "This atlas was then used, in this stage of the study, to localize the seven GSE135251-derived " +
         "candidate genes (below): LUM, " +
         "THY1, and THBS2 all localized specifically to the Mesenchyme cluster (hepatic stellate " +
         "cells/portal fibroblasts) and were each far more expressed in cirrhotic than healthy liver within " +
@@ -769,7 +770,7 @@ module.exports = {
         "cleanly to Cholangiocytes, consistent with the cirrhosis-associated ductular reaction; CXCL8 and " +
         "CCL20 did not resolve to one clear producer cell type." },
       { type: "figure", file: "figures/prior_analyses/GSE136103_candidate_gene_dotplot.png",
-        caption: "GSE136103 localization of the seven GSE135251-derived candidate genes (prior analysis " +
+        caption: "GSE136103 localization of the seven GSE135251-derived candidate genes (Analysis " +
                  "2), split by condition. LUM/THY1/THBS2 localize to Mesenchyme and rise sharply in " +
                  "cirrhosis; EPCAM localizes to Cholangiocyte." },
 
@@ -781,27 +782,27 @@ module.exports = {
         "expression within that population rose sharply - i.e., the fibrogenic signal reflects activation " +
         "of existing stellate cells rather than net stellate-cell expansion." },
       { type: "figure", file: "figures/prior_analyses/GSE136103_composition_barplot.png",
-        caption: "GSE136103 cell-type composition, healthy vs. cirrhotic (prior analysis 2). Cholangiocyte " +
+        caption: "GSE136103 cell-type composition, healthy vs. cirrhotic (Analysis 2). Cholangiocyte " +
                  "and Endothelia proportions rise with cirrhosis; Mesenchyme's proportion does not, despite " +
                  "its rising fibrogenic gene expression - activation, not expansion." },
 
       { type: "p", text:
-        "Relationship to the present study: the present manuscript does not reuse the GSE135251 bulk " +
-        "analysis or its LUM/THY1/THBS2/EPCAM findings at all - that analysis is cited only in the " +
-        "Introduction as motivating background for why a network-centrality-and-druggability screening " +
-        "strategy was judged worth extending to a genuinely inter-organ mouse dataset. The GSE136103 atlas " +
-        "described above, however, is directly reused in Section 3.5/Figure 5 and Supplemental Figure S3 - " +
-        "but in an entirely different role: as an independent, cross-species reference for localizing this " +
-        "study's own candidate genes (Sdc1, Sdc2, Sdc3, Sdc4, Cdh5, Angptl4), which are unrelated to the " +
-        "LUM/THY1/THBS2/EPCAM genes the atlas was originally built to localize. The same limitation flagged " +
-        "in that prior work applies here: GSE135251 and GSE136103 are different patient cohorts with no " +
-        "paired samples, and the present study's own mouse cohort is a third, entirely independent dataset " +
+        "Relationship to the mouse inter-organ analysis in the main Results: Analyses 1 and 2 above " +
+        "establish the human background this study builds on, but the mouse liver-heart axis reported " +
+        "in the main Results does not directly reuse the GSE135251 bulk analysis or its " +
+        "LUM/THY1/THBS2/EPCAM findings - that analysis instead motivated why a network-centrality-and-" +
+        "druggability screening strategy was worth extending to a genuinely inter-organ mouse dataset. " +
+        "The GSE136103 atlas described above, however, is directly reused in Section 3.5/Figure 5 and " +
+        "Supplemental Figure S3 - but in an entirely different role: as an independent, cross-species " +
+        "reference for localizing this study's own candidate genes (Sdc1, Sdc2, Sdc3, Sdc4, Cdh5, " +
+        "Angptl4), which are unrelated to the LUM/THY1/THBS2/EPCAM genes the atlas was originally built " +
+        "to localize in Analysis 2. The same caveat applies across all three stages of this study: " +
+        "GSE135251 and GSE136103 are different human patient cohorts with no paired samples, and this " +
+        "study's own mouse cohort is a third, entirely independent dataset " +
         "- so every cross-reference among the three (bulk-to-atlas, mouse-to-human) is a plausible " +
         "biological inference drawn across independent datasets, not a directly matched, within-subject " +
-        "validation. All raw data, analysis code, and full result tables for both prior analyses are " +
-        "version-controlled in their own dedicated repositories (referenced generically above rather than " +
-        "by internal project name, consistent with the rest of this manuscript), and are available from " +
-        "the corresponding author on request." },
+        "validation. Full result tables and analysis code for Analyses 1 and 2 are documented above and " +
+        "available from the corresponding author on request." },
     ],
   },
 
