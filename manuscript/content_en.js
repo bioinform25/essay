@@ -345,7 +345,8 @@ module.exports = {
       "ectodomain that would engage a secreted ligand such as Angptl4 - rendering them structurally " +
       "unactionable for small-molecule docking. We therefore redirected the final target to Angptl4 " +
       "itself: it is completely undrugged in DGIdb, its C-terminal fibrinogen-like domain has a solved " +
-      "2.3-A crystal structure with a visible ligand-accommodating surface (PDB 6EUB), and it is " +
+      "2.3-A crystal structure with a visible ligand-accommodating surface (PDB 6EUB; Biterova et al., " +
+      "2018), and it is " +
       "independently validated both by our own DEG analysis and by a 2024 single-cell study demonstrating " +
       "cardiac-fibroblast-specific ANGPTL4 secretion in HFpEF (Li et al., 2024) (full rationale in " +
       "Supplemental Text S1)." },
