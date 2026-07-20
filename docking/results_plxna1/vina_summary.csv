@@ -1,0 +1,12 @@
+label,target,best_affinity_kcal_mol,status
+Imatinib,Plxna1,-9.957,OK
+Pazopanib,Plxna1,-9.199,OK
+EG01377,Plxna1,-9.152,OK
+Cediranib,Plxna1,-8.674,OK
+Vatalanib,Plxna1,-8.357,OK
+Semaxinib,Plxna1,-8.153,OK
+Ibuprofen,Plxna1,-6.707,OK
+Metoprolol,Plxna1,-6.638,OK
+Caffeine,Plxna1,-6.439,OK
+Aspirin,Plxna1,-6.438,OK
+Fasudil,Plxna1,-5.718,OK

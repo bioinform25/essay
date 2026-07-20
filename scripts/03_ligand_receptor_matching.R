@@ -10,8 +10,8 @@ suppressPackageStartupMessages({
 
 dir.create("results", showWarnings = FALSE)
 
-liver_sig  <- read.csv("results/Liver_DEG_sig_padj01_lfc1.5.csv", stringsAsFactors = FALSE)
-lv_sig     <- read.csv("results/LV_DEG_sig_padj01_lfc1.5.csv", stringsAsFactors = FALSE)
+liver_sig  <- read.csv("results/Liver_DEG_sig_padj05_lfc1.0.csv", stringsAsFactors = FALSE)
+lv_sig     <- read.csv("results/LV_DEG_sig_padj05_lfc1.0.csv", stringsAsFactors = FALSE)
 liver_full <- read.csv("results/Liver_DESeq2_full.csv", stringsAsFactors = FALSE)
 lv_full    <- read.csv("results/LV_DESeq2_full.csv", stringsAsFactors = FALSE)
 

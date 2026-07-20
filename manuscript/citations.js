@@ -24,6 +24,10 @@ module.exports = {
     "Corso et al., 2023": "https://arxiv.org/abs/2210.01776",
     "Ramachandran et al., 2019": "https://doi.org/10.1038/s41586-019-1631-3",
     "Govaere et al., 2020": "https://doi.org/10.1126/scitranslmed.aba4448",
+    "Powell et al., 2018": "https://doi.org/10.1021/acs.jmedchem.8b00210",
+    "Tanaka et al., 2022": "https://doi.org/10.1002/pro.4452",
+    "Takahashi et al., 1999": "https://doi.org/10.1016/S0092-8674(00)80062-8",
+    "Artigiani et al., 2004": "https://doi.org/10.1038/sj.embor.7400189",
   },
   // Same order as the `references` array in content_en.js / content_kr.js.
   referenceUrls: [
@@ -44,5 +48,9 @@ module.exports = {
     "https://arxiv.org/abs/2210.01776",                    // Corso 2023 DiffDock
     "https://doi.org/10.1038/s41586-019-1631-3",           // Ramachandran 2019
     "https://doi.org/10.1126/scitranslmed.aba4448",        // Govaere 2020
+    "https://doi.org/10.1021/acs.jmedchem.8b00210",        // Powell 2018 (PDB 6FMC/EG01377)
+    "https://doi.org/10.1002/pro.4452",                    // Tanaka 2022 (PDB 7Y4P)
+    "https://doi.org/10.1016/S0092-8674(00)80062-8",       // Takahashi 1999 (Nrp1-PlexinA co-receptor)
+    "https://doi.org/10.1038/sj.embor.7400189",            // Artigiani 2004 (Sema5A-PlexinB3 specificity)
   ],
 };

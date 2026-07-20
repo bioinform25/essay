@@ -1,0 +1,26 @@
+"cell_type","gene","pct_expressed","avg_expr","n_cells"
+"endothelial cell","Nrp1",94.9152542372881,2.47081276766321,177
+"endothelial cell","Nrp2",52.5423728813559,0.803342289219951,177
+"endothelial cell","Plxna1",4.51977401129944,0.0410499014818583,177
+"endothelial cell","Plxna3",0,0,177
+"endothelial cell","Sema5b",0,0,177
+"fibroblast","Nrp1",74.7787610619469,1.08631380179661,226
+"fibroblast","Nrp2",4.42477876106195,0.0432451837391832,226
+"fibroblast","Plxna1",4.86725663716814,0.0384860830264734,226
+"fibroblast","Plxna3",3.09734513274336,0.0291827748660624,226
+"fibroblast","Sema5b",0,0,226
+"endocardial cell","Nrp1",96.8253968253968,2.48579510778901,63
+"endocardial cell","Nrp2",23.8095238095238,0.278921380406258,63
+"endocardial cell","Plxna1",4.76190476190476,0.0435963561459725,63
+"endocardial cell","Plxna3",1.58730158730159,0.00595270543541326,63
+"endocardial cell","Sema5b",0,0,63
+"cardiac muscle cell","Nrp1",21.6666666666667,0.289254916741122,60
+"cardiac muscle cell","Nrp2",0,0,60
+"cardiac muscle cell","Plxna1",5,0.0447614360627053,60
+"cardiac muscle cell","Plxna3",1.66666666666667,0.0228032665142472,60
+"cardiac muscle cell","Sema5b",0,0,60
+NA,"Nrp1",47.9591836734694,0.664792744182656,98
+NA,"Nrp2",16.3265306122449,0.12679595394242,98
+NA,"Plxna1",10.2040816326531,0.101073779209136,98
+NA,"Plxna3",0,0,98
+NA,"Sema5b",0,0,98

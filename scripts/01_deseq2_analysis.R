@@ -1,6 +1,13 @@
 # Phase 1: per-organ DESeq2 analysis (Liver, LV) — chow vs HFpEF
 # Data: Zenodo 12794566 (Schiattarella lab, Circ Res 2024), same 10 mice, both organs
-# Rigor threshold: padj < 0.01 & |log2FC| > 1.5 (project3/4 convention)
+# Threshold: padj < 0.05 & |log2FC| > 1.0 (a sensitivity check at the
+# original stricter padj<0.01/|log2FC|>1.5 confirmed the heart-to-liver
+# Angptl4 axis is identical at both thresholds -- unaffected either way --
+# while relaxing the threshold surfaces a small liver-to-heart signal
+# (C4a-C3ar1, Sema5b-Plxna1/3) that the original threshold missed entirely.
+# Adopted padj<0.05/|log2FC|>1.0 as the primary threshold since it is the
+# more conventional choice (close to Strocchi et al. 2024's own
+# padj<0.05/|log2FC|>0.5) and lets both directions be evaluated fairly.
 
 suppressPackageStartupMessages({
   library(DESeq2)
@@ -56,9 +63,9 @@ run_deseq2 <- function(organ_label, counts_path) {
 
   write.csv(res_df, sprintf("results/%s_DESeq2_full.csv", organ_label), row.names = FALSE)
 
-  sig <- res_df %>% filter(!is.na(padj), padj < 0.01, abs(log2FoldChange) > 1.5)
-  write.csv(sig, sprintf("results/%s_DEG_sig_padj01_lfc1.5.csv", organ_label), row.names = FALSE)
-  cat(organ_label, ": ", nrow(sig), "significant DEGs (padj<0.01, |log2FC|>1.5) out of",
+  sig <- res_df %>% filter(!is.na(padj), padj < 0.05, abs(log2FoldChange) > 1.0)
+  write.csv(sig, sprintf("results/%s_DEG_sig_padj05_lfc1.0.csv", organ_label), row.names = FALSE)
+  cat(organ_label, ": ", nrow(sig), "significant DEGs (padj<0.05, |log2FC|>1.0) out of",
       nrow(res_df), "tested\n")
 
   # volcano
@@ -66,9 +73,9 @@ run_deseq2 <- function(organ_label, counts_path) {
   print(EnhancedVolcano(res_df,
     lab = res_df$gene_name,
     x = "log2FoldChange", y = "padj",
-    pCutoff = 0.01, FCcutoff = 1.5,
+    pCutoff = 0.05, FCcutoff = 1.0,
     title = sprintf("%s: HFpEF vs Chow", organ_label),
-    subtitle = "padj < 0.01, |log2FC| > 1.5",
+    subtitle = "padj < 0.05, |log2FC| > 1.0",
     caption = "",
     labSize = 3.0, pointSize = 1.5, drawConnectors = TRUE, max.overlaps = 15))
   dev.off()

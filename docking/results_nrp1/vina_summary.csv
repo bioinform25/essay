@@ -1,0 +1,12 @@
+label,target,best_affinity_kcal_mol,status
+Imatinib,Nrp1,-7.984,OK
+Vatalanib,Nrp1,-7.972,OK
+Semaxinib,Nrp1,-7.258,OK
+Pazopanib,Nrp1,-7.231,OK
+EG01377,Nrp1,-7.1,OK
+Cediranib,Nrp1,-6.91,OK
+Ibuprofen,Nrp1,-6.299,OK
+Metoprolol,Nrp1,-5.872,OK
+Aspirin,Nrp1,-5.632,OK
+Fasudil,Nrp1,-5.146,OK
+Caffeine,Nrp1,-4.98,OK

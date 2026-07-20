@@ -116,8 +116,18 @@ grid([
     [("gsea_running_LV_1.png", "E"), ("gsea_running_LV_2.png", "F")],
 ], "Figure3_GSEA_combined.png")
 stitch([("Pioglitazone_binding_pose_pymol.png", "A"), ("Ezetimibe_binding_pose_pymol.png", "B"), ("Resmetirom_binding_pose_pymol.png", "C")], "Figure7_pose_combined.png")
-stitch([("Liver_GO_BP_dotplot.png", "A"), ("LV_GO_BP_dotplot.png", "B")], "FigureS_GO_combined.png")
+# LV has 0 significant GO-BP terms at the current threshold (padj<0.05,
+# |log2FC|>1.0), so clusterProfiler correctly produces no LV_GO_BP_dotplot.png
+# -- Figure S1 is Liver-only, and this null result is stated in its caption
+# rather than papered over with a stale pre-rerun figure.
+import shutil
+shutil.copy(os.path.join(FIG_DIR, "Liver_GO_BP_dotplot.png"), os.path.join(OUT_DIR, "FigureS_GO_combined.png"))
+print("Wrote", os.path.join(OUT_DIR, "FigureS_GO_combined.png"), "(Liver-only; LV has 0 significant GO-BP terms)")
 grid([
     [("Angptl4axis_liver_localization_by_condition.png", "A")],
     [("Angptl4axis_UMAP_featureplot_by_condition.png", "B")],
 ], "FigureS3_condition_combined.png")
+stitch([("Vina_screening_Nrp1_ranked.png", "A"), ("Vina_screening_Plxna1_ranked.png", "B")], "FigureVina_dual_combined.png", align="max")
+stitch([("Imatinib_Nrp1_binding_pose.png", "A"), ("Imatinib_Plxna1_binding_pose.png", "B")], "FigurePose_dual_combined.png", align="max")
+stitch([("Sema5bAxis_liver_localization_dotplot.png", "A"), ("TabulaMuris_heart_dotplot.png", "B")], "FigureSema5bLocalization_combined.png", align="max")
+stitch([("Liver_KEGG_dotplot.png", "A"), ("LV_KEGG_dotplot.png", "B")], "FigureKEGG_combined.png", align="max")

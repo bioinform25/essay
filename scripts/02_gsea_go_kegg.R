@@ -48,7 +48,7 @@ run_enrichment <- function(organ_label) {
   cat(organ_label, ": GSEA significant pathways (padj<0.05):", sum(gsea_res$padj < 0.05, na.rm = TRUE), "\n")
 
   # --- GO / KEGG over-representation on the significant DEG set ---
-  sig <- read.csv(sprintf("results/%s_DEG_sig_padj01_lfc1.5.csv", organ_label), stringsAsFactors = FALSE)
+  sig <- read.csv(sprintf("results/%s_DEG_sig_padj05_lfc1.0.csv", organ_label), stringsAsFactors = FALSE)
   entrez_map <- bitr(sig$ensembl_id, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = org.Mm.eg.db)
   universe_map <- bitr(full$ensembl_id, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = org.Mm.eg.db)
 

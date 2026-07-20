@@ -12,17 +12,22 @@ module.exports = {
     references: "참고문헌 (References)",
     graphicalAbstract: "Graphical Abstract",
   },
-  title: "심장-간 Angptl4-Sdc/Cdh5 축과 심간증후군(Cardiohepatic Syndrome): 표적 재조정 및 " +
-         "Ezetimibe·Pioglitazone의 구조 기반 약물 재창출",
+  title: "심장-간 양방향 신호 축: Angptl4-Sdc/Cdh5(심장→간)와 Sema5b-Nrp1(간→심장) 축의 " +
+         "구조 기반 표적 재조정 및 약물 재창출",
   studentLine: "202251154 이창우",
 
   graphicalAbstract: {
     file: "figures/graphical_abstract.png",
-    caption: "Graphical abstract. 간·좌심실 페어드 전사체 분석은 애초 가설과 반대되는 신호 방향을 " +
-             "드러내어 심장→간 방향의 Angptl4-Sdc/Cdh5 축을 확인시켜 주었다. 네트워크 중심성 분석은 " +
-             "Sdc1/Sdc4를 hub로 지목했으나, 세포외 도메인 결정구조가 없어 구조 기반 스크리닝은 " +
-             "ANGPTL4(PDB 6EUB) 자체로 재조정되었고, 그 결과 STITCH·AutoDock Vina·DiffDock 세 " +
-             "방법 모두에서 수렴하는 재창출 후보물질로 Ezetimibe와 Pioglitazone이 도출되었다.",
+    caption: "Graphical abstract. 간·좌심실 페어드 전사체 분석을 padj<0.05, |log2FC|>1.0 " +
+             "기준으로 재분석한 결과, 심장→간과 간→심장 양방향 모두에서 후보 축이 발견되었다. " +
+             "심장→간 방향은 통계 기준과 무관하게 견고한 Angptl4-Sdc/Cdh5 축으로, 네트워크 hub인 " +
+             "Sdc1/Sdc4가 구조적으로 액셔너블하지 않아 ANGPTL4(PDB 6EUB) 자체로 표적을 재조정하였고 " +
+             "Ezetimibe·Pioglitazone이 STITCH·Vina·DiffDock 세 방법에 걸쳐 수렴하는 재창출 " +
+             "후보로 확인되었다. 간→심장 방향은 완화된 통계 기준에서만 나타나는 Sema5b-Plxna1/Plxna3 " +
+             "축으로, hub인 Plxna1이 마우스 심장에서 발현이 미약해 semaphorin/plexin 신호전달의 " +
+             "보조수용체인 Nrp1(PDB 6FMC)로 표적을 재조정하였으며, Nrp1에서는 Vina·DiffDock이 " +
+             "동일 부위로 수렴한 반면 Plxna1에서는 두 방법이 22.7Å 떨어진 서로 다른 부위를 가리켜 " +
+             "가설 생성적 결과로 남겨두었다.",
   },
 
   abstract:
@@ -30,27 +35,39 @@ module.exports = {
     "axis)을 통해 양방향으로 연결되어 있다는 인식이 점차 확립되고 있으나, 이 상호작용을 매개하는 " +
     "분자적 실체는 아직 충분히 규명되지 않았다. 본 연구는 동일 개체(C57BL/6N 마우스)에서 간과 " +
     "좌심실을 동시에 채취한 페어드 bulk RNA-seq 데이터(Chow vs. 2-hit HFpEF 식이, 군당 n=5; Zenodo " +
-    "12794566)를, 원 논문보다 더 엄격한 통계 기준(padj<0.01, |log2FC|>1.5)으로 재분석하였다. 당초 " +
-    "가설이었던 '간→심장' 방향의 신호는 CellChatDB 큐레이션 매칭과 STRING 단백질-단백질 상호작용 " +
-    "네트워크 분석 모두에서 교차-장기 연결이 전혀 확인되지 않았다. 대신 '심장→간' 방향의 후보 축이 " +
-    "발견되었다: LV(좌심실)에서 유의하게 상향된 Angptl4가 간에서 발현되는 Cdh5/Sdc1-4와 짝을 " +
-    "이루었다. 독립적으로 세포유형이 주석된 인간 간 단일세포 아틀라스(GSE136103)를 재사용한 결과, " +
-    "Sdc1/Sdc4는 간세포(hepatocyte)에 국소화되었으며 이는 이들이 네트워크 hub(각각 degree 16, " +
-    "14)라는 지위와도 일치하였다. 그러나 Sdc1/Sdc4의 모든 공개 결정구조는 세포외 영역이 아닌 구조를 " +
-    "포함하고 있어 구조 기반 도킹에 활용할 수 없었으므로, 구조 기반 스크리닝의 표적을 ANGPTL4의 " +
-    "C-말단 fibrinogen-like domain(PDB 6EUB)으로 재조정하였다 — 이는 DGIdb 기준으로 완전히 " +
-    "미개발된 표적이며, 2024년 단일세포 연구에서 심장 섬유아세포 특이적 ANGPTL4 분비가 HFpEF에서 " +
-    "확인된 바 있어 독립적으로 뒷받침된다. 21개 화합물에 대한 AutoDock Vina 스크리닝 결과 " +
-    "Resmetirom(첫 FDA 승인 MASH 치료제), Ezetimibe, Pioglitazone이 1~3위(-9.07, -8.88, " +
-    "-8.28 kcal/mol)를 차지하였다. 결합 부위를 사전 지정하지 않는 DiffDock으로 이 세 화합물을 " +
-    "교차검증한 결과, Pioglitazone(confidence -1.06, 최고)과 Ezetimibe(-1.32) 모두 Vina " +
-    "포켓으로부터 4Å 이내로 수렴한 반면 Resmetirom은 23.5Å 떨어진 다른 부위에 결합하여, Vina " +
-    "1위가 아닌 두 화합물이 교차검증된 후보로 확인되었다 — 특히 Pioglitazone은 STITCH의 독립적 " +
-    "ANGPTL4 연관성까지 더해 세 갈래의 근거를 갖춘다. 본 연구는 엄격하게 " +
-    "재분석된 정직한 귀무(null) 결과가 네트워크 약리학 파이프라인을 임상적으로 의미 있고 검증 " +
-    "가능한 가설로 재조정할 수 있음을 보여준다.",
+    "12794566)를 재분석하였다. 원 논문 자체의 완화된 기준(padj<0.05, |log2FC|>0.5)과 본 연구가 " +
+    "처음 채택했던 더 엄격한 기준(padj<0.01, |log2FC|>1.5)을 비교하는 민감도 분석을 거쳐, 두 기준의 " +
+    "중간에 해당하는 padj<0.05, |log2FC|>1.0을 최종 기준으로 채택하였다(간 228개, LV 63개 유의 " +
+    "DEG). 이 기준에서 CellChatDB 리간드-수용체 매칭은 양방향 모두에서 신호를 드러내었다. " +
+    "심장→간 방향에서는 LV에서 유의하게 상향된 Angptl4가 간에서 발현되는 Cdh5/Sdc1-4와 짝을 " +
+    "이루는 축이 통계 기준과 무관하게 견고하게 재현되었다. Sdc1/Sdc4는 간세포에 국소화되는 네트워크 " +
+    "hub(각각 degree 16, 14)였으나 공개된 모든 결정구조가 세포외 영역을 포함하지 않아, 표적을 " +
+    "ANGPTL4의 C-말단 fibrinogen-like domain(PDB 6EUB)으로 재조정하였다. 21개 화합물에 대한 " +
+    "AutoDock Vina 스크리닝과 DiffDock 교차검증 결과 Ezetimibe와 Pioglitazone이 두 방법 모두에서 " +
+    "수렴하는 재창출 후보로 확인되었다(Vina -8.88, -8.28 kcal/mol; DiffDock pose가 Vina 포켓 " +
+    "3.5Å, 3.9Å 이내로 수렴). 더 흥미로운 점은 완화된 통계 기준에서만 나타나는 간→심장 방향의 " +
+    "새로운 신호였다: 간의 Sema5b가 LV에서 발현되는 Plxna1/Plxna3와 짝을 이루었다. STRING " +
+    "네트워크는 Plxna1(degree 17)과 Plxna3(degree 16)을 hub로 지목하였으나, 독립적인 마우스 " +
+    "심장 단일세포 아틀라스(Tabula Muris Heart+Aorta)에서 이들의 실제 심장 내 발현은 미약하였다 " +
+    "(심근세포 기준 ≤5%). 반면 semaphorin/plexin 신호전달에서 잘 알려진 보조수용체인 Nrp1은 " +
+    "심내막·내피세포에서 강하게 발현되었고(최대 96.8%), 훨씬 고해상도의 결정구조(0.90Å, EG01377 " +
+    "결합형, PDB 6FMC; Powell et al., 2018)와 실제 화합물 연관성(STITCH·DGIdb: Pazopanib, " +
+    "Cediranib, Fasudil, Imatinib, Vatalanib, Semaxinib)을 지녔다. Plxna1(Sema 도메인 중심의 " +
+    "domain-level blind box)과 Nrp1(EG01377 공동결정 포켓 특이적 box) 양쪽 모두에 대해 도킹을 " +
+    "수행한 결과, 두 표적에서 Vina 순위가 가장 높았던 Imatinib을 DiffDock으로 교차검증했을 때 " +
+    "Nrp1에서는 Vina와 DiffDock 모두 동일 부위(1.9Å 이내, 문헌상 알려진 b1 domain 잔기 Tyr297/ " +
+    "Trp301/Asp320/Lys351과 일치)로 수렴한 반면, Plxna1에서는 두 방법이 22.7Å 떨어진 서로 다른 " +
+    "부위를 가리켜 도킹 결과의 신뢰도가 낮았다. 다만 SEMA5B-PLXNA1 신호전달에서 NRP1이 실제로 " +
+    "보조수용체로 작용하는지는 문헌상 확립되어 있지 않다는 점을 명시한다 — NRP1의 보조수용체 " +
+    "역할은 III형 분비성 semaphorin-PlexinA 신호전달에서 규명된 것이며(Takahashi et al., " +
+    "1999), V형 semaphorin인 SEMA5B는 수용체 특이성이 그 근연 유전자 SEMA5A와도 다르므로" +
+    "(SEMA5A는 Plexin-B3에 결합하나 SEMA5B는 결합하지 않음; Artigiani et al., 2004) 이를 그대로 " +
+    "확장 적용할 수 없으며, 이는 명시적 가설로 남겨둔다. 본 연구는 통계 기준의 신중한 재조정이 " +
+    "심장-간 축의 양방향 신호 — 통계적으로 견고하고 구조적으로 검증된 심장→간 축과, 통계적으로는 " +
+    "미묘하지만 구조·발현·독립적 도킹 방법이 수렴하는 가설 생성적 간→심장 축 — 를 모두 드러낼 수 " +
+    "있음을 보여준다.",
 
-  keywords: "핵심단어: HFpEF, MASLD, 심장-간 축, ANGPTL4, 네트워크 약리학, 분자 도킹",
+  keywords: "핵심단어: HFpEF, MASLD, 심장-간 축, ANGPTL4, Neuropilin-1, 네트워크 약리학, 분자 도킹",
 
   introduction: [
     "대사이상 관련 지방성 간질환(Metabolic dysfunction-associated steatotic liver disease, " +
@@ -94,7 +111,19 @@ module.exports = {
     "임상적으로 이미 확립된 울혈성 간병증(congestive hepatopathy)/심장-간 증후군(cardiohepatic " +
     "syndrome) 개념과 정확히 부합하는 것이었다. 본 연구는 이러한 방향 전환을 실망스러운 결과로 " +
     "치부하지 않고 정직한 발견으로 보고하며, 이를 druggability 평가와 화합물 수준의 스크리닝까지 " +
-    "끝까지 추적한다."
+    "끝까지 추적한다.",
+
+    "위 세 단계를 마친 뒤, 원 연구(Strocchi et al., 2024)가 실제로 사용한 통계 기준(padj<0.05, " +
+    "|log2FC|>0.5)이 본 연구가 처음 채택한 기준(padj<0.01, |log2FC|>1.5)보다 상당히 완화되어 " +
+    "있다는 점을 발견하였다(3.1절). 이는 자연스러운 질문으로 이어졌다: 더 완화된, 그러나 여전히 " +
+    "임의적이지 않은 기준을 채택하면 간→심장 방향에서도 유의미한 신호가 나타날까? 이 질문에 답하기 " +
+    "위해 이미 적합된 DESeq2 모델을 다시 필터링하는 민감도 분석을 수행하였고(모델을 다시 적합할 " +
+    "필요 없이), 그 결과를 본 연구 전체 파이프라인의 최종 기준으로 채택하였다(padj<0.05, " +
+    "|log2FC|>1.0; 3.1절). 이 완화된 기준에서 심장→간 Angptl4-Sdc/Cdh5 축은 통계 기준과 무관하게 " +
+    "그대로 재현되었으나, 동시에 당초 가설이었던 간→심장 방향에서도 이전에는 보이지 않았던 새로운 " +
+    "신호(Sema5b-Plxna1/Plxna3)가 나타났다. 본 연구는 이 두 번째 축을 무시하지 않고, 첫 번째 축과 " +
+    "동일한 엄격도로 STRING 네트워크·세포유형 국소화·druggability·구조 기반 도킹까지 끝까지 " +
+    "추적하여(3.10-3.17절), 최종적으로 심장-간 축을 단방향이 아닌 양방향 회로로 기술한다."
   ],
 
   methods: [
@@ -184,51 +213,112 @@ module.exports = {
       "여부는 단순한 재순위화가 아니라 독립적인 구조적 검증에 해당한다(복합체당 샘플 수=10, " +
       "seed 미고정)."
     },
+    { h: "2.11 심장 세포유형 국소화(마우스 자체 검증)", p:
+      "간→심장 방향에서 확인된 후보 유전자는 리간드(Sema5b)뿐 아니라 수용체(Plxna1, Plxna3, " +
+      "Nrp1, Nrp2)까지 심장 측에서 실제로 발현되는지 확인이 필요하였다. 2.6절에서 사용한 " +
+      "GSE136103 아틀라스는 인간 간 데이터이므로 심장 조직을 포함하지 않아, 독립적인 마우스 심장 " +
+      "atlas가 새로 필요하였다. Tabula Muris droplet(10x) Heart+Aorta atlas(figshare file " +
+      "13088642, 624 세포, cell_ontology_class 주석: cardiac muscle cell, endocardial cell, " +
+      "endothelial cell, fibroblast)를 조회하여 5개 후보 유전자의 세포유형별 발현 비율과 평균 " +
+      "발현량을 산출하였다. 이는 2.6절/Supplemental Figure S4에서 사용한 것과 같은 Tabula Muris " +
+      "리소스의 심장 특이적 하위 데이터셋으로, 원 bulk 코호트와 동일한 종(마우스)에서 얻은 " +
+      "독립적인 참조 자료라는 점에서 2.6절의 검증 논리를 그대로 따른다. 같은 Tabula Muris " +
+      "리소스에는 FACS/Smart-seq2 기반 심장 파일(770MB)도 존재하나, 본 연구는 실용적인 이유로 " +
+      "더 작은 droplet 기반 파일(85MB)을 선택하였으며, 이에 따라 결과를 2.6절의 FACS 기반 간 " +
+      "atlas와 직접적인 방법론적 대응물로 취급하지 않고 droplet 기반 데이터로 명시한다."
+    },
+    { h: "2.12 이중 표적 구조 액셔너빌리티 평가 및 표적 재조정", p:
+      "간→심장 후보(Plxna1, Plxna3, Sema5b, Nrp1, Nrp2)에 대해서도 2.8절과 동일한 UniProt/PDB " +
+      "구조 검토를 반복하였다. 이 과정에서 UniProt REST API의 gene:NRP1 및 gene:NRP2 검색이 " +
+      "각각 두 개의 서로 다른 유전자 항목을 반환한다는 사실을 발견하였다 — NELL1(UniProt Q92832)과 " +
+      "NELL2(Q99435)가 오래된 유전자 별칭으로 각각 'NRP1'과 'NRP2'를 가지고 있어, 검색 결과의 " +
+      "첫 항목을 그대로 취하면 진짜 Neuropilin이 아닌 NELL1/NELL2의 PDB 구조가 반환된다. 이 " +
+      "문제는 반환된 PDB 파일 자체의 TITLE 레코드가 'neuropilin'을 언급하지 않는다는 점에서 " +
+      "발견되었으며, 이후 검색 결과 중 1차 유전자명(동의어가 아닌)이 질의어와 정확히 일치하는 " +
+      "항목만 채택하도록 검증 절차를 수정하여 재현하였다(실제 Neuropilin-1: O14786, 25개 PDB " +
+      "구조; Neuropilin-2: O60462, 16개 PDB 구조). 모든 plexin 계열 단백질에 대해 소분자가 " +
+      "결합된 공개 구조가 전무하다는 점(Plxna1의 유일한 구조 7Y4P/7Y4Q는 apo 상태의 ectodomain " +
+      "단편)과, 반대로 Nrp1이 이미 알려진 소분자 억제제(EG01377)와 공동결정화된 0.90Å " +
+      "고해상도 구조(PDB 6FMC; Powell et al., 2018)를 갖추고 있다는 점을 종합하여, 이 축의 " +
+      "구조 기반 스크리닝 표적을 CellChatDB가 직접 매칭한 Plxna1이 아니라 그 첫 번째 STRING " +
+      "상호작용 파트너인 Nrp1로 재조정할지 판단하였다. 다만 Nrp1이 실제로 SEMA5B-PLXNA1 " +
+      "신호전달의 보조수용체로 기능하는지는 문헌상 확립되어 있지 않으므로(4절 참조), Plxna1과 " +
+      "Nrp1 양쪽 모두를 도킹하여 데이터가 스스로 말하게 하는 방식을 채택하였다(3.14-3.17절)."
+    },
+    { h: "2.13 이중 표적 AutoDock Vina 및 DiffDock 스크리닝", p:
+      "Nrp1(PDB 6FMC)은 2.9절과 동일한 방식으로, 공동결정화된 저해제(EG01377, PDB 리간드 코드 " +
+      "DUE)의 원자 무게중심을 도킹 박스 중심(24×24×24Å³)으로 삼아 포켓 특이적으로 준비하였다. " +
+      "Plxna1(PDB 7Y4P)은 소분자 결합 포켓이 알려져 있지 않으므로, UniProt이 주석한 Sema " +
+      "domain(잔기 27-512, semaphorin 리간드 결합이 확립된 7-blade beta-propeller 구조; " +
+      "Tanaka et al., 2022)의 Cα 무게중심을 중심으로 한 더 넓은 domain-level blind box" +
+      "(30×30×30Å³)를 사용하였으며, 이는 특정 포켓이 아닌 도메인 표면 전체를 탐색하는 더 낮은 " +
+      "신뢰도의 설정임을 명시한다. 리간드 라이브러리는 11개 화합물로 구성하였다: (1) Nrp1 " +
+      "수용체에 실제로 결합해 있는 EG01377 자체(RCSB 화학성분 사전의 DUE 항목에서 직접 확보한 " +
+      "SMILES 사용, 자기도킹(self-docking) 양성대조군); (2) STITCH에서 실제 Nrp1/Nrp2 화학적 " +
+      "파트너로 확인된 승인/후기임상 키나아제 억제제 6종(Imatinib, Vatalanib, Cediranib, " +
+      "Semaxinib, Pazopanib, Fasudil); (3) 기전상 무관한 대조군 4종(Aspirin, Ibuprofen, " +
+      "Caffeine, Metoprolol). 두 표적 각각에 대해 2.9절과 동일한 Vina 조건(exhaustiveness=16, " +
+      "num_modes=5, seed=42)으로 전체 라이브러리를 스크리닝한 뒤, 각 표적의 Vina 1위 화합물" +
+      "(두 표적 모두 Imatinib)을 2.10절과 동일한 DiffDock 웹 인터페이스로 교차검증하였다."
+    },
   ],
 
   resultsBlocks: [
-    { type: "heading", text: "3.1 장기별 차등발현 분석" },
+    { type: "heading", text: "3.1 장기별 차등발현 분석 및 통계 기준 재조정" },
     { type: "p", text:
-      "먼저 2-hit HFpEF 요법에 노출된 마우스의 장기별 전사체 변화를 살펴보았다. padj<0.01 및 " +
-      "|log2FC|>1.5 기준으로, 간에서는 86개(상향 48, 하향 38), LV에서는 20개(상향 15, 하향 5)의 " +
-      "유전자가 유의하게 차등발현되었다(Figure 1A, 1B; 전체 유전자 목록은 Supplemental Table " +
-      "S1, S2 참조). 이들 DEG에 대한 비지도 계층적 군집화는 두 장기 모두에서 Chow군과 HFpEF군을 " +
-      "뚜렷하게 분리하였다(Figure 2A, 2B). 간에서는 급성기 반응 및 염증 관련 전사체(Dsg1c, Per2, " +
-      "Saa2, Lcn2)가 상향되고 다수의 시토크롬 P450 계열 유전자가 하향되어 지질대사 이상과 부합하는 " +
-      "양상을 보였으며, LV에서는 Chrna2, Hmgcs2, Mmp12가 상향되고 Cyp1a1이 하향되었다." },
+      "먼저 2-hit HFpEF 요법에 노출된 마우스의 장기별 전사체 변화를 살펴보았다. 처음에는 위양성을 " +
+      "최소화하기 위해 padj<0.01, |log2FC|>1.5의 보수적 기준을 채택하였다(간 86개, LV 20개 유의 " +
+      "DEG). 그러나 원 연구(Strocchi et al., 2024) 자체가 사용한 기준은 훨씬 완화된 padj<0.05, " +
+      "|log2FC|>0.5였다는 점을 확인하고, 이미 적합된 DESeq2 모델을 다시 필터링하는 민감도 분석을 " +
+      "수행하였다(모델 재적합 불필요). 원 논문의 기준과 본 연구가 처음 채택한 기준의 중간에 해당하는 " +
+      "padj<0.05, |log2FC|>1.0을 최종 기준으로 채택하였으며, 이 기준으로 전체 파이프라인을 " +
+      "처음부터 다시 실행하였다. 이 기준에서는 간 228개(상향 133, 하향 95), LV 63개(상향 41, " +
+      "하향 22) 유전자가 유의하게 차등발현되었다(Figure 1A, 1B; 전체 유전자 목록은 Supplemental " +
+      "Table S1, S2 참조). 이들 DEG에 대한 비지도 계층적 군집화는 두 장기 모두에서 Chow군과 " +
+      "HFpEF군을 뚜렷하게 분리하였다(Figure 2A, 2B)." },
     { type: "figure", file: "figures/composite/Figure1_volcano_combined.png",
       caption: "Figure 1. HFpEF vs. Chow 조건에서 장기별 차등발현 유전자. (A) 간 volcano plot. " +
-               "(B) 좌심실(LV) volcano plot. 유의 기준(padj<0.01, |log2FC|>1.5)을 만족하는 " +
+               "(B) 좌심실(LV) volcano plot. 유의 기준(padj<0.05, |log2FC|>1.0)을 만족하는 " +
                "유전자는 빨간색으로 표시하였고 대표 유전자를 라벨로 표기하였다. 전체 DEG 목록은 " +
                "Supplemental Table S1(간)과 S2(LV)에 수록하였다." },
     { type: "figure", file: "figures/composite/Figure2_heatmap_combined.png",
       caption: "Figure 2. 유의 DEG의 계층적 군집화(z-score 변환된 variance-stabilized count 기준). " +
-               "(A) 간(DEG 86개). (B) LV(DEG 20개). 두 조직 모두 비지도 방식으로 Chow군과 HFpEF군이 " +
+               "(A) 간(DEG 228개). (B) LV(DEG 63개). 두 조직 모두 비지도 방식으로 Chow군과 HFpEF군이 " +
                "뚜렷하게 분리되었다." },
     { type: "p", text:
-      "다음으로, 원 연구(Strocchi et al., 2024)가 제시한 두 후보 매개인자 Saa1과 Saa4가 본 연구의 " +
-      "더 엄격한 기준에서도 재현되는지 확인하였다. 두 유전자 모두 기존 보고와 동일한 방향성을 " +
-      "보였으나(Saa1, log2FC=1.16, padj=5.9×10⁻⁵; Saa4, log2FC=0.53, padj=0.011), 본 연구의 " +
-      "|log2FC|>1.5 기준은 통과하지 못하였다. 이는 원 보고의 위양성이라기보다 통계적으로는 실재하되 " +
-      "효과크기가 본 연구의 더 보수적인 기준에 못 미치는, 정직한 효과크기 한계로 해석하였다." },
+      "다음으로, 원 연구가 제시한 두 후보 매개인자 Saa1과 Saa4가 이 완화된 기준에서 재현되는지 " +
+      "확인하였다. Saa1(log2FC=1.16, padj=5.9×10⁻⁵)은 |log2FC|>1.0 기준을 통과하여 유의 DEG " +
+      "목록에 포함되었으나, Saa4(log2FC=0.53, padj=0.011)는 여전히 통과하지 못하였다. 이는 " +
+      "통계 기준의 선택이 재현되는 후보 목록에 실질적인 영향을 미친다는 것을 보여주며, 본 연구가 " +
+      "이 문제를 명시적인 민감도 분석으로 다룬 이유이기도 하다." },
 
-    { type: "heading", text: "3.2 경로 수준 농축분석 (GSEA, GO, KEGG)" },
+    { type: "heading", text: "3.2 경로 수준 농축분석 (GSEA, GO, KEGG): 기준 의존성에 대한 정직한 관찰" },
     { type: "p", text:
-      "Hallmark GSEA에서 간은 19개, LV는 17개의 경로가 유의하였다(padj<0.05; Figure 3A, 3B). " +
-      "간에서는 MTORC1_SIGNALING, CHOLESTEROL_HOMEOSTASIS, MYC_TARGETS_V1이 하향된 반면 " +
-      "INTERFERON_ALPHA_RESPONSE는 상향되었다. LV에서는 ADIPOGENESIS, FATTY_ACID_METABOLISM, " +
-      "OXIDATIVE_PHOSPHORYLATION, PEROXISOME, BILE_ACID_METABOLISM이 모두 뚜렷하게 상향되어, " +
-      "HFpEF 스트레스 하에서 심장 대사가 지질 처리 및 미토콘드리아 경로 쪽으로 전환되고 있음을 " +
-      "시사하였다 — 이는 기존 HFpEF 문헌에서 보고된 미토콘드리아 기능장애와 일치하는 패턴이다. " +
-      "이러한 농축 신호의 형태를 요약 지표인 NES만이 아니라 직접 확인하기 위해, 각 장기에서 가장 " +
-      "유의한 상위 2개 경로에 대한 고전적인 running-enrichment-score plot을 제시하였다(Figure " +
-      "3C-F): 간에서는 MTORC1_SIGNALING과 CHOLESTEROL_HOMEOSTASIS 모두 running score가 초반부터 " +
-      "급격하게 음의 방향으로 몰려 있고 0 부근으로 되돌아오지 않아, 분산된 신호가 아니라 뚜렷하게 " +
-      "집중된 결핍 신호임을 보여주었다. LV에서는 ADIPOGENESIS와 FATTY_ACID_METABOLISM이 정반대 " +
-      "패턴 — 즉시 상승해 지속되는 양의 농축 — 을 보여, 소수의 이상치 유전자가 아니라 일관된 대사 " +
-      "전환에 의한 신호임을 시사하였다. " +
-      "GO Biological Process 분석에서는 간 34개, LV 10개의 유의 항목이, KEGG에서는 간 9개, LV " +
-      "0개의 유의 경로가 확인되었다(Supplemental Figure S1, S2; Supplemental Table S3-S5)." },
+      "Hallmark GSEA에서 간은 19개, LV는 17개의 경로가 유의하였다(padj<0.05; Figure 3A, 3B) — " +
+      "이 결과는 이전 절에서 기술한 기준 완화 전후로 전혀 변하지 않았는데, GSEA(fgsea)는 유의 " +
+      "DEG 목록이 아니라 전체 유전자의 순위화된 랭킹 지표를 사용하는 방법이므로 DEG 판정 기준 " +
+      "자체와 무관하기 때문이다. 간에서는 MTORC1_SIGNALING, CHOLESTEROL_HOMEOSTASIS, " +
+      "MYC_TARGETS_V1이 하향된 반면 INTERFERON_ALPHA_RESPONSE는 상향되었다. LV에서는 " +
+      "ADIPOGENESIS, FATTY_ACID_METABOLISM, OXIDATIVE_PHOSPHORYLATION, PEROXISOME, " +
+      "BILE_ACID_METABOLISM이 모두 뚜렷하게 상향되어, HFpEF 스트레스 하에서 심장 대사가 지질 " +
+      "처리 및 미토콘드리아 경로 쪽으로 전환되고 있음을 시사하였다 — 이는 기존 HFpEF 문헌에서 " +
+      "보고된 미토콘드리아 기능장애와 일치하는 패턴이다. 이러한 농축 신호의 형태를 요약 지표인 " +
+      "NES만이 아니라 직접 확인하기 위해, 각 장기에서 가장 유의한 상위 2개 경로에 대한 고전적인 " +
+      "running-enrichment-score plot을 제시하였다(Figure 3C-F): 간에서는 MTORC1_SIGNALING과 " +
+      "CHOLESTEROL_HOMEOSTASIS 모두 running score가 초반부터 급격하게 음의 방향으로 몰려 있고 0 " +
+      "부근으로 되돌아오지 않아, 분산된 신호가 아니라 뚜렷하게 집중된 결핍 신호임을 보여주었다. " +
+      "LV에서는 ADIPOGENESIS와 FATTY_ACID_METABOLISM이 정반대 패턴 — 즉시 상승해 지속되는 양의 " +
+      "농축 — 을 보여, 소수의 이상치 유전자가 아니라 일관된 대사 전환에 의한 신호임을 시사하였다. " +
+      "반면 유의 DEG 목록 자체를 입력으로 사용하는 과대표현분석(ORA)은 기준 완화의 영향을 그대로 " +
+      "받았으며, 그 결과는 직관과 어긋나는 흥미로운 패턴을 보였다: GO Biological Process에서 간은 " +
+      "34개에서 41개로 늘었으나, LV는 입력 DEG 수가 20개에서 63개로 3배 이상 늘었음에도 유의 " +
+      "항목이 10개에서 0개로 완전히 사라졌다. KEGG에서는 간이 9개에서 15개로, LV는 0개에서 1개로 " +
+      "늘었다(Supplemental Figure S1, S2; Supplemental Table S3-S5). LV GO-BP 결과는 얼핏 " +
+      "모순처럼 보이지만, ORA는 입력 유전자 집합이 특정 기능 범주에 얼마나 '집중'되어 있는지를 " +
+      "평가하는 방법이므로, 완화된 기준으로 늘어난 43개의 추가 LV DEG가 기존 20개보다 기능적으로 " +
+      "더 분산되어 있다면 유의성이 오히려 감소할 수 있다 — 실제로 이런 현상이 관찰되었다는 " +
+      "사실 자체를 얼버무리지 않고 그대로 보고한다. 이 관찰은 3.3절 이하에서 다루는 리간드-수용체 " +
+      "매칭 결과의 기준 의존성을 해석하는 데에도 중요한 배경이 된다." },
     { type: "figure", file: "figures/composite/Figure3_GSEA_combined.png",
       caption: "Figure 3. Hallmark 유전자집합농축분석(GSEA). (A) 간, (B) LV 막대그래프는 padj<0.05로 " +
                "유의한 모든 경로의 정규화농축점수(NES)를 나타낸다. (C-F) 각 장기에서 가장 유의한 " +
@@ -238,16 +328,24 @@ module.exports = {
                "ADIPOGENESIS, (F) LV FATTY_ACID_METABOLISM. GO-BP 및 KEGG 전체 결과는 " +
                "Supplemental Figure S1-S2 및 Supplemental Table S3-S5에 수록하였다." },
 
-    { type: "heading", text: "3.3 리간드-수용체 인터랙톰 매칭: 축의 방향 재조정" },
+    { type: "heading", text: "3.3 리간드-수용체 인터랙톰 매칭: 양방향 축의 발견" },
     { type: "p", text:
       "본 연구는 당초 간에서 분비되는 인자가 HFpEF 관련 심장 리모델링을 유발한다는 가설을 " +
-      "세웠다. 그러나 예상과 달리, CellChatDB 매칭과 제약 없는 STRING 기반 탐색(confidence≥0.7) " +
-      "모두에서 간→LV 방향의 교차-장기 엣지는 단 하나도 확인되지 않았다. 반대 방향에서는 " +
-      "CellChatDB가 5건의 매칭을 제시하였다: LV에서 유의하게 상향된 Angptl4는 간에서 발현되는 " +
-      "Cdh5, Sdc1, Sdc2, Sdc3, Sdc4 모두와 큐레이션된 리간드-수용체 관계에 있었다(Table 1). " +
-      "이에 따라 후보 축의 방향을 간→심장에서 심장→간으로 재조정하였다. 이 방향 전환은 임시방편적인 " +
-      "수정이 아니라, 심장의 기능장애가 이차적으로 간을 손상시키는 임상적으로 이미 확립된 " +
-      "울혈성 간병증/심장-간 증후군 개념과 정확히 대응한다." },
+      "세웠다. 처음 채택했던 보수적 기준(padj<0.01, |log2FC|>1.5)에서는 CellChatDB 매칭과 제약 " +
+      "없는 STRING 기반 탐색(confidence≥0.7) 모두에서 간→LV 방향의 교차-장기 엣지가 단 하나도 " +
+      "확인되지 않았다. 반대 방향에서는 CellChatDB가 5건의 매칭을 제시하였다: LV에서 유의하게 " +
+      "상향된 Angptl4는 간에서 발현되는 Cdh5, Sdc1, Sdc2, Sdc3, Sdc4 모두와 큐레이션된 " +
+      "리간드-수용체 관계에 있었다(Table 1). 이에 따라 후보 축의 방향을 간→심장에서 심장→간으로 " +
+      "재조정하였다. 이 방향 전환은 임시방편적인 수정이 아니라, 심장의 기능장애가 이차적으로 간을 " +
+      "손상시키는 임상적으로 이미 확립된 울혈성 간병증/심장-간 증후군 개념과 정확히 대응한다. " +
+      "3.1절에서 기술한 완화된 최종 기준(padj<0.05, |log2FC|>1.0)에서 이 매칭을 다시 수행한 " +
+      "결과, 심장→간 방향의 5건은 정확히 동일하게 재현되어 이 축이 통계 기준에 견고함을 " +
+      "확인하였다. 그러나 이번에는 당초 가설이었던 간→LV 방향에서도 이전에는 보이지 않았던 3건의 " +
+      "새로운 매칭이 나타났다: 간에서 상향된 Sema5b가 LV에서 발현되는 Plxna1, Plxna3와, 그리고 " +
+      "간의 C4a가 LV의 C3ar1과 짝을 이루었다(C4a는 이후 3.11절에서 기술하는 이유로 네트워크 " +
+      "확장 분석에서 제외하였다). 이 간→심장 신호는 통계 기준에 민감하다는 점에서 심장→간 축보다 " +
+      "약하지만, 당초 가설을 뒷받침하는 유일한 신호이므로 무시하지 않고 3.10절 이하에서 심장→간 " +
+      "축과 동일한 엄격도로 끝까지 추적하였다." },
     { type: "table",
       title: "Table 1. LV→간 리간드-수용체 매칭 결과 (CellChatDB).",
       header: ["Interaction", "리간드", "수용체", "Pathway", "근거"],
@@ -395,6 +493,177 @@ module.exports = {
                "Thr353, His356. (C) Resmetirom(DiffDock confidence −2.06), Vina 포켓으로부터 " +
                "23.5Å 떨어진 별개 부위; 접촉 잔기 Trp280, Asp281, Ile367, Leu374, Tyr387, " +
                "Tyr388, Pro389." },
+
+    { type: "heading", text: "3.10 간→심장 방향 리간드-수용체 매칭 및 STRING 네트워크" },
+    { type: "p", text:
+      "3.3절에서 기술한 대로, 완화된 통계 기준(padj<0.05, |log2FC|>1.0)에서만 간→LV 방향의 3건의 " +
+      "매칭이 나타났다(Table 5). 이 중 Sema5b-Plxna1과 Sema5b-Plxna3를 seed로 삼아 STRING " +
+      "네트워크를 첫 번째 상호작용 파트너까지 확장하였다(confidence≥0.7, 62개 엣지). C4a는 " +
+      "seed에서 제외하였는데, STRING의 마우스 데이터베이스에는 C4a에 대응하는 별도 노드가 " +
+      "존재하지 않는다는 것을 확인했기 때문이다(Ensembl 유전자 ID로 조회 시 0건 반환; 유전자 " +
+      "심볼 'C4a'로 조회하면 전혀 다른 유전자인 'C5ar2'로 오매칭됨 — 마우스가 인간과 달리 C4a/Slp " +
+      "및 C4b라는 절편중복(segmental duplication) 유래 paralog 쌍을 가지는 것과 관련된 " +
+      "데이터베이스 한계로 판단된다). 이 네트워크에서 Plxna1(degree=17, betweenness=38.4)과 " +
+      "Plxna3(degree=16, betweenness=22.4)가 seed 유전자 중 가장 중심적인 hub였으며, seed는 " +
+      "아니지만 첫 번째 상호작용 파트너인 Plxna4(degree=14), Nrp1(degree=13), Nrp2(degree=11) " +
+      "역시 높은 연결성을 보였다(Figure 8; 전체 hub 순위는 Supplemental Table S10 참조)." },
+    { type: "table",
+      title: "Table 5. 간→LV 리간드-수용체 매칭 결과 (CellChatDB, padj<0.05/|log2FC|>1.0 기준에서만 확인됨).",
+      header: ["Interaction", "리간드", "수용체", "Pathway", "비고"],
+      widths: [2200, 1300, 1300, 1500, 2726],
+      rows: [
+        ["SEMA5B_PLXNA1", "Sema5b", "Plxna1", "SEMA5", "STRING 최고 degree hub"],
+        ["SEMA5B_PLXNA3", "Sema5b", "Plxna3", "SEMA5", "STRING 2위 degree hub"],
+        ["C4A_C3AR1", "C4a", "C3ar1", "COMPLEMENT", "C4a는 STRING 마우스 DB에 노드 없음 (본문 참조)"],
+      ] },
+    { type: "figure", file: "figures/Sema5bAxis_network_ggraph.png",
+      caption: "Figure 8. Sema5b-Plxna1/Plxna3 축을 중심으로 한 STRING 단백질-단백질 상호작용 " +
+               "네트워크(confidence≥0.7, 첫 번째 상호작용 파트너 포함, 62개 엣지). 빨간 노드: seed " +
+               "유전자(Sema5b, Plxna1, Plxna3); 파란 노드: STRING 상호작용 파트너(Plxna4, Nrp1, " +
+               "Nrp2 등). 노드 크기는 degree에 비례하며, 엣지의 굵기와 불투명도는 STRING confidence " +
+               "score에 비례한다." },
+
+    { type: "heading", text: "3.11 종간 세포유형 국소화: 간(리간드)과 심장(수용체) 양쪽 검증" },
+    { type: "p", text:
+      "heart→liver 축(Angptl4)은 리간드가 심장에서, 수용체가 간에서 발현되므로 3.5절에서 간 " +
+      "측만 국소화하면 충분하였다. 그러나 이 liver→heart 축은 정반대 구조 — 리간드(Sema5b)는 " +
+      "간에서, 수용체(Plxna1, Plxna3, Nrp1, Nrp2)는 심장에서 — 이므로 양쪽 모두의 검증이 " +
+      "필요하였다. 간 측은 3.5절과 동일한 GSE136103 아틀라스를 재사용하였으며, SEMA5B/PLXNA1/ " +
+      "PLXNA3는 모두 Mesenchyme(간성상세포)에 주로 국소화되어 — heart→liver 축의 원 후보였던 " +
+      "LUM/THY1/THBS2(서론, Supplemental Text S3)와 동일한 세포유형이었다 — NRP1/NRP2는 " +
+      "Endothelia에 강하게 국소화되었다(Figure 9A). 심장 측은 2.11절에서 기술한 새로운 참조 " +
+      "자료인 Tabula Muris 마우스 심장(droplet, Heart+Aorta, 624세포)를 조회하였다. 그 결과는 " +
+      "뚜렷한 비대칭을 보였다: STRING에서 가장 중심적인 hub이자 CellChatDB가 직접 매칭한 " +
+      "수용체인 Plxna1은 심근세포에서 5.0%, 섬유아세포에서 4.9%, 내피세포에서 4.5%로 모든 " +
+      "세포유형에서 미약하게만 검출된 반면, CellChatDB가 직접 매칭하지 않은 첫 번째 STRING " +
+      "상호작용 파트너 Nrp1은 심내막세포의 96.8%, 내피세포의 94.9%, 섬유아세포의 74.8%에서 " +
+      "검출되어 압도적으로 강한 신호를 보였다(Figure 9B; 전체 결과는 Supplemental Table S11 " +
+      "참조). Sema5b는 예상대로 심장 내 모든 세포유형에서 검출되지 않았는데, 이는 결함이 " +
+      "아니라 Sema5b가 간에서 분비되어 심장에 도달하는 리간드이므로 애초에 심장 조직 자체에서 " +
+      "발현될 필요가 없기 때문이다(수용 측 검증이므로 리간드 발현 자체는 확인 대상이 아님)." },
+    { type: "figure", file: "figures/composite/FigureSema5bLocalization_combined.png",
+      caption: "Figure 9. Sema5b-Plxna1 축 유전자의 종간 세포유형 국소화, 리간드(간)와 수용체" +
+               "(심장) 양쪽. (A) 간 측(GSE136103, 인간 간경변 atlas): SEMA5B/PLXNA1/PLXNA3는 " +
+               "Mesenchyme에, NRP1/NRP2는 Endothelia에 국소화된다. (B) 심장 측(Tabula Muris " +
+               "마우스 Heart+Aorta droplet atlas, n=624세포): CellChatDB가 직접 매칭한 수용체인 " +
+               "Plxna1(≤5%)보다 첫 번째 STRING 상호작용 파트너인 Nrp1(최대 96.8%)이 훨씬 " +
+               "강하고 넓게 발현된다." },
+
+    { type: "heading", text: "3.12 STITCH 네트워크 약리학: Nrp1/Nrp2에서만 실제 화합물 신호" },
+    { type: "p", text:
+      "STITCH 조회 결과, Sema5b/Plxna1/Plxna3의 화학적 파트너는 모두 결정화 완충액 유래 " +
+      "인공물(N-Acetyl-Hexosamine, Glycerol, Magnesium ion, ADP 등)뿐이었고 실제 약물성 " +
+      "화합물은 전혀 없었다. 반면 Nrp1은 Imatinib(승인 항암제) 1건을, Nrp2는 Vatalanib, " +
+      "Cediranib, Semaxinib(SU5416), Pazopanib(승인 다중 키나아제 억제제), Fasudil(승인 " +
+      "ROCK 억제제)을 포함해 훨씬 풍부한 실제 화합물 신호를 반환하였다(Table 6; 전체 결과는 " +
+      "Supplemental Table S12 참조). 이는 3.11절의 발현 국소화 비대칭과 같은 방향을 가리키는 " +
+      "독립적인 근거로, Plxna1/Plxna3보다 Nrp1/Nrp2가 실제 화합물 상호작용 데이터베이스에 " +
+      "훨씬 풍부하게 기록되어 있음을 보여준다." },
+    { type: "table",
+      title: "Table 6. Sema5b-Plxna1 축 유전자의 STITCH 화학적 파트너 (선별).",
+      header: ["유전자", "화합물"],
+      widths: [3013, 6013],
+      rows: [
+        ["Sema5b / Plxna1 / Plxna3", "결정화 완충액 유래 인공물뿐 (실제 화합물 없음)"],
+        ["Nrp1", "Imatinib (승인 항암제)"],
+        ["Nrp2", "Pazopanib (승인 다중 키나아제 억제제)"],
+        ["Nrp2", "Fasudil (승인 ROCK 억제제)"],
+        ["Nrp2", "Cediranib, Vatalanib, Semaxinib (후기임상/연구용 키나아제 억제제)"],
+      ] },
+
+    { type: "heading", text: "3.13 구조 액셔너빌리티 평가 및 표적 재조정: Plxna1에서 Nrp1으로" },
+    { type: "p", text:
+      "2.12절에서 기술한 UniProt 검색 오류를 수정한 뒤, 각 후보 유전자의 PDB 구조를 재검토하였다. " +
+      "PLXNA1(UniProt Q9UIW2)은 apo 상태의 ectodomain 구조 2건(7Y4P, 3.50Å; 7Y4Q, 4.70Å; " +
+      "Tanaka et al., 2022)만을 가지고 있었고, PLXNA3와 SEMA5B는 공개된 구조가 전무하였다. 사실 " +
+      "plexin 계열 단백질 전체를 통틀어 소분자가 결합된 공개 구조는 단 하나도 없었다. 반면 " +
+      "NRP1(O14786)은 25개의 PDB 구조를 가지고 있었으며, 그중 6FMC는 소분자 저해제 EG01377이 " +
+      "결합된 0.90Å 초고해상도 구조였다(Powell et al., 2018). NRP2(O60462) 역시 16개 구조를 " +
+      "가지고 있었다(Table 7). 이 비대칭 — CellChatDB가 직접 매칭한 수용체(Plxna1)는 구조적으로 " +
+      "액셔너블하지 않은 반면, 첫 번째 STRING 상호작용 파트너(Nrp1)는 소분자 결합 포켓까지 " +
+      "해결된 고해상도 구조를 갖춤 — 은 3.7절에서 기술한 heart→liver 축의 Sdc1/Sdc4→Angptl4 " +
+      "재조정과 정확히 같은 논리 구조이다. 다만 두 재조정 사이에는 중요한 차이가 있다: heart→liver " +
+      "축의 재조정은 리간드(Angptl4) 자체로 옮겨간 것이지만, 이번 재조정은 수용체 복합체 내의 " +
+      "다른 노드(Nrp1)로 옮겨가는 것이며, Nrp1이 실제로 Sema5b-Plxna1 신호전달의 보조수용체로 " +
+      "기능하는지는 문헌상 확립되어 있지 않다(4절에서 상세히 논의). Neuropilin이 보조수용체로 " +
+      "명확히 검증된 것은 III형 분비성 semaphorin이 Plexin-A 계열과 결합하는 경우이며(Takahashi " +
+      "et al., 1999), Sema5b는 V형 semaphorin으로 수용체 특이성이 다를 수 있다 — 실제로 근연 " +
+      "유전자 Sema5a는 Plexin-B3에 결합하지만 Sema5b는 결합하지 않는다는 것이 알려져 있다" +
+      "(Artigiani et al., 2004), 즉 5형 semaphorin 내에서도 paralog 간 수용체 특이성이 " +
+      "엄격하다. 이에 본 연구는 어느 한쪽을 미리 배제하지 않고 Plxna1과 Nrp1 양쪽 모두를 " +
+      "구조 기반 도킹 표적으로 사용하여, 데이터 자체가 어느 쪽이 더 방어 가능한지 답하도록 " +
+      "하였다(3.15-3.16절)." },
+    { type: "table",
+      title: "Table 7. Sema5b-Plxna1 축 유전자의 PDB 구조 요약.",
+      header: ["유전자", "UniProt", "PDB 구조 수", "소분자 결합 구조", "비고"],
+      widths: [1600, 1600, 1600, 1800, 2426],
+      rows: [
+        ["PLXNA1", "Q9UIW2", "2", "없음", "apo ectodomain (7Y4P 3.50Å, 7Y4Q 4.70Å)"],
+        ["PLXNA3", "P51805", "0", "없음", "구조 전무"],
+        ["SEMA5B", "Q9P283", "0", "없음", "구조 전무"],
+        ["NRP1", "O14786", "25", "있음 (6FMC, 0.90Å)", "EG01377 결합 b1 domain — 최종 표적"],
+        ["NRP2", "O60462", "16", "있음", "다수 저해제 결합 구조"],
+      ] },
+
+    { type: "heading", text: "3.14 Druggability 평가 (DGIdb)" },
+    { type: "p", text:
+      "DGIdb 조회 결과는 3.12절의 STITCH 결과 및 3.13절의 구조 평가와 일관되었다. Plxna1, " +
+      "Plxna3, Sema5b는 모두 0건의 약물 상호작용을 보인 반면, Nrp1과 Nrp2는 각각 다수의 " +
+      "상호작용을 보였다(Table 8; 전체 결과는 Supplemental Table S13 참조)." },
+    { type: "table",
+      title: "Table 8. Sema5b-Plxna1 축 유전자의 DGIdb druggability 요약.",
+      header: ["유전자", "상호작용 수", "예시 약물"],
+      widths: [2000, 2000, 5013],
+      rows: [
+        ["PLXNA1", "0", "-"],
+        ["PLXNA3", "0", "-"],
+        ["SEMA5B", "0", "-"],
+        ["NRP1", "5", "Palifermin, Pegaptanib, Vesencumab, EG01377, EG00229"],
+        ["NRP2", "1", "Daunorubicin liposomal"],
+      ] },
+
+    { type: "heading", text: "3.15 이중 표적 AutoDock Vina 스크리닝: Nrp1 vs. Plxna1" },
+    { type: "p", text:
+      "11개 화합물 라이브러리를 Nrp1(포켓 특이적 box)과 Plxna1(Sema domain 중심 domain-level " +
+      "blind box) 양쪽에 독립적으로 스크리닝하였다(Figure 10; 전체 결과는 Supplemental Table " +
+      "S14 참조). Nrp1에서는 STITCH가 실제 화학적 파트너로 확인한 화합물들(Imatinib −7.98, " +
+      "Vatalanib −7.97, Semaxinib −7.26, Pazopanib −7.23 kcal/mol)이 기전상 무관한 대조군" +
+      "(Aspirin, Caffeine, Metoprolol, Fasudil; −4.98~−6.30 kcal/mol)보다 뚜렷하게 우수한 " +
+      "점수를 보였고, 자기도킹 양성대조군인 EG01377도 −7.10 kcal/mol로 중상위권에 위치하여 " +
+      "특이성이 있는 결과임을 시사하였다. 반면 Plxna1에서는 Nrp1을 표적으로 설계된 EG01377이 " +
+      "−9.15 kcal/mol로 실제 Vina 1위인 Imatinib(−9.96)과 거의 동률을 이루었는데, 이는 " +
+      "특정 화합물-표적 상호작용이 아니라 넓은 blind box 내에서 분자 크기가 클수록 유리해지는 " +
+      "일반적인 인공물일 가능성을 시사하는 경고 신호이다." },
+    { type: "figure", file: "figures/composite/FigureVina_dual_combined.png",
+      caption: "Figure 10. 이중 표적 AutoDock Vina 스크리닝. (A) Nrp1(PDB 6FMC, EG01377 " +
+               "포켓 특이적 box): STITCH 화학적 파트너(빨강)가 무관한 대조군(회색)보다 뚜렷하게 " +
+               "우수하며, 자기도킹 양성대조군 EG01377(파랑)도 중상위권. (B) Plxna1(PDB 7Y4P, " +
+               "Sema domain 중심 domain-level blind box): Nrp1 전용으로 설계된 EG01377이 " +
+               "실제 1위 화합물과 거의 동률 — 특이성 없는 인공물일 가능성을 시사." },
+
+    { type: "heading", text: "3.16 DiffDock 교차검증: 결정적 분기" },
+    { type: "p", text:
+      "두 표적 각각의 Vina 1위 화합물(공교롭게도 둘 다 Imatinib)을 DiffDock으로 교차검증한 결과, " +
+      "3.15절의 우려가 뚜렷하게 갈렸다. Nrp1에서는 DiffDock의 최상위 pose(confidence −1.51)가 " +
+      "Vina 포켓(EG01377 무게중심)으로부터 단 1.9Å 이내에 수렴하였으며, 접촉 잔기(Tyr297, " +
+      "Trp301, Asp320, Glu348, Lys350, Lys351, Tyr353)는 문헌상 VEGF-A/Sema3A의 C-말단 " +
+      "아르기닌과 EG-계열 저해제가 결합하는 것으로 알려진 바로 그 b1 domain 포켓과 일치하였다 " +
+      "(Figure 11A). 반면 Plxna1에서는 DiffDock의 최상위 pose(confidence −1.65)가 Vina " +
+      "box로부터 22.7Å 떨어진 완전히 다른 부위(접촉 잔기 Lys156, Glu196, Gln221, Ser226, " +
+      "Gln228, Leu229, Lys230, Phe292, Leu388, Gln413, Pro414)에 위치하여, 사전 지정 없는 " +
+      "독립적 방법이 Sema domain 표적 부위에 전혀 동의하지 않았다(Figure 11B). 두 DiffDock " +
+      "confidence 값(−1.51, −1.65) 모두 해당 방법의 저–중간 신뢰 구간에 속하지만, Vina와 " +
+      "DiffDock이 pose 위치에서 완전히 독립적으로 일치하는지 여부는 결합 부위의 생물학적 " +
+      "타당성을 판단하는 데 그 자체로 유효한 근거이다. 이에 따라 본 연구는 Nrp1을 이 축의 " +
+      "구조적으로 뒷받침되는 최종 표적으로, Plxna1은 CellChatDB가 직접 매칭한 원래 후보이지만 " +
+      "구조·발현·독립적 도킹 방법 세 가지 모두에서 뒷받침되지 않는 가설 생성적 결과로 " +
+      "구분하여 보고한다." },
+    { type: "figure", file: "figures/composite/FigurePose_dual_combined.png",
+      caption: "Figure 11. Imatinib의 이중 표적 DiffDock 교차검증 결과. (A) Nrp1(PDB 6FMC): " +
+               "DiffDock 최상위 pose(confidence −1.51)가 Vina 포켓으로부터 1.9Å 이내로 수렴하며, " +
+               "접촉 잔기가 문헌상 알려진 b1 domain 포켓과 일치. (B) Plxna1(PDB 7Y4P): DiffDock " +
+               "최상위 pose(confidence −1.65)가 Vina box로부터 22.7Å 떨어진 별개 부위에 위치 — " +
+               "두 독립적 방법이 서로 다른 결합 부위를 가리켜 신뢰도가 낮음." },
   ],
 
   discussion: [
@@ -443,30 +712,74 @@ module.exports = {
     "제시하는 것이지 확립된 약리기전으로 주장하는 것이 아니며, 정확히 5절에서 제안하는 " +
     "wet-lab 검증 계획이 확인하도록 설계된 바로 그 가능성이다.",
 
+    "3.10-3.16절에서 다룬 liver→heart 축은 이 논의를 한 단계 더 밀고 나간다. 이 축은 " +
+    "heart→liver 축과 정확히 같은 재조정 논리 — 네트워크 중심성이 곧 구조적 액셔너빌리티를 " +
+    "보장하지 않는다 — 를 따르지만, 재조정의 방향이 다르다: heart→liver 축에서는 표적이 " +
+    "수용체(Sdc1/Sdc4)에서 리간드(Angptl4) 자체로 옮겨갔지만, liver→heart 축에서는 표적이 " +
+    "CellChatDB가 직접 매칭한 수용체(Plxna1)에서 그 수용체 복합체 내의 다른 노드(Nrp1)로 " +
+    "옮겨갔다. 이 차이는 사소하지 않다: Angptl4로의 재조정은 '같은 분자를 표적으로 삼되 " +
+    "다른 도메인을 겨냥한다'는 안전한 재조정인 반면, Nrp1으로의 재조정은 '전혀 다른 분자를 " +
+    "표적으로 삼는다'는 훨씬 대담한 가정을 필요로 한다. 이 가정이 정당화되려면 Nrp1이 " +
+    "실제로 Sema5b-Plxna1 신호전달 복합체의 일부로 기능해야 하는데, 이는 확립된 사실이 " +
+    "아니라 명시적 가설이다 — Neuropilin의 보조수용체 역할이 구조적으로 검증된 것은 III형 " +
+    "분비성 semaphorin이 Plexin-A와 결합하는 경우이며(Takahashi et al., 1999), Sema5b는 " +
+    "V형 semaphorin으로 그 근연 유전자인 Sema5a조차 Plexin-B3에 대한 결합 특이성이 " +
+    "paralog-specific함이 알려져 있다(Sema5a는 결합하지만 Sema5b는 결합하지 않음; Artigiani " +
+    "et al., 2004). 이러한 이유로 본 연구는 Nrp1을 '확립된 표적'이 아니라 '구조·발현·독립적 " +
+    "도킹 방법이라는 세 갈래의 간접 증거가 수렴하는 가장 방어 가능한 가설'로 제시하며, Plxna1 " +
+    "도킹 결과는 같은 엄격도로 나란히 보고하되 세 증거 모두에서 뒷받침되지 않는다는 점을 " +
+    "숨기지 않는다(3.13-3.16절).",
+
+    "두 축을 나란히 놓고 보면 흥미로운 비대칭이 드러난다. heart→liver 축(Angptl4-Sdc/Cdh5)은 " +
+    "통계 기준을 엄격하게 잡든 완화하든 동일하게 재현되는 반면(3.3절), liver→heart 축" +
+    "(Sema5b-Plxna1/Plxna3)은 완화된 기준(padj<0.05, |log2FC|>1.0)에서만 나타나고 더 엄격한 " +
+    "기준(padj<0.01, |log2FC|>1.5)에서는 사라진다. 이 비대칭을 얼버무리지 않는 것이 중요하다: " +
+    "이는 liver→heart 축이 heart→liver 축보다 통계적으로 더 약한 신호이며, 따라서 " +
+    "가설 생성적(hypothesis-generating) 성격이 더 강하다는 것을 의미한다. 3.2절에서 관찰한 " +
+    "GSEA(기준 무관)와 ORA(기준 의존)의 대비 역시 같은 메시지를 준다: 통계 기준의 선택은 " +
+    "단순한 형식적 절차가 아니라 어떤 생물학적 가설이 '보이는지' 자체를 결정하며, 본 연구는 " +
+    "이를 감추는 대신 정직하게 두 기준 모두에서 얻은 결과를 나란히 제시함으로써 독자가 각 " +
+    "축의 증거 강도를 스스로 판단할 수 있게 하였다. 그럼에도 불구하고, 두 축을 종합하면 " +
+    "심장-간 상호작용이 한쪽 방향의 단일 신호가 아니라 서로 다른 신뢰도를 가진 양방향 회로일 " +
+    "가능성을 시사하며, 이는 심장-간 증후군을 단일 방향의 울혈성 손상으로만 보던 기존 임상적 " +
+    "관점을 확장할 잠재력을 가진다.",
+
     "몇 가지 한계를 명시해야 한다. 첫째, 본 분석은 소규모 표본(군당 n=5)의 단일 마우스 모델에 " +
     "기반하므로 독립적 재현이 필요하다. 둘째, 심장 측 Angptl4 분비원은 본 연구 자체의 단일세포 " +
     "데이터가 아니라 독립적인 문헌 보고를 통해서만 확인되었다. 셋째, 로컬 GPU의 부재로 " +
     "DiffDock은 21개 전체 화합물이 아니라 Vina 상위 화합물(Resmetirom, Ezetimibe, 그리고 " +
     "STITCH에서 이미 독립적으로 실제 ANGPTL4 화학적 파트너로 확인되었기에 포함한 " +
-    "Pioglitazone)에 한해 공개 웹 인터페이스를 통해서만 수행되었다. 넷째, 본 연구에서 제시된 " +
-    "모든 결합친화도는 in silico 예측치이며, 어떠한 치료적 주장을 하기에 앞서 Western blot, " +
-    "SPR, ITC 등을 통한 생화학적 검증이 필요하다.",
+    "Pioglitazone; liver→heart 축은 두 표적 각각의 Vina 1위 화합물 Imatinib)에 한해 공개 " +
+    "웹 인터페이스를 통해서만 수행되었다. 넷째, 본 연구에서 제시된 모든 결합친화도는 in " +
+    "silico 예측치이며, 어떠한 치료적 주장을 하기에 앞서 Western blot, SPR, ITC 등을 통한 " +
+    "생화학적 검증이 필요하다. 다섯째, liver→heart 축의 Nrp1 표적화는 Sema5b-Plxna1 신호전달 " +
+    "복합체에서 Nrp1의 직접적 역할을 가정하는데, 이는 위에서 논의했듯 문헌상 확립되지 않은 " +
+    "가설이다 — 도킹 결과가 Nrp1을 '방어 가능한 구조 기반 표적'으로 뒷받침하는 것과, Nrp1이 " +
+    "'이 특정 신호전달의 생물학적 보조수용체'라고 확정하는 것은 다른 수준의 주장임을 " +
+    "명확히 구분해야 한다. 여섯째, Plxna1 도킹은 알려진 결합 포켓이 없는 domain-level blind " +
+    "box를 사용하였고, 자기도킹 대조군이 실제 상위 화합물과 거의 동률을 이루었다는 점에서 " +
+    "(3.15절) 이 결과 자체의 신뢰도가 낮다는 것을 반복해서 강조한다.",
   ],
 
   conclusion: {
     summary:
-      "본 연구는 공개된 간-심장 페어드 마우스 전사체 데이터를 더 엄격한 통계 기준으로 재분석하고, " +
-      "리간드-수용체 인터랙톰 매칭, PPI 네트워크 구축, 네트워크 약리학, druggability 평가, 구조 " +
-      "기반 가상 스크리닝까지 분석을 이어감으로써, 당초 가설이었던 간→심장 방향 대신 심장→간 " +
-      "방향의 Angptl4-Sdc/Cdh5 축을 확인하였다 — 이러한 방향 전환은 실제로 임상적으로 확립된 " +
-      "심장-간 증후군 개념에 대응한다. 이 국소화는 인간 간 scRNA-seq 아틀라스와 마우스 자체 " +
-      "아틀라스(Tabula Muris) 모두에서 독립적으로 재현되었으며, 네트워크 hub인 Sdc1/Sdc4가 현재 " +
-      "구조적으로 액셔너블하지 않다는 점을 인식하고 구조 기반 스크리닝의 표적을 Angptl4 자체로 " +
-      "재조정한 결과, 여러 독립적인 도킹 알고리즘에 걸쳐 가장 일관되게 교차검증된 후보로 " +
-      "Pioglitazone과 Ezetimibe를 확인하였다 — 특히 Pioglitazone은 STITCH 연관성·Vina 순위· " +
-      "DiffDock 포켓 수렴이라는 세 갈래의 수렴하는 in silico 근거를 갖추었다. 이 결과들은 " +
-      "여전히 in silico 예측에 머물러 있으므로, 아래에서는 일반적인 향후 연구 방향 나열 대신 " +
-      "구체적인 wet-lab 검증 파이프라인을 제시한다.",
+      "본 연구는 공개된 간-심장 페어드 마우스 전사체 데이터를 통계 기준의 민감도 분석을 거쳐 " +
+      "재조정된 기준(padj<0.05, |log2FC|>1.0)으로 재분석하고, 리간드-수용체 인터랙톰 매칭, PPI " +
+      "네트워크 구축, 네트워크 약리학, druggability 평가, 구조 기반 가상 스크리닝까지 분석을 " +
+      "이어감으로써 심장-간 축을 양방향 회로로 확인하였다. 통계적으로 견고한 heart→liver 방향 " +
+      "에서는 당초 가설이었던 간→심장 대신 심장→간 방향의 Angptl4-Sdc/Cdh5 축이 확인되었으며 — " +
+      "이는 임상적으로 확립된 심장-간 증후군 개념에 대응한다 — 네트워크 hub인 Sdc1/Sdc4가 " +
+      "구조적으로 액셔너블하지 않다는 점을 인식하고 표적을 Angptl4 자체로 재조정한 결과, 여러 " +
+      "독립적인 도킹 알고리즘에 걸쳐 가장 일관되게 교차검증된 후보로 Pioglitazone과 Ezetimibe를 " +
+      "확인하였다. 통계적으로 더 미묘한 liver→heart 방향에서는 완화된 기준에서만 나타나는 " +
+      "Sema5b-Plxna1/Plxna3 축을 동일한 엄격도로 끝까지 추적하여, CellChatDB가 직접 매칭한 " +
+      "수용체(Plxna1)의 발현·구조적 한계를 확인하고 첫 번째 STRING 상호작용 파트너인 Nrp1으로 " +
+      "표적을 재조정하였다 — Nrp1은 Vina와 DiffDock 두 독립적 방법 모두에서 문헌상 알려진 결합 " +
+      "부위로 수렴한 반면, Plxna1 도킹은 두 방법이 서로 다른 부위를 가리켜 가설 생성적 수준에 " +
+      "머물렀다. 이 모든 결과는 여전히 in silico 예측에 머물러 있으므로, 아래에서는 일반적인 " +
+      "향후 연구 방향 나열 대신 통계적으로 더 견고한 heart→liver 축을 중심으로 한 구체적인 " +
+      "wet-lab 검증 파이프라인을 제시하고, 마지막에 liver→heart 축에 대한 유사한 검증 방향을 " +
+      "간략히 제안한다.",
     planIntro:
       "제안하는 검증 파이프라인은 conditioned-media 패러다임을 따른다 — 스트레스를 받은/분비하는 " +
       "공여세포가 분비인자를 수용세포로 전달하고, 그 수용세포 측에서 약리학적 차단을 테스트하는 " +
@@ -514,7 +827,14 @@ module.exports = {
     closing:
       "이 구체적 파이프라인 외에도, SPR 또는 ITC를 통한 ANGPTL4-Ezetimibe 결합의 생화학적 검증과 " +
       "GPU 환경에서의 전체 라이브러리 DiffDock 재스크리닝은 여전히 가치 있는 보완적 방향으로 " +
-      "남아있다.",
+      "남아있다. liver→heart 축(Sema5b-Nrp1)에 대해서는, 같은 conditioned-media 패러다임을 " +
+      "방향만 뒤집어 적용할 수 있다: 이번에는 1차 마우스 간성상세포(HSC)를 Sema5b 분비 " +
+      "공여세포로, 1차 마우스 심장 내피세포 또는 심내막세포(Tabula Muris에서 Nrp1 발현이 " +
+      "가장 높았던 세포유형, 3.11절)를 수용세포로 삼아, Nrp1 저해제 후보(EG01377 또는 Imatinib) " +
+      "전처리 유무에 따라 VEGF/semaphorin 하위 신호(예: Rac1/RhoA 활성, 내피 이동성 assay)가 " +
+      "변화하는지 확인한다. 다만 이 축은 통계적으로 더 미묘하고 Nrp1의 직접적 역할이 가설 " +
+      "수준이므로(4절), 어떠한 체외 검증에 앞서 재조합 Sema5b 단백질과 Nrp1의 직접 결합 여부를 " +
+      "SPR/ITC로 먼저 확인하는 것이 순서상 우선되어야 한다.",
   },
 
   codeWalkthrough: {
@@ -551,6 +871,22 @@ module.exports = {
       { file: "23_graphical_abstract.py", desc: "데이터부터 재창출 후보물질까지 연구 전체 워크플로우를 요약하는 graphical abstract 파이프라인 도식(matplotlib) 생성." },
       { file: "24_gsea_running_score.R", desc: "clusterProfiler::GSEA로 Hallmark GSEA를 재실행(script 02의 fgsea와 동일한 랭킹 지표 사용)하고, enrichplot::gseaplot2로 각 장기 상위 2개 pathway에 대한 고전적 running-enrichment-score plot을 생성 — Figure 3C-F로 추가." },
       { file: "25_umap_featureplot_condition.R", desc: "GSE136103 아틀라스에서 Sdc1/Sdc4/Angptl4에 대해 조건별(healthy/cirrhotic)로 나눈 UMAP FeaturePlot(Seurat) 생성 — 기존 dot plot과 합쳐 Figure S3 구성." },
+      { file: "26_relaxed_threshold_recheck.R", desc: "padj<0.05, |log2FC|>1.0으로 완화한 기준에서 캐시된 DESeq2 객체를 다시 필터링하고 CellChatDB 매칭을 재실행하는 최초의 탐색적 민감도 분석 — 간→LV 방향에서 3건의 새 매칭이 나타남을 처음 발견 (이후 스크립트 01-03 자체가 이 기준을 기본값으로 채택하면서 공식 파이프라인에 흡수됨)." },
+      { file: "28_liver_to_heart_candidate_network.R", desc: "Sema5b/Plxna1/Plxna3를 seed로 STRING 네트워크를 확장. C4a는 마우스 STRING DB에 노드가 없음을 Ensembl ID/심볼 양쪽으로 확인 후 제외." },
+      { file: "29_liver_to_heart_druggability_check.R", desc: "Sema5b/Plxna1/Plxna3/Plxna4/Nrp1/Nrp2에 대해 DGIdb GraphQL API 조회." },
+      { file: "30_semaphorin_structure_check.R", desc: "PLXNA1/PLXNA3/SEMA5B/NRP1/NRP2의 UniProt PDB 교차참조 조회. gene:NRP1/NRP2 검색이 NELL1/NELL2(오래된 별칭)와 충돌하는 문제를 발견하고, 1차 유전자명 정확 일치 검증으로 수정." },
+      { file: "31_semaphorin_stitch.R", desc: "위 6개 유전자의 STITCH 화학적 파트너 조회, PubChem CID를 화합물명으로 변환." },
+      { file: "32_sema5b_liver_localization.R", desc: "GSE136103 아틀라스(이미 구축됨)를 재사용해 SEMA5B/PLXNA1/PLXNA3/NRP1/NRP2의 간 내 세포유형 DotPlot 생성." },
+      { file: "33_tabula_muris_heart_check.R", desc: "Tabula Muris droplet Heart+Aorta atlas(624세포)를 조회해 Plxna1/Plxna3/Sema5b/Nrp1/Nrp2의 심장 내 세포유형별 발현을 마우스 자체에서 직접 확인." },
+      { file: "34_prepare_dual_receptors.py", desc: "Nrp1(PDB 6FMC, EG01377 리간드 무게중심 기준 포켓 특이적 box)과 Plxna1(PDB 7Y4P, UniProt Sema domain 잔기 27-512 Cα 무게중심 기준 domain-level box) 양쪽의 Meeko 수용체 PDBQT 생성." },
+      { file: "35_build_dual_axis_ligand_library.py", desc: "11개 화합물 라이브러리 구성: EG01377(RCSB 화학성분 사전에서 SMILES 직접 확보, 자기도킹 대조군) + STITCH 확인 화합물 6종 + 무관 대조군 4종." },
+      { file: "36_prepare_dual_axis_ligands.py", desc: "11개 리간드 전체에 대해 3차원 구조 생성 및 Meeko PDBQT 변환." },
+      { file: "37_run_dual_axis_vina_screening.py", desc: "준비된 두 수용체(Nrp1, Plxna1) 각각에 대해 11개 리간드 전체로 AutoDock Vina 실행." },
+      { file: "38_dual_axis_vina_results_plot.R", desc: "두 표적의 Vina 결과를 화합물 분류별 막대그래프로 시각화(Figure 10)." },
+      { file: "39_diffdock_distance_check.py", desc: "DiffDock 최상위 pose 중심점과 Vina box 중심점 사이 거리를 계산해 두 방법의 수렴/발산 여부를 정량화." },
+      { file: "40_dual_axis_pose_figures.py", desc: "script 15와 동일한 matplotlib 파이프라인으로 두 표적의 DiffDock pose 및 접촉 잔기 정적 figure 생성(Figure 11)." },
+      { file: "41_liver_to_heart_network_ggraph.R", desc: "script 21과 동일한 ggraph 파이프라인으로 Sema5b-Plxna1/Plxna3 STRING 네트워크 재구축(Figure 8)." },
+      { file: "42_graphical_abstract_dual_axis.py", desc: "Graphical abstract를 heart→liver·liver→heart 두 열로 재구성해 양방향 회로를 한눈에 요약하도록 재제작." },
     ],
     reproNote:
       "소프트웨어 버전: R 4.5.2(DESeq2, apeglm, clusterProfiler, fgsea, msigdbr, CellChat, igraph, " +
@@ -558,7 +894,8 @@ module.exports = {
       "py3Dmol); AutoDock Vina 1.2.7; PyMOL(오픈소스 빌드, 전용 Miniconda 환경으로 설치); " +
       "Cytoscape 3.10.4(설치 완료, 수동 활용 가능). DiffDock은 이 컴퓨터에 CUDA 지원 GPU가 없어 " +
       "로컬에 설치하지 않았으며, 대신 원 저자 코드(gcorso/DiffDock)를 그대로 구동하는 공개 Gradio " +
-      "웹 인터페이스를 통해 Vina 상위 화합물(Resmetirom, Ezetimibe, Pioglitazone)에 한해서만 " +
+      "웹 인터페이스를 통해 Vina 상위 화합물(heart→liver 축: Resmetirom, Ezetimibe, " +
+      "Pioglitazone; liver→heart 축: 두 표적 각각의 Vina 1위 화합물 Imatinib)에 한해서만 " +
       "실행하였다. 저장소의 전체 커밋 이력은 " +
       "실제로 수행된 분석 과정 — 최초의 (간→심장) 가설, 그것이 데이터로 뒷받침되지 않는다고 확인된 " +
       "시점, 이후 표적과 스크리닝 전략이 재조정된 과정 — 을 시간순으로 완전하게 기록하고 있다.",
@@ -566,44 +903,60 @@ module.exports = {
 
   supplemental: {
     docTitle: "Supplemental Data",
-    docSubtitle: "심장-간 Angptl4-Sdc/Cdh5 축과 심간증후군(Cardiohepatic Syndrome): 표적 재조정 및 " +
-                 "Ezetimibe·Pioglitazone의 구조 기반 약물 재창출 — Supplemental Figures, Tables, and Text",
+    docSubtitle: "심장-간 양방향 신호 축: Angptl4-Sdc/Cdh5(심장→간)와 Sema5b-Nrp1(간→심장) 축의 " +
+                 "구조 기반 표적 재조정 및 약물 재창출 — Supplemental Figures, Tables, and Text",
     labels: { figures: "Supplemental Figures", tables: "Supplemental Tables", text: "Supplemental Text", code: "코드 및 분석 워크플로우" },
     figures: [
       { file: "figures/composite/FigureS_GO_combined.png",
-        caption: "Figure S1. GO Biological Process 농축분석. (A) 간(유의 항목 34개, padj<0.05). (B) LV(유의 항목 10개, padj<0.05). Figure 3의 Hallmark GSEA와 겹치지 않는 상보적 온톨로지로 결과를 보완한다." },
-      { file: "figures/Liver_KEGG_dotplot.png",
-        caption: "Figure S2. 간 KEGG 경로 농축분석(유의 경로 9개, padj<0.05). 동일 기준에서 LV는 유의한 KEGG 경로가 없었으며, 이를 생략하지 않고 그대로 보고한다." },
+        caption: "Figure S1. 간 GO Biological Process 농축분석(유의 항목 41개, padj<0.05). LV는 " +
+                 "동일 기준에서 유의 항목이 0개였다 — DEG 입력 유전자 수가 20개에서 63개로 3배 " +
+                 "이상 늘었음에도 유의 GO-BP 항목이 오히려 사라진 결과이며, 이를 생략하지 않고 " +
+                 "그대로 보고한다(3.2절 참조, ORA는 GSEA와 달리 기준에 의존적임). Figure 3의 " +
+                 "Hallmark GSEA와 겹치지 않는 상보적 온톨로지로 결과를 보완한다." },
+      { file: "figures/composite/FigureKEGG_combined.png",
+        caption: "Figure S2. KEGG 경로 농축분석(padj<0.05). (A) 간(유의 경로 15개). (B) LV" +
+                 "(유의 경로 1개, Ovarian steroidogenesis) — 이전 더 엄격한 기준에서는 LV에 유의 " +
+                 "KEGG 경로가 전혀 없었으나, 완화된 기준에서 1개가 새로 나타났다." },
       { file: "figures/composite/FigureS3_condition_combined.png", maxHeightPx: 700,
         caption: "Figure S3. 질환 상태(건강 vs. 간경변)별로 나눈 Angptl4 축 유전자의 간 세포유형 국소화(GSE136103 종간 참조 아틀라스; 구축 과정은 Methods 2.6 및 Supplemental Text S3 참조). Figure 5에 더해, 단순 발현량뿐 아니라 국소화 패턴 자체가 질환 상태에 따라 달라지는지를 보여주기 위해 추가하였다. (A) 전체 6개 축 유전자에 대한 dot plot(y축에 세포유형 표기). (B) UMAP feature plot(SDC1, SDC4, ANGPTL4), 건강 vs. 간경변을 나란히 배치하여 세포유형별 요약 수치가 아니라 발현 세포의 UMAP 전체 상 분포 변화로 동일한 변화를 보여준다. 클러스터 정체성은 (A)의 dot plot 및 Supplemental Text S3의 주석된 UMAP과 일치한다." },
       { file: "figures/TabulaMuris_liver_dotplot.png",
         caption: "Figure S4. Angptl4 축 유전자 국소화의 독립적인 마우스 자체 교차검증(Tabula Muris, FACS/Smart-seq2 간 아틀라스, n=714 세포, 5개 주석 세포유형). Sdc4(91.8%)와 Sdc1(68.3%)은 주로 간세포에서, Sdc3(80.3%)는 Kupffer 세포에서, Cdh5(98.4%)는 간 동양혈관 내피세포에서 검출되어 — bulk 코호트와 동일한 종에서 Figure 5의 인간 아틀라스 패턴을 직접 재현하였다." },
     ],
     tableIntros: {
-      S1: "Figure 1A 및 3.1절에서 보고한 86개 유전자 수의 근거가 되는 간 DEG 전체 테이블(DESeq2/apeglm 산출 전체 컬럼: baseMean, log2FoldChange, lfcSE, pvalue, padj, gene_name).",
-      S2: "Figure 1B 및 3.1절에서 보고한 20개 유전자 수의 근거가 되는 LV DEG 전체 테이블.",
-      S3: "Figure S1A의 근거가 되는 간 GO-BP 농축분석 전체 테이블.",
-      S4: "Figure S1B의 근거가 되는 LV GO-BP 농축분석 전체 테이블.",
-      S5: "Figure S2의 근거가 되는 간 KEGG 농축분석 전체 테이블.",
+      S1: "Figure 1A 및 3.1절에서 보고한 228개 유전자 수의 근거가 되는 간 DEG 전체 테이블(DESeq2/apeglm 산출 전체 컬럼: baseMean, log2FoldChange, lfcSE, pvalue, padj, gene_name).",
+      S2: "Figure 1B 및 3.1절에서 보고한 63개 유전자 수의 근거가 되는 LV DEG 전체 테이블.",
+      S3: "Figure S1의 근거가 되는 간 GO-BP 농축분석 전체 테이블.",
+      S4: "LV GO-BP 농축분석 결과(0개 행 — 3.2절 및 Figure S1 캡션 참조).",
+      S5: "Figure S2의 근거가 되는 간·LV KEGG 농축분석 전체 테이블.",
       S6: "3.4절에서 논의한 Sdc1/Sdc4 중심성의 근거가 되는 STRING 네트워크 hub 유전자 전체 순위(degree, betweenness).",
       S7: "3.8절에서 다룬 21개 전체 스크리닝 화합물의 AutoDock Vina 전체 순위(본문 Table 4 상위 5개 요약에서 생략된 지방산·무관 대조군 그룹 포함).",
       S8: "3.6절에서 다룬 Angptl4 축 전체 유전자의 STITCH 화학적 파트너 조회 전체 결과(PubChem으로 확인한 화합물 정보 포함).",
       S9: "Table 3 및 3.7절의 표적 선정 근거가 되는 DGIdb druggability 조회 전체 결과.",
+      S10: "3.10절/Figure 8의 근거가 되는 Sema5b-Plxna1/Plxna3 축 STRING 네트워크 hub 유전자 전체 순위(degree, betweenness).",
+      S11: "3.11절/Figure 9B의 근거가 되는 Tabula Muris 마우스 심장(Heart+Aorta droplet atlas) 세포유형별 발현 전체 결과(pct_expressed, avg_expr, n_cells).",
+      S12: "3.12절/Table 6의 근거가 되는 Sema5b-Plxna1 축 전체 유전자의 STITCH 화학적 파트너 조회 전체 결과.",
+      S13: "3.14절/Table 8의 근거가 되는 Sema5b-Plxna1 축 전체 유전자의 DGIdb druggability 조회 전체 결과.",
+      S14: "3.15절/Figure 10의 근거가 되는 Nrp1·Plxna1 이중 표적 AutoDock Vina 전체 순위(11개 화합물 전체, 두 표적 각각).",
     },
     tableTitles: {
-      S1: "Table S1. 간 유의 DEG 전체 목록 (n=86, padj<0.01, |log2FC|>1.5)",
-      S2: "Table S2. LV 유의 DEG 전체 목록 (n=20, padj<0.01, |log2FC|>1.5)",
+      S1: "Table S1. 간 유의 DEG 전체 목록 (n=228, padj<0.05, |log2FC|>1.0)",
+      S2: "Table S2. LV 유의 DEG 전체 목록 (n=63, padj<0.05, |log2FC|>1.0)",
       S3: "Table S3. 간 GO-BP 농축분석 (전체, padj<0.05)",
-      S4: "Table S4. LV GO-BP 농축분석 (전체, padj<0.05)",
-      S5: "Table S5. 간 KEGG 경로 농축분석 (전체, padj<0.05)",
+      S4: "Table S4. LV GO-BP 농축분석 (0개 행)",
+      S5: "Table S5. 간·LV KEGG 경로 농축분석 (전체, padj<0.05)",
       S6: "Table S6. STRING 네트워크 hub 유전자 (Angptl4-Sdc/Cdh5 축 + 첫 번째 상호작용 파트너)",
-      S7: "Table S7. AutoDock Vina 전체 순위 (21개 화합물 전체)",
+      S7: "Table S7. AutoDock Vina 전체 순위 (21개 화합물 전체, ANGPTL4)",
       S8: "Table S8. Angptl4 축 유전자의 STITCH 화학적 파트너 (전체)",
-      S9: "Table S9. DGIdb druggability 요약",
+      S9: "Table S9. DGIdb druggability 요약 (Angptl4 축)",
+      S10: "Table S10. STRING 네트워크 hub 유전자 (Sema5b-Plxna1/Plxna3 축 + 첫 번째 상호작용 파트너)",
+      S11: "Table S11. Tabula Muris 마우스 심장 세포유형별 발현 전체 결과 (Sema5b-Plxna1 축)",
+      S12: "Table S12. Sema5b-Plxna1 축 유전자의 STITCH 화학적 파트너 (전체)",
+      S13: "Table S13. DGIdb druggability 요약 (Sema5b-Plxna1 축)",
+      S14: "Table S14. Nrp1·Plxna1 이중 표적 AutoDock Vina 전체 순위 (11개 화합물 전체)",
     },
     textTitles: {
-      S1: "Text S1. 최종 표적 선정 근거",
-      S2: "Text S2. DiffDock 교차검증 요약",
+      S1: "Text S1. 최종 표적 선정 근거 (양방향 축)",
+      S2: "Text S2. DiffDock 교차검증 요약 (양방향 축)",
       S3: "Text S3. 본 연구의 기반이 된 인간 코호트 분석(GSE135251, GSE136103)의 전체 방법론",
     },
     textS1: [
@@ -636,6 +989,31 @@ module.exports = {
       "(활용 가능한 수용체 세포외 도메인 구조의 부재) 때문이지 네트워크 분석 자체가 syndecan을 " +
       "배제했기 때문이 아니다. Sdc1/Sdc4는 여전히 이 축의 최상위 전산 hub이며, 이들의 헤파란황산 " +
       "함유 세포외 도메인 구조가 확보되는 대로 재검토되어야 한다.",
+      "liver→heart 축(Sema5b-Plxna1/Plxna3, 3.10-3.16절)에서는 CellChatDB가 직접 매칭한 " +
+      "수용체(Plxna1, Plxna3)와 그 첫 번째 STRING 상호작용 파트너 중 구조·발현·druggability " +
+      "데이터가 가장 풍부한 Nrp1, 총 세 후보를 최종 표적 후보로 평가하였다.",
+      "Plxna1은 이 축에서 가장 중심적인 hub(degree 17)이자 CellChatDB가 직접 매칭한 수용체이지만, " +
+      "Tabula Muris 마우스 심장에서 실제 발현이 미약하였다(심근세포 5.0%, 3.11절). 유일하게 " +
+      "해결된 구조(PDB 7Y4P/7Y4Q)는 apo 상태의 ectodomain 단편으로 소분자 결합 포켓이 알려져 " +
+      "있지 않으며, DGIdb 상호작용도 0건이다.",
+      "Plxna3는 두 번째 hub(degree 16)이며 마찬가지로 심장 내 발현이 미약하였다(1.6-3.1%). " +
+      "해결된 구조가 전혀 없고 DGIdb 상호작용도 0건이어서, Plxna1보다도 구조적으로 더 " +
+      "액셔너블하지 않다.",
+      "Nrp1은 CellChatDB가 직접 매칭한 수용체가 아니라 Plxna1/Plxna3의 첫 번째 STRING " +
+      "상호작용 파트너(degree 13)로 발견되었으나, Tabula Muris 마우스 심장에서 심내막세포의 " +
+      "96.8%, 내피세포의 94.9%, 섬유아세포의 74.8%에서 검출되어 압도적으로 강한 발현을 " +
+      "보였다. 소분자 저해제 EG01377이 결합된 0.90Å 초고해상도 구조(PDB 6FMC; Powell et al., " +
+      "2018)를 가지고 있으며, DGIdb에 5건(Palifermin, Pegaptanib, Vesencumab, EG01377, " +
+      "EG00229), STITCH에 실제 승인/후기임상 화합물 다수가 등재되어 있다.",
+      "이에 이 축의 구조 기반 스크리닝은 Plxna1과 Nrp1 양쪽 모두를 도킹하는 방식을 " +
+      "채택하였다(어느 한쪽도 사전에 배제하지 않음). 최종적으로 Vina·DiffDock 두 독립적 " +
+      "방법이 문헌상 알려진 결합 부위로 함께 수렴한 Nrp1을 구조적으로 뒷받침되는 표적으로, " +
+      "두 방법이 서로 다른 부위를 가리킨 Plxna1을 가설 생성적 결과로 구분하여 보고한다" +
+      "(3.15-3.16절). 이로 인해 발생하는 한계를 명시적으로 밝혀둔다: Nrp1으로의 재조정은 " +
+      "Angptl4로의 재조정(같은 분자의 다른 도메인)과 달리 완전히 다른 분자로 옮겨가는 것이며, " +
+      "Nrp1이 실제로 Sema5b-Plxna1 신호전달의 보조수용체로 기능하는지는 문헌상 확립되어 있지 " +
+      "않다(4절 참조). Plxna1/Plxna3는 여전히 이 축의 최상위 전산 hub이자 CellChatDB의 직접 " +
+      "매칭 수용체이며, 소분자 결합 구조가 확보되는 대로 재검토되어야 한다.",
     ],
     textS2: [
       "Vina 상위 화합물 중 세 개 — Vina 순위 1, 2위인 Resmetirom과 Ezetimibe, 그리고 순위와 " +
@@ -668,6 +1046,24 @@ module.exports = {
       "(swcanner/DiffDock-Web)를 웹 인터페이스를 통해 승인된 상위 화합물(Resmetirom, " +
       "Ezetimibe, Pioglitazone)에 한해서만 사용하였으며, 이는 DiffDock을 21개 전체 화합물이 " +
       "아니라 최종 소수 후보로 제한한다는 앞서의 CPU 예산 결정과 일치한다.",
+      "liver→heart 축(Nrp1, Plxna1; 3.15-3.16절)에서는 두 표적 각각의 Vina 1위 화합물" +
+      "(공교롭게도 둘 다 Imatinib)을 동일한 웹 인터페이스로 교차검증하였다. 결과는 " +
+      "heart→liver 축과 달리 두 표적 사이에서 뚜렷하게 갈렸다: Nrp1에서는 DiffDock 최상위 " +
+      "pose(confidence −1.51)가 Vina box 중심(EG01377 무게중심)으로부터 1.9Å 이내로 " +
+      "수렴하였고, 접촉 잔기(Tyr297, Trp301, Thr316, Asp320, Glu348, Thr349, Lys350, " +
+      "Lys351, Tyr353, Thr413, Gly414, Ile415)는 문헌상 VEGF-A/Sema3A의 C-말단 아르기닌 " +
+      "및 EG-계열 저해제가 결합하는 것으로 알려진 바로 그 b1 domain 포켓과 일치하였다. " +
+      "Plxna1에서는 DiffDock 최상위 pose(confidence −1.65)가 Sema domain 중심 Vina box로부터 " +
+      "22.7Å 떨어진 완전히 다른 부위(접촉 잔기 Lys156, Glu196, Gln221, Ser226, Gln228, " +
+      "Leu229, Lys230, Phe292, Leu388, Gln413, Pro414)에 위치하였다.",
+      "이 결과는 3.15절에서 이미 제기된 우려 — Plxna1에서는 Nrp1 전용으로 설계된 자기도킹 " +
+      "대조군(EG01377)이 실제 Vina 1위 화합물과 거의 동률(−9.15 vs. −9.96 kcal/mol)이었다는 " +
+      "점 — 을 독립적인 두 번째 방법으로 재확인한다. Vina와 DiffDock 모두 Plxna1의 " +
+      "domain-level blind box 결과에 신뢰를 주지 않으며, 이는 Nrp1에서 두 방법이 서로를 " +
+      "뒷받침한 것과 정확히 대조된다. 두 DiffDock confidence 값(−1.51, −1.65) 자체는 모두 " +
+      "저–중간 신뢰 구간에 속하므로 어느 쪽도 확정적 결합제로 과대 포장해서는 안 되지만, " +
+      "'두 독립적 방법이 동일 부위로 수렴하는가'라는 기준에서는 Nrp1과 Plxna1이 명확히 " +
+      "구분된다.",
     ],
     textS3: [
       { type: "p", text:
@@ -784,5 +1180,9 @@ module.exports = {
     "Corso G, Stärk H, Jing B, Barzilay R, Jaakkola T. DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking. International Conference on Learning Representations (ICLR). 2023.",
     "Ramachandran P, Dobie R, Wilson-Kanamori JR, et al. Resolving the fibrotic niche of human liver cirrhosis at single-cell level. Nature. 2019;575(7783):512-518.",
     "Govaere O, Cockell S, Tiniakos D, et al. Transcriptomic profiling across the nonalcoholic fatty liver disease spectrum reveals gene signatures for steatohepatitis and fibrosis. Sci Transl Med. 2020;12(572):eaba4448.",
+    "Powell J, Mota F, Steadman D, et al. Small Molecule Neuropilin-1 Antagonists Combine Antiangiogenic and Antitumor Activity with Immune Modulation through Reduction of Transforming Growth Factor Beta (TGFbeta) Production in Regulatory T-Cells. J Med Chem. 2018;61(9):4135-4154.",
+    "Tanaka T, Ekimoto T, Nagatomo M, et al. Hybrid in vitro/in silico analysis of low-affinity protein-protein interactions that regulate signal transduction by Sema6D. Protein Sci. 2022;31(9):e4452.",
+    "Takahashi T, Fournier A, Nakamura F, et al. Plexin-neuropilin-1 complexes form functional semaphorin-3A receptors. Cell. 1999;99(1):59-69.",
+    "Artigiani S, Conrotto P, Fazzari P, et al. Plexin-B3 is a functional receptor for semaphorin 5A. EMBO Rep. 2004;5(7):710-714.",
   ],
 };

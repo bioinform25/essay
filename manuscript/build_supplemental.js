@@ -114,15 +114,20 @@ function build(lang) {
   children.push(heading1(S.labels.tables, { pageBreakBefore: true }));
 
   const tableSpecs = [
-    { key: "S1", file: "Liver_DEG_sig_padj01_lfc1.5.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
-    { key: "S2", file: "LV_DEG_sig_padj01_lfc1.5.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
+    { key: "S1", file: "Liver_DEG_sig_padj05_lfc1.0.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
+    { key: "S2", file: "LV_DEG_sig_padj05_lfc1.0.csv", maxCols: 7, widths: [2400, 1100, 1300, 1000, 1300, 1226, 1700] },
     { key: "S3", file: "Liver_GO_BP.csv", maxCols: 6, widths: [1400, 3200, 1300, 1300, 1300, 926] },
     { key: "S4", file: "LV_GO_BP.csv", maxCols: 6, widths: [1400, 3200, 1300, 1300, 1300, 926] },
-    { key: "S5", file: "Liver_KEGG.csv", maxCols: 6, widths: [1000, 3200, 1300, 1300, 1300, 1226] },
+    { key: "S5", file: "Liver_LV_KEGG_combined.csv", maxCols: 7, widths: [900, 900, 2800, 1200, 1200, 1200, 1026] },
     { key: "S6", file: "Angptl4axis_hub_genes.csv", maxCols: null, widths: null },
     { key: "S7", file: path.join("..", "docking", "results", "vina_summary.csv"), maxCols: null, widths: null },
     { key: "S8", file: "STITCH_hub_gene_chemical_partners.csv", maxCols: null, widths: null },
     { key: "S9", file: "DGIdb_druggability_summary.csv", maxCols: null, widths: null },
+    { key: "S10", file: "LiverToHeart_candidate_hub_genes.csv", maxCols: null, widths: null },
+    { key: "S11", file: "TabulaMuris_heart_Sema5bAxis_expression.csv", maxCols: null, widths: null },
+    { key: "S12", file: "STITCH_semaphorin_axis_chemical_partners.csv", maxCols: null, widths: null },
+    { key: "S13", file: "LiverToHeart_DGIdb_druggability.csv", maxCols: null, widths: null },
+    { key: "S14", file: path.join("..", "docking", "results_dual", "vina_summary_combined.csv"), maxCols: null, widths: null },
   ];
 
   tableSpecs.forEach((spec, idx) => {

@@ -1,0 +1,12 @@
+label,query_name,cid,smiles,mw
+EG01377,EG01377,NA (RCSB chemcomp DUE),NCc1ccc(cc1)c2cc3ccoc3c(c2)S(=O)(=O)Nc4ccsc4C(=O)N[C@@H](CCCNC(N)=N)C(O)=O,NA
+Imatinib,imatinib,5291,CC1=C(C=C(C=C1)NC(=O)C2=CC=C(C=C2)CN3CCN(CC3)C)NC4=NC=CC(=N4)C5=CN=CC=C5,493.6
+Vatalanib,vatalanib,151194,C1=CC=C2C(=C1)C(=NN=C2NC3=CC=C(C=C3)Cl)CC4=CC=NC=C4,346.8
+Cediranib,cediranib,9933475,CC1=CC2=C(N1)C=CC(=C2F)OC3=NC=NC4=CC(=C(C=C43)OC)OCCCN5CCCC5,450.5
+Semaxinib,semaxanib,5329098,CC1=CC(=C(N1)/C=C\2/C3=CC=CC=C3NC2=O)C,238.28
+Pazopanib,pazopanib,10113978,CC1=C(C=C(C=C1)NC2=NC=CC(=N2)N(C)C3=CC4=NN(C(=C4C=C3)C)C)S(=O)(=O)N,437.5
+Fasudil,fasudil,3547,C1CNCCN(C1)S(=O)(=O)C2=CC=CC3=C2C=CN=C3,291.37
+Aspirin,aspirin,2244,CC(=O)OC1=CC=CC=C1C(=O)O,180.16
+Ibuprofen,ibuprofen,3672,CC(C)CC1=CC=C(C=C1)C(C)C(=O)O,206.28
+Caffeine,caffeine,2519,CN1C=NC2=C1C(=O)N(C(=O)N2C)C,194.19
+Metoprolol,metoprolol,4171,CC(C)NCC(COC1=CC=C(C=C1)CCOC)O,267.36
